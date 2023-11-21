@@ -17,23 +17,5 @@ public class OpenAiApiClient
     _httpClient.BaseAddress = new Uri("https://api.openai.com/v1/");
     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
   }
-
-  public async Task<string> SendQuestions(string prompt, string model)
-  {
-    var requestBody = new
-    {
-      prompt = prompt,
-      model = model,
-      max_tokens = 150,
-      temperature = 0.5
-    };
-
-    var response = await _httpClient.PostAsJsonAsync("completions", requestBody);
-    response.EnsureSuccessStatusCode();
-    var responseBody = await response.Content.ReadAsStringAsync();
-
-    return responseBody;
-  }
-
 }
 

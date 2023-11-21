@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using OpenAI.GPT3;
@@ -17,15 +18,15 @@ namespace Solution.ViewModels
     private string _responseText;
     public string ResponseText
     {
-      get { return _responseText; }
-      set
-      {
-        if (_responseText != value)
+        get { return _responseText; }
+        set
         {
-          _responseText = value;
-          OnPropertyChanged();
+            if (_responseText != value)
+            {
+                _responseText = value;
+                OnPropertyChanged();
+            }
         }
-      }
     }
 
     public ICommand SendPromptCommand { get; }
@@ -35,7 +36,6 @@ namespace Solution.ViewModels
       SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
     }
 
-// YourViewModel.cs
     public async Task SendPrompt()
     {
       // Declare the API key
@@ -43,16 +43,14 @@ namespace Solution.ViewModels
 
 // Create an instance of the OpenAIService class
       var gpt3 = new OpenAIService(new OpenAiOptions()
-      {
-        ApiKey = apiKey
-      });
+      { ApiKey = apiKey });
 
 // Create a chat completion request
       var completionResult = await gpt3.ChatCompletion.CreateCompletion
       (new ChatCompletionCreateRequest()
       {
         Messages = new List<ChatMessage>(new ChatMessage[]
-          { new ChatMessage("user", "Generate a text that is 5 words long") }),
+          { new ChatMessage("user", "Generate a text that is 5 words long dont include any special characters") }),
         Model = Models.ChatGpt3_5Turbo,
         Temperature = 0.5F,
         MaxTokens = 100,
@@ -60,24 +58,23 @@ namespace Solution.ViewModels
       });
 
 // Check if the completion result was successful and handle the response
+      StringBuilder resultBuilder = new StringBuilder();
+
       if (completionResult.Successful)
       {
         foreach (var choice in completionResult.Choices)
         {
-          Console.WriteLine(choice.Message.Content);
+          resultBuilder.AppendLine(choice.Message.Content);
         }
       }
       else
       {
-        if (completionResult.Error == null)
-        {
-          throw new Exception("Unknown Error");
-        }
-        Console.WriteLine($"error");
+        resultBuilder.AppendLine("Error occurred");
       }
+      ResponseText = resultBuilder.ToString();
 
-// Keep the console window open
-      Console.ReadLine();
+      // Return the concatenated results as a string
+      Console.WriteLine(resultBuilder.ToString());
     }
 
     // INotifyPropertyChanged implementation
