@@ -8,19 +8,19 @@
         mc:Ignorable="d" AllowsTransparency="True" Background="Transparent" WindowStyle="None">
     <Border CornerRadius="25" BorderBrush="Transparent">
         <Grid>
-            <Label 
-                 Content="new test" 
-                 HorizontalAlignment="Left" 
-                 Margin="29,28,0,0" 
+            <Label
+                 Content="new test"
+                 HorizontalAlignment="Left"
+                 Margin="29,28,0,0"
                  VerticalAlignment="Top"
                  FontFamily="Lucida Console"
                  Foreground="White"
                  FontSize="20"
             />
-            <Button 
-                 Content="x" 
-                 HorizontalAlignment="Left" 
-                 Margin="424,10,0,0" 
+            <Button
+                 Content="x"
+                 HorizontalAlignment="Left"
+                 Margin="424,10,0,0"
                  VerticalAlignment="Top"
                  Background="Transparent"
                  FontFamily="Lucida Console"
@@ -36,7 +36,7 @@
             </LinearGradientBrush>
         </Border.Background>
     </Border>
-    
-    
-   
+
+
+
 </Window>

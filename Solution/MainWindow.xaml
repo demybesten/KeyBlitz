@@ -4,14 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Solution"
+        xmlns:views="clr-namespace:Solution.Views"
+        xmlns:viewModels="clr-namespace:Solution.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type local:NewTestViewModel}">
-            <local:NewTestView/>
+        <DataTemplate DataType="{x:Type viewModels:NewTestViewModel}">
+            <views:NewTestView/>
         </DataTemplate>
     </Window.Resources>
     <Grid>
-
+        <TextBlock Text="{Binding ResponseText}" />
+        <Button Content="Send Prompt" Command="{Binding SendPromptCommand}" />
     </Grid>
 </Window>

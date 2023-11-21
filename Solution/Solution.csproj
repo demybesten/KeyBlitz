@@ -12,9 +12,11 @@
     <Folder Include="Models\" />
     <Folder Include="Converters\" />
     <Folder Include="Resources\" />
-    <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="References\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.4" />
   </ItemGroup>
 
 </Project>
