@@ -192,3 +192,17 @@ bin
 obj
 *.xml
 *.cs
+*.cs
+*.lref
+*.editorconfig
+*.cache
+*.vsidx
+*.testlog
+KeyBlitz_Solution/.vs/KeyBlitz_Solution/v17/.wsuo
+*.manifest
+*.sqlite
+*.cache
+*.editorconfig
+*.cache
+*.lref
+*.cs
