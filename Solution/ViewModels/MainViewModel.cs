@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Solution.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged {
+    public class MainViewModel : BaseViewModel {
         private object _currentViewModel;
         public object CurrentViewModel {
             get {
@@ -19,9 +19,8 @@ namespace Solution.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public MainViewModel() {
+            _currentViewModel = new NewTestViewModel();
         }
     }
 }

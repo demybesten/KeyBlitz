@@ -10,10 +10,17 @@
         Background="Transparent">
     <Border CornerRadius="25" BorderBrush="Transparent">
         <Grid>
+            <Image 
+                HorizontalAlignment="Center" 
+                Height="454" 
+                VerticalAlignment="Center" 
+                Width="450"
+                Source="temp.png"
+            />
             <Label 
                  Content="new test" 
                  HorizontalAlignment="Left" 
-                 Margin="29,28,0,0" 
+                 Margin="23,30,0,0" 
                  VerticalAlignment="Top"
                  FontFamily="Lucida Console"
                  Foreground="White"
@@ -22,14 +29,78 @@
             <Button 
                  Content="x" 
                  HorizontalAlignment="Left" 
-                 Margin="424,10,0,0" 
+                 Margin="416,18,0,0" 
                  VerticalAlignment="Top"
                  Background="Transparent"
                  FontFamily="Lucida Console"
                  Foreground="White"
                  FontSize="20"
-                 BorderBrush="Transparent"
+                 BorderBrush="Transparent" 
+                 RenderTransformOrigin="-0.914,0.486"
             />
+            <Label 
+                Content="length" 
+                HorizontalAlignment="Left" 
+                Margin="48,84,0,0" 
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="Gray"
+                FontSize="15"
+            />
+            <Slider 
+                x:Name="lengthSlider"
+                HorizontalAlignment="Left" 
+                Margin="53,114,0,0" 
+                VerticalAlignment="Top" 
+                Width="140"
+                Maximum="200"
+                Minimum="20"
+                IsSnapToTickEnabled="True"
+                TickFrequency="20"
+                Value="{Binding TextLength}"
+            />
+            <Label 
+                Content="{Binding TextLength}" 
+                HorizontalAlignment="Right" 
+                Margin="0,113,397,0" 
+                VerticalAlignment="Top"
+                Foreground="White"
+                FontFamily="Lucida Console" Height="20" Width="51"
+                HorizontalContentAlignment="Right" RenderTransformOrigin="0.5,0.5"
+                >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.377"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="-0.243"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+            <Border 
+                HorizontalAlignment="Center" 
+                Height="169" 
+                Margin="0,80,0,0" 
+                Background="Black"
+                VerticalAlignment="Top" 
+                Width="4"/>
+            <Label 
+                Content="complexity" 
+                HorizontalAlignment="Left" 
+                Margin="44,184,0,0" 
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="Gray"
+                FontSize="15"
+            />
+            <ComboBox 
+                HorizontalAlignment="Left" 
+                Margin="53,0,0,0" 
+                VerticalAlignment="Center" 
+                Width="143" 
+                Height="30"
+                />
+
         </Grid>
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
