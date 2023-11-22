@@ -7,34 +7,36 @@
         Title="GptView" Height="450" Width="800">
     <StackPanel>
         <!-- Label and TextBox for Subject -->
-        <StackPanel Orientation="Horizontal"  Margin="10">
-            <TextBlock Text="Subject:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding Subject}" Width="200" Height="20" Margin="10"/>
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock Text="Subject:" VerticalAlignment="Center" />
+            <TextBox Text="{Binding Subject}" Width="200" Height="20" Margin="10" />
         </StackPanel>
 
         <!-- Label and TextBox for Length -->
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Text="Length in amount of words:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding Length, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="20" Margin="10"/>
+            <TextBlock Text="Length in amount of words:" VerticalAlignment="Center" />
+            <TextBox Text="{Binding Length, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="20"
+                     Margin="10" />
         </StackPanel>
 
         <!-- Label and TextBox for Complexity -->
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Text="Complexity (easy being 1-5 being hard):" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding Complexity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="200" Height="20"  Margin="10"/>
+            <TextBlock Text="Complexity (easy being 1-5 being hard):" VerticalAlignment="Center" />
+            <TextBox Text="{Binding Complexity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"
+                     Height="20" Margin="10" />
         </StackPanel>
 
         <!-- Button to send prompt -->
-        
+
         <StackPanel Orientation="Horizontal" Margin="10">
-            <Button Content="Send Prompt" Command="{Binding SendPromptCommand}" Width="150" Height="50"  Margin="10"/>
+            <Button Content="Send Prompt" Command="{Binding SendPromptCommand}" Width="150" Height="50" Margin="10" />
         </StackPanel>
-        
+        <StackPanel>
+            <TextBlock Text="Result:" VerticalAlignment="Center" />
+        </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Text="Result:" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding ResponseText}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding ResponseText}" VerticalAlignment="Center" />
         </StackPanel>
-        
+
     </StackPanel>
 </Window>
-
