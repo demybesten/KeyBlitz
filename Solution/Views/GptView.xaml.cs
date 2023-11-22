@@ -5,10 +5,9 @@ namespace Solution.Views;
 
 public partial class GptView : Window
 {
-  public GptView()
-  {
-    InitializeComponent();
-    DataContext = new GptViewModel();
-  }
+    public GptView()
+    {
+        InitializeComponent();
+        DataContext = new GptViewModel();
+    }
 }
-
