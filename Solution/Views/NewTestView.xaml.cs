@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 namespace Solution.Views
 {
-    public partial class NewTestView : UserControl
+    public partial class NewTestView : Window
     {
         public NewTestView()
         {
