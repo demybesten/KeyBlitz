@@ -1,4 +1,5 @@
-﻿using Solution.Views;
+﻿using Solution.ViewModels;
+using Solution.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace Solution
         public MainWindow()
         {
             InitializeComponent();
+            Hide();
         }
     }
 }
