@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solution.Views"
+        xmlns:local="clr-namespace:Solution.Views" 
+        xmlns:viewmodels="clr-namespace:Solution.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:NewTestViewModel}"
         Height="455" 
         Width="450"
         mc:Ignorable="d" 
@@ -101,6 +103,7 @@
                 VerticalAlignment="Center" 
                 Width="143" 
                 Height="30"
+                ItemsSource="{Binding ComplexityLevels}"
             />
             <Label 
                 Content="language" 

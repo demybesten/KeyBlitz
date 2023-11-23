@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,22 @@ namespace Solution.ViewModels
                 OnPropertyChanged(nameof(TextLength));
             }
         }
+        public NewTestViewModel() {
+            _textLength=20;
+            ComplexityLevels.Add("basic");
+            ComplexityLevels.Add("avarage");
+            ComplexityLevels.Add("pro");
+        }
 
+        private ObservableCollection<string> _complexityLevels = new ObservableCollection<string>();
+        public ObservableCollection<string> ComplexityLevels {
+            get {
+                return _complexityLevels;
+            }
+            set {
+                _complexityLevels = value;
+                OnPropertyChanged(nameof(ComplexityLevels));
+            }
+        }
     }
 }
