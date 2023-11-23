@@ -88,26 +88,26 @@ namespace Solution.ViewModels
             {
                 case 1:
                     userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is {Length} words long with Simple sentences and phrases and common and frequently used words also don't use any special characters";
+                                  $" that is exactly {Length} words long with Simple sentences and phrases and common and frequently used words also don't use any special characters";
                     break;
 
                 case 2:
                     userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is {Length} words long with Expanded vocabulary with common words and basic sentence structures with some variety ";
+                                  $" that is exactly {Length} words long with Expanded vocabulary with common words and basic sentence structures with some variety ";
                     break;
 
                 case 3:
                     userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is {Length} words long with More varied sentence structures and a mix of common and less common words ";
+                                  $" that is exactly {Length} words long with More varied sentence structures and a mix of common and less common words ";
                     break;
 
                 case 4:
                     userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is {Length} words long with Complex sentence structures and advanced vocabulary and varied word choices";
+                                  $" that is exactly {Length} words long with Complex sentence structures and advanced vocabulary and varied word choices";
                     break;
                 case 5:
                     userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is {Length} words long with advanced and nuanced language and rich vocabulary with technical or specialized terms";
+                                  $" that is exactly {Length} words long with advanced and nuanced language and rich vocabulary with technical or specialized terms";
                     break;
             }
 
@@ -126,7 +126,6 @@ namespace Solution.ViewModels
                 Messages = new List<ChatMessage>(new ChatMessage[]
                     { new ChatMessage("user", userMessage) }),
                 Model = Models.ChatGpt3_5Turbo,
-                Temperature = 0.1F,
                 MaxTokens = 100,
                 N = 1
             });
