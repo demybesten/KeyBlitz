@@ -12,151 +12,192 @@ using Solution.Services;
 
 namespace Solution.ViewModels
 {
-    public class GptViewModel : INotifyPropertyChanged
+  public class GptViewModel : INotifyPropertyChanged
+  {
+    private string _responseText;
+
+    public string ResponseText
     {
-        private string _responseText;
-
-        public string ResponseText
+      get { return _responseText; }
+      set
+      {
+        if (_responseText != value)
         {
-            get { return _responseText; }
-            set
-            {
-                if (_responseText != value)
-                {
-                    _responseText = value;
-                    OnPropertyChanged();
-                }
-            }
+          _responseText = value;
+          OnPropertyChanged();
         }
+      }
+    }
 
-        private string _subject;
+    private string _subject;
 
-        public string Subject
+    public string Subject
+    {
+      get { return _subject; }
+      set
+      {
+        if (_subject != value)
         {
-            get { return _subject; }
-            set
-            {
-                if (_subject != value)
-                {
-                    _subject = value;
-                    OnPropertyChanged();
-                }
-            }
+          _subject = value;
+          OnPropertyChanged();
         }
+      }
+    }
 
-        private int _length;
+    private int _length;
 
-        public int Length
+    public int Length
+    {
+      get { return _length; }
+      set
+      {
+        if (_length != value)
         {
-            get { return _length; }
-            set
-            {
-                if (_length != value)
-                {
-                    _length = value;
-                    OnPropertyChanged();
-                }
-            }
+          _length = value;
+          OnPropertyChanged();
         }
+      }
+    }
 
-        private int _complexity;
+    private string _complexity;
 
-        public int Complexity
+    public string Complexity
+    {
+      get { return _complexity; }
+      set
+      {
+        if (_complexity != value)
         {
-            get { return _complexity; }
-            set
-            {
-                if (_complexity != value)
-                {
-                    _complexity = value;
-                    OnPropertyChanged();
-                }
-            }
+          _complexity = value;
+          OnPropertyChanged();
         }
+      }
+    }
 
-        public RelayCommand SendPromptCommand { get; }
+    private string _language;
 
-        public GptViewModel()
+    public string Language
+    {
+      get { return _language; }
+      set
+      {
+        if (_language != value)
         {
-            SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+          _language = value;
+          OnPropertyChanged();
         }
-
-        public async Task SendPrompt()
+      }
+    }
+    string _type;
+    private string _texttype;
+    public string TextType
+    {
+      get { return _texttype; }
+      set
+      {
+        if (_texttype != value)
         {
-            string userMessage = "a short text about baby seals";
-            switch (Complexity)
-            {
-                case 1:
-                    userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is exactly {Length} words long with Simple sentences and phrases and common and frequently used words also don't use any special characters";
-                    break;
+          _texttype = value;
+          OnPropertyChanged();
+        }
+      }
+    }
 
-                case 2:
-                    userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is exactly {Length} words long with Expanded vocabulary with common words and basic sentence structures with some variety ";
-                    break;
+    public RelayCommand SendPromptCommand { get; }
 
-                case 3:
-                    userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is exactly {Length} words long with More varied sentence structures and a mix of common and less common words ";
-                    break;
+    public GptViewModel()
+    {
+      SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+    }
 
-                case 4:
-                    userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is exactly {Length} words long with Complex sentence structures and advanced vocabulary and varied word choices";
-                    break;
-                case 5:
-                    userMessage = $"Generate a text on the subject of '{Subject}'" +
-                                  $" that is exactly {Length} words long with advanced and nuanced language and rich vocabulary with technical or specialized terms";
-                    break;
-            }
+    public async Task SendPrompt()
+    {
+      Dictionary<string, string> complexities = new Dictionary<string, string>
+      {
+        ["basic"] = "basic (no capital letters or punctuation, simple words)",
+        ["average"] = "average (include capital letters and punctuation)",
+        ["advanced"] = "advanced (include capital letters and punctuation, use difficult words)",
+      };
+
+      if (Subject == "")
+      {
+        Subject = "random";
+      }
+
+      if (TextType.ToUpper() == "WORDS")
+      {
+        _type = "random words (don't use any capital letters or punctuation)";
+      }else if (TextType.ToUpper() == "SENTENCES")
+      {
+        _type = "Completely random sentences that don't have any connection, separated by dots. Use capital letters.";
+      }else if (TextType.ToUpper() == "STORY")
+      {
+        foreach (var variable in complexities)
+        {
+          if (variable.Key == Complexity.ToLower())
+          {
+            Complexity = variable.Value;
+          }
+        }
+      }
+      string prompt = $"Generate a text for typing practice using the following specifications. DON'T use newlines, ever!\n" +
+                      $"Generate completely random {_type} \n" +
+                      $"Language: {Language} [EXTREMELY IMPORTANT]\n" +
+                      $"Length: EXACTLY {Length} words long.\n" +
+                      $"Subject: {Subject}\n" +
+                      $"Text/word complexity: {Complexity}\n\n" +
+                      "PROVIDE THE TEXT IN A SINGLE STRING WITHOUT QUATATION MARKS OR ANY OTHER TEXT (DON'T generate code, use plaintext!)\n" +
+                      "Do NOT go over the specified wordcount!!!\n" +
+                      "DO NOT USE ANY CHARACTERS OUTSIDE THE LATIN ALPHABET, REPLACE FOREIGN LETTERS WITH ALPHANUMERIC CHARACTERS!!!";
 
 
-            // Declare the API key
-            var apiKey = "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";
+
+
+      // Declare the API key
+      var apiKey = "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";
 
 // Create an instance of the OpenAIService class
-            var gpt3 = new OpenAIService(new OpenAiOptions()
-                { ApiKey = apiKey });
+      var gpt3 = new OpenAIService(new OpenAiOptions()
+        { ApiKey = apiKey });
 
 // Create a chat completion request
-            var completionResult = await gpt3.ChatCompletion.CreateCompletion
-            (new ChatCompletionCreateRequest()
-            {
-                Messages = new List<ChatMessage>(new ChatMessage[]
-                    { new ChatMessage("user", userMessage) }),
-                Model = Models.ChatGpt3_5Turbo,
-                MaxTokens = 100,
-                N = 1
-            });
+      var completionResult = await gpt3.ChatCompletion.CreateCompletion
+      (new ChatCompletionCreateRequest()
+      {
+        Messages = new List<ChatMessage>(new ChatMessage[]
+          { new ChatMessage("system", prompt) }),
+        Model = "gpt-4-1106-preview",
+        MaxTokens = 100,
+        N = 1
+      });
 
 // Check if the completion result was successful and handle the response
-            StringBuilder resultBuilder = new StringBuilder();
+      StringBuilder resultBuilder = new StringBuilder();
 
-            if (completionResult.Successful)
-            {
-                foreach (var choice in completionResult.Choices)
-                {
-                    resultBuilder.AppendLine(choice.Message.Content);
-                }
-            }
-            else
-            {
-                resultBuilder.AppendLine("Error occurred");
-            }
-
-            ResponseText = resultBuilder.ToString();
-
-            // Return the concatenated results as a string
-            Console.WriteLine(resultBuilder.ToString());
-        }
-
-        // INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+      if (completionResult.Successful)
+      {
+        foreach (var choice in completionResult.Choices)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+          resultBuilder.AppendLine(choice.Message.Content);
         }
+      }
+      else
+      {
+        resultBuilder.AppendLine("Error occurred");
+      }
+
+      ResponseText = resultBuilder.ToString();
+
+      // Return the concatenated results as a string
+      Console.WriteLine(resultBuilder.ToString());
     }
+
+    // INotifyPropertyChanged implementation
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+  }
 }

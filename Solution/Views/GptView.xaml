@@ -21,9 +21,21 @@
 
         <!-- Label and TextBox for Complexity -->
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Text="Complexity (easy being 1-5 being hard):" VerticalAlignment="Center" />
+            <TextBlock Text="Complexity (basic/average/advanced):" VerticalAlignment="Center" />
             <TextBox Text="{Binding Complexity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"
                      Height="20" Margin="10" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="10">
+          <TextBlock Text="Language:" VerticalAlignment="Center" />
+          <TextBox Text="{Binding Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"
+                   Height="20" Margin="10" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="10">
+          <TextBlock Text="Type (words/sentences/story):" VerticalAlignment="Center" />
+          <TextBox Text="{Binding TextType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"
+                   Height="20" Margin="10" />
         </StackPanel>
 
         <!-- Button to send prompt -->
