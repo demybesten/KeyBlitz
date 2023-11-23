@@ -16,7 +16,7 @@ jobs:
       Appx_Bundle: Always
       Appx_Bundle_Platforms: "Any CPU"
       Appx_Package_Build_Mode: StoreUpload
-      Configuration: Release
+      Configuration: Debug
 
     steps:
     - name: Checkout
