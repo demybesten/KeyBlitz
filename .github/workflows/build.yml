@@ -13,6 +13,10 @@ jobs:
     env:
       Solution_Name: Solution.sln
       Test_Project_Path: KeyBlitz.Tests\KeyBlitz.Tests.csproj 
+      Appx_Bundle: Always
+      Appx_Bundle_Platforms: x86|x64
+      Appx_Package_Build_Mode: StoreUpload
+      Configuration: Release
 
     steps:
     - name: Checkout
@@ -45,13 +49,7 @@ jobs:
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Create the app package
-      run: msbuild  /p:Configuration=Debug /p:Platform="Any CPU" /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle
-      env:
-        Appx_Bundle: Always
-        Appx_Bundle_Platforms: x86|x64
-        Appx_Package_Build_Mode: StoreUpload
-        Configuration: Release
-       
+      run: msbuild /p:Configuration=$env:Configuration /p:Platform=$env:Appx_Bundle_Platforms /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle      
 
     # Remove the pfx
 #    - name: Remove the pfx
