@@ -83,7 +83,8 @@
                 Margin="0,80,0,0" 
                 Background="Black"
                 VerticalAlignment="Top" 
-                Width="4"/>
+                Width="4"
+            />
             <Label 
                 Content="complexity" 
                 HorizontalAlignment="Left" 
@@ -94,13 +95,84 @@
                 FontSize="15"
             />
             <ComboBox 
+                x:Name="complexityCB"
                 HorizontalAlignment="Left" 
                 Margin="53,0,0,0" 
                 VerticalAlignment="Center" 
                 Width="143" 
                 Height="30"
-                />
-
+            />
+            <Label 
+                Content="language" 
+                HorizontalAlignment="Left" 
+                Margin="245,84,0,0" 
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="Gray"
+                FontSize="15"
+            />
+            <ComboBox 
+                x:Name="languageCN"
+                HorizontalAlignment="Left" 
+                Margin="256,109,0,0" 
+                VerticalAlignment="Top" 
+                Width="143" 
+                Height="30"
+            />
+            <Label 
+                Content="text type" 
+                HorizontalAlignment="Left" 
+                Margin="245,184,0,0" 
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="Gray"
+                FontSize="15"
+            />
+            <ComboBox 
+                x:Name="textTypeCB"
+                HorizontalAlignment="Left" 
+                Margin="256,0,0,0" 
+                VerticalAlignment="Center" 
+                Width="143" 
+                Height="30"
+            />
+            <Label 
+                Content="subject (optional)" 
+                HorizontalAlignment="Left" 
+                Margin="48,262,0,0" 
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="Gray"
+                FontSize="15"
+            />
+            <TextBox 
+                x:Name="subjectText"
+                HorizontalAlignment="Center" 
+                Margin="0,292,0,0" 
+                TextWrapping="Wrap"  
+                VerticalAlignment="Top" 
+                Width="346" Height="76"
+            />
+            <Button 
+                x:Name="cancelTest"
+                Content="cancel" 
+                HorizontalAlignment="Left" 
+                Margin="53,384,0,0" 
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="Gray"
+                FontSize="15" Height="30" Width="155"
+            />
+            <Button 
+                x:Name="startTest"
+                Content="start" 
+                HorizontalAlignment="Left" 
+                Margin="245,384,0,0" 
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="Gray"
+                FontSize="15" Height="30" Width="155"
+            />
         </Grid>
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
