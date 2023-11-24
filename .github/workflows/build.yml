@@ -35,5 +35,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Solution.exe
-        path: KeyBlitz\Solution\publish\
+        path: D:\a\KeyBlitz\KeyBlitz\Solution\publish\
 
