@@ -28,7 +28,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: Publish artifact
-      run: dotnet publish -c Release -o publish  -r win10-x64 /p:PublishSingleFile=true
+      run: dotnet publish -c Release -o publish  -r win10-x64 /p:PublishSingleFile=true --self-contained
       working-directory: Solution
 
     - name: Archive artifact
