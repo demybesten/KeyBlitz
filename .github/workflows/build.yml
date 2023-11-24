@@ -2,13 +2,13 @@ name: .NET Core Desktop
 
 on:
   push:
-    branches: [ "main" ]
+    branches: main
   pull_request:
-    branches: [ "main" ]
+    branches: main
 
 jobs:
   build:
-    runs-on: windows-latest 
+    runs-on: ubuntu-latest 
 
     env:
       Solution_Name: Solution.sln
@@ -20,44 +20,31 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      uses: actions/checkout@v2
 
     # Install the .NET Core workload
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: '6.0.100'
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the application
-      run: msbuild /p:Configuration=$env:Configuration /p:Platform="Any CPU" /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle   
-      env:
-        Configuration: ${{ matrix.configuration }}
+    - name: Restore dependencies
+      run: dotnet restore
 
-    # Decode the base 64 encoded pfx and save the Signing_Certificate
- #   - name: Decode the pfx
-  #    run: |
-   #     $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
-    #    $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath GitHubActionsWorkflow.pfx
-     #   [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+    - name: Build project
+      run: dotnet build --configuration Release
+  
+    - name: Publish artifact
+      run: dotnet publish -c Release -o publish
+      working-directory: Solution
 
-    # Create the app package by building and packaging the Windows Application Packaging project
-    - name: Create the app package
-      run: msbuild /p:Configuration=$env:Configuration /p:Platform=$env:Appx_Bundle_Platforms /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle      
-
-    # Remove the pfx
-#    - name: Remove the pfx
- #     run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
-
-    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+    - name: Archive artifact
+      uses: actions/upload-artifact@v2
       with:
-        name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\AppPackages
+        name: your-project-artifact
+        path: YourProjectName/publish
