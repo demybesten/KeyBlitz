@@ -34,6 +34,12 @@ jobs:
     - name: Archive artifact
       uses: actions/upload-artifact@v3
       with:
+        name: KeyBlitz Win 10
+        path: D:\a\KeyBlitz\KeyBlitz\Solution\output\net6.0-windows\win10-x64
+
+    - name: Archive artifact
+      uses: actions/upload-artifact@v3
+      with:
         name: KeyBlitz
         path: D:\a\KeyBlitz\KeyBlitz\Solution\publish
 
