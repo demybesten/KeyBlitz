@@ -11,6 +11,7 @@
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
     <PublishReadyToRun>true</PublishReadyToRun>
     <SelfContained>true</SelfContained>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
