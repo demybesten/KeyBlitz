@@ -1,23 +1,21 @@
-﻿// App.xaml.cs
-
+﻿using Solution.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using Solution.ViewModels;
-using Solution.Views;
 
-namespace YourNamespace
-{
-    public partial class App : Application
-    {
-        protected override void OnStartup(StartupEventArgs e)
-        {
+namespace Solution {
+    
+    public partial class App : Application {
+        protected override void OnStartup(StartupEventArgs e) {
             base.OnStartup(e);
-
-            GptViewModel viewModel = new GptViewModel();
-            GptView view = new GptView();
-
-            view.DataContext = viewModel;
-
-            view.Show();
+            MainWindow window = new MainWindow();
+            MainViewModel mainViewModel = new MainViewModel();
+            window.DataContext = mainViewModel;
+            window.Show();
         }
     }
 }
