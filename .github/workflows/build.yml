@@ -28,7 +28,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: Publish artifact
-      run: dotnet publish -c Release -o publish
+      run: dotnet publish -c Release -o publish  /p:PublishSingleFile=true
       working-directory: Solution
 
     - name: Archive artifact
@@ -36,22 +36,3 @@ jobs:
       with:
         name: KeyBlitz
         path: D:\a\KeyBlitz\KeyBlitz\Solution\publish
-
-
-    - name: Download ILMerge
-      run: |
-        Invoke-WebRequest -Uri https://github.com/dotnet/ILMerge/releases/download/v3.0.37/ILMerge.zip -OutFile ILMerge.zip
-        Expand-Archive -Path .\ILMerge.zip -DestinationPath ILMerge
-  #    shell: PowerShell
-
-    - name: Run ILMerge
-      run: |
-        .\ILMerge\ILMerge.exe /out:KeyBlitz.exe published\Solution.dll published\Solution.exe published\Solution.pdb published\Solution.runtimeconfig.json published\Solution.deps.json
-   #   shell: PowerShell
-
-    - name: Upload Merged .exe
-      uses: actions/upload-artifact@v3
-      with:
-        name: merged-app
-        path: KeyBlitz.exe
-
