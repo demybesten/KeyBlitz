@@ -34,6 +34,6 @@ jobs:
     - name: Archive artifact
       uses: actions/upload-artifact@v3
       with:
-        name: KeyBlitz.exe
-        path: D:\a\KeyBlitz\KeyBlitz\Solution\publish\Solution.exe
+        name: KeyBlitz
+        path: D:\a\KeyBlitz\KeyBlitz\Solution\publish
 
