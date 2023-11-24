@@ -11,7 +11,6 @@ using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using Solution.Services;
-using TiktokenSharp;
 
 namespace Solution.ViewModels
 {
