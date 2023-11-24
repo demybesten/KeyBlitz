@@ -11,6 +11,7 @@ using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using Solution.Services;
+using TiktokenSharp;
 
 namespace Solution.ViewModels
 {
@@ -36,6 +37,7 @@ namespace Solution.ViewModels
         }
 
         private string _responseText;
+        private string[] ResponseTextArray;
 
         public string ResponseText
         {
@@ -45,7 +47,7 @@ namespace Solution.ViewModels
             if (_responseText != value)
             {
               _responseText = value;
-              OnPropertyChanged();
+              OnPropertyChanged(nameof(ResponseText));
             }
           }
         }
@@ -144,6 +146,7 @@ namespace Solution.ViewModels
 
     public async Task SendPrompt()
     {
+      Console.WriteLine("Generating....");
       Dictionary<string, string> complexities = new Dictionary<string, string>
       {
         ["basic"] = "basic (no capital letters or punctuation, simple words)",
@@ -199,7 +202,7 @@ namespace Solution.ViewModels
         Messages = new List<ChatMessage>(new ChatMessage[]
           { new ChatMessage("system", prompt) }),
         Model = "gpt-4-1106-preview",
-        MaxTokens = 100,
+        // MaxTokens = 4096,
         N = 1
       });
 
@@ -219,17 +222,13 @@ namespace Solution.ViewModels
       }
 
       ResponseText = resultBuilder.ToString();
+      ResponseTextArray = ResponseText.Split(' ');
+
+      // TikToken tikToken = TikToken.EncodingForModel("gpt-4-1106-preview");
+      // var aantalTokens = tikToken.Encode(ResponseText); //[15339, 1917]
 
       // Return the concatenated results as a string
-      Console.WriteLine(resultBuilder.ToString());
+      Console.WriteLine($"Length:{ResponseTextArray.Length}\n{ResponseText}");
     }
-
-    // INotifyPropertyChanged implementation
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    }
+  }
 }
