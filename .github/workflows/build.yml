@@ -34,5 +34,6 @@ jobs:
     - name: Archive artifact
       uses: actions/upload-artifact@v2
       with:
-        name: your-project-artifact
-        path: YourProjectName/publish
+        name: Solution.exe
+        path: KeyBlitz\Solution\publish\
+
