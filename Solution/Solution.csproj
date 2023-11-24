@@ -12,6 +12,7 @@
     <PublishReadyToRun>true</PublishReadyToRun>
     <SelfContained>true</SelfContained>
     <DebugType>embedded</DebugType>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +23,5 @@
     <Folder Include="Services\" />
     <Folder Include="References\" />
   </ItemGroup>
-
-
 
 </Project>
