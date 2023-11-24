@@ -1,43 +1,35 @@
-name: .NET Core Desktop
+name: Build
 
 on:
   push:
-    branches: main
+    branches:
+      - main
   pull_request:
-    branches: main
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest 
-
-    env:
-      Solution_Name: Solution.sln
-      Test_Project_Path: KeyBlitz.Tests\KeyBlitz.Tests.csproj 
-      Appx_Bundle: Always
-      Appx_Bundle_Platforms: "Any CPU"
-      Appx_Package_Build_Mode: StoreUpload
-      Configuration: Debug
+    runs-on: windows-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v2
 
-    # Install the .NET Core workload
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.100'
 
-    # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build project
       run: dotnet build --configuration Release
-  
+
     - name: Publish artifact
       run: dotnet publish -c Release -o publish
-      working-directory: Solution
+      working-directory: YourProjectName
 
     - name: Archive artifact
       uses: actions/upload-artifact@v2
