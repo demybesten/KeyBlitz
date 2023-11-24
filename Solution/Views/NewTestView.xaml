@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solution.Views" 
-        xmlns:viewmodels="clr-namespace:Solution.ViewModels" 
+        xmlns:local="clr-namespace:Solution.Views"
+        xmlns:viewmodels="clr-namespace:Solution.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:NewTestViewModel}"
-        Height="455" 
+        Height="455"
         Width="450"
-        mc:Ignorable="d" 
+        mc:Ignorable="d"
         Background="Transparent"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <UserControl.Resources>
@@ -551,41 +551,41 @@
     </UserControl.Resources>
     <Border CornerRadius="25" BorderBrush="Transparent">
         <Grid>
-            <Label 
-                 Content="new test" 
-                 HorizontalAlignment="Left" 
-                 Margin="23,30,0,0" 
+            <Label
+                 Content="new test"
+                 HorizontalAlignment="Left"
+                 Margin="23,30,0,0"
                  VerticalAlignment="Top"
                  FontFamily="Lucida Console"
                  Foreground="White"
                  FontSize="20"
             />
-            <Button 
-                 Content="x" 
-                 HorizontalAlignment="Left" 
-                 Margin="416,18,0,0" 
+            <Button
+                 Content="x"
+                 HorizontalAlignment="Left"
+                 Margin="416,18,0,0"
                  VerticalAlignment="Top"
                  Background="Transparent"
                  FontFamily="Lucida Console"
                  Foreground="White"
                  FontSize="20"
-                 BorderBrush="Transparent" 
+                 BorderBrush="Transparent"
                  RenderTransformOrigin="-0.914,0.486"
             />
-            <Label 
-                Content="length" 
-                HorizontalAlignment="Left" 
-                Margin="48,84,0,0" 
+            <Label
+                Content="length"
+                HorizontalAlignment="Left"
+                Margin="48,84,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
                 Foreground="Gray"
                 FontSize="15"
             />
-            <Slider Style="{DynamicResource SliderStyle1}" 
+            <Slider Style="{DynamicResource SliderStyle1}"
                 x:Name="lengthSlider"
-                HorizontalAlignment="Left" 
-                Margin="53,114,0,0" 
-                VerticalAlignment="Top" 
+                HorizontalAlignment="Left"
+                Margin="53,114,0,0"
+                VerticalAlignment="Top"
                 Width="140"
                 Maximum="200"
                 Minimum="20"
@@ -593,60 +593,61 @@
                 TickFrequency="20"
                 Value="{Binding TextLength}"
             />
-            <Label 
-                Content="{Binding TextLength}" 
-                HorizontalAlignment="Right" 
-                Margin="0,113,397,0" 
+            <Label
+                Content="{Binding TextLength}"
+                HorizontalAlignment="Right"
+                Margin="0,113,397,0"
                 VerticalAlignment="Top"
                 Foreground="White"
                 FontFamily="Lucida Console" Height="20" Width="51"
                 HorizontalContentAlignment="Right" RenderTransformOrigin="0.5,0.5"
             />
-            <Border 
-                HorizontalAlignment="Center" 
-                Height="169" 
-                Margin="0,80,0,0" 
+            <Border
+                HorizontalAlignment="Center"
+                Height="169"
+                Margin="0,80,0,0"
                 Background="Black"
-                VerticalAlignment="Top" 
+                VerticalAlignment="Top"
                 Width="4"
             />
-            <Label 
-                Content="complexity" 
-                HorizontalAlignment="Left" 
-                Margin="44,184,0,0" 
+            <Label
+                Content="complexity"
+                HorizontalAlignment="Left"
+                Margin="44,184,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
                 Foreground="Gray"
                 FontSize="15"
             />
-            <ComboBox 
+            <ComboBox
                 x:Name="complexityCB"
                 HorizontalAlignment="Left"
-                Margin="53,0,0,0" 
-                Width="143" 
+                Margin="53,0,0,0"
+                Width="143"
                 Height="30"
                 FontFamily="Lucida Console"
                 Foreground="White"
                 FontSize="15"
                 ItemsSource="{Binding ComplexityLevels}"
+                Text="{Binding ComplexityLevel}"
                 Background="Black"
             />
-            
-            <Label 
-                Content="language" 
-                HorizontalAlignment="Left" 
-                Margin="245,84,0,0" 
+
+            <Label
+                Content="language"
+                HorizontalAlignment="Left"
+                Margin="245,84,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
                 Foreground="Gray"
                 FontSize="15"
             />
-            <ComboBox 
+            <ComboBox
                 x:Name="languageCN"
-                HorizontalAlignment="Left" 
-                Margin="256,109,0,0" 
-                VerticalAlignment="Top" 
-                Width="143" 
+                HorizontalAlignment="Left"
+                Margin="256,109,0,0"
+                VerticalAlignment="Top"
+                Width="143"
                 Height="30"
                 FontFamily="Lucida Console"
                 Foreground="White"
@@ -655,21 +656,21 @@
                 ItemsSource="{Binding Languages}"
                 Text="{Binding Language}"
             />
-            <Label 
-                Content="text type" 
-                HorizontalAlignment="Left" 
-                Margin="245,184,0,0" 
+            <Label
+                Content="text type"
+                HorizontalAlignment="Left"
+                Margin="245,184,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
                 Foreground="Gray"
                 FontSize="15"
             />
-            <ComboBox 
+            <ComboBox
                 x:Name="textTypeCB"
-                HorizontalAlignment="Left" 
-                Margin="256,0,0,0" 
-                VerticalAlignment="Center" 
-                Width="143" 
+                HorizontalAlignment="Left"
+                Margin="256,0,0,0"
+                VerticalAlignment="Center"
+                Width="143"
                 Height="30"
                 FontFamily="Lucida Console"
                 Foreground="White"
@@ -677,21 +678,21 @@
                 ItemsSource="{Binding TextTypes}"
                 SelectedValue="{Binding TextType}"
             />
-            <Label 
-                Content="subject (optional)" 
-                HorizontalAlignment="Left" 
-                Margin="48,262,0,0" 
+            <Label
+                Content="subject (optional)"
+                HorizontalAlignment="Left"
+                Margin="48,262,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
                 Foreground="Gray"
                 FontSize="15"
             />
-            <TextBox 
+            <TextBox
                 x:Name="subjectText"
-                HorizontalAlignment="Center" 
-                Margin="0,292,0,0" 
-                TextWrapping="Wrap"  
-                VerticalAlignment="Top" 
+                HorizontalAlignment="Center"
+                Margin="0,292,0,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
                 Width="346" Height="76"
                 FontFamily="Lucida Console"
                 Foreground="White"
@@ -708,15 +709,15 @@
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <Button 
+            <Button
                 x:Name="cancelTest"
-                Content="cancel" 
-                HorizontalAlignment="Left" 
-                Margin="53,384,0,0" 
+                Content="cancel"
+                HorizontalAlignment="Left"
+                Margin="53,384,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
                 Foreground="White"
-                FontSize="15" Height="30" 
+                FontSize="15" Height="30"
                 Width="155"
                 BorderBrush="Transparent"
             >
@@ -745,17 +746,18 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button 
+            <Button
                 x:Name="startTest"
-                Content="start" 
-                HorizontalAlignment="Left" 
-                Margin="245,384,0,0" 
+                Content="start"
+                HorizontalAlignment="Left"
+                Margin="245,384,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
                 Foreground="White"
-                FontSize="15" Height="30" 
+                FontSize="15" Height="30"
                 Width="155"
                 BorderBrush="Transparent"
+                Command="{Binding SendPromptCommand}"
             >
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
