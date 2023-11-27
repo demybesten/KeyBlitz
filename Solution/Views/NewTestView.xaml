@@ -10,6 +10,7 @@
         Width="450"
         mc:Ignorable="d"
         Background="Transparent"
+        
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <UserControl.Resources>
         <Style x:Key="FocusVisual">
