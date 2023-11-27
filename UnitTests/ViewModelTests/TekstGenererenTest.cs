@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Solution.ViewModels;
 
-namespace TestProject1;
+namespace TekstGenererenTests;
 
 [TestFixture]
 public class OnPropertyChangedTests
