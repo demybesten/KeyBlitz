@@ -11,6 +11,7 @@ using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using Solution.Services;
+using static Solution.Helpers.Helpers;
 
 namespace Solution.ViewModels
 {
@@ -34,6 +35,9 @@ namespace Solution.ViewModels
 
 
         }
+
+
+        string closestString = null;
 
         private string _responseText;
         private string[] ResponseTextArray;
@@ -193,7 +197,6 @@ namespace Solution.ViewModels
 // Create an instance of the OpenAIService class
       var gpt3 = new OpenAIService(new OpenAiOptions()
         { ApiKey = apiKey });
-
 // Create a chat completion request
       var completionResult = await gpt3.ChatCompletion.CreateCompletion
       (new ChatCompletionCreateRequest()
@@ -202,32 +205,46 @@ namespace Solution.ViewModels
           { new ChatMessage("system", prompt) }),
         Model = "gpt-4-1106-preview",
         // MaxTokens = 4096,
-        N = 1
+        N = 5
       });
 
 // Check if the completion result was successful and handle the response
       StringBuilder resultBuilder = new StringBuilder();
-
+      List<string> resultArray = new List<string>();
       if (completionResult.Successful)
       {
         foreach (var choice in completionResult.Choices)
         {
           resultBuilder.AppendLine(choice.Message.Content);
+          resultArray.Add(resultBuilder.ToString());
+          resultBuilder = new StringBuilder();
         }
       }
       else
       {
         resultBuilder.AppendLine("Error occurred");
       }
+      int closestDifference = int.MaxValue;
 
-      ResponseText = resultBuilder.ToString();
-      ResponseTextArray = ResponseText.Split(' ');
+      foreach (string currentString in resultArray)
+      {
 
-      // TikToken tikToken = TikToken.EncodingForModel("gpt-4-1106-preview");
-      // var aantalTokens = tikToken.Encode(ResponseText); //[15339, 1917]
+        ResponseTextArray = currentString.Split(' ');
+        Console.WriteLine($"Length: {ResponseTextArray.Length} {currentString}|||\n");
+        // Calculate the absolute difference between the target word count and the current string's word count
+        int currentWordCount = CountWords(currentString);
+        int difference = Math.Abs(_textLength - currentWordCount);
 
-      // Return the concatenated results as a string
-      Console.WriteLine($"Length:{ResponseTextArray.Length}\n{ResponseText}");
+        // Check if the current string is closer to the target word count
+        if (difference < closestDifference)
+        {
+          closestString = currentString;
+          closestDifference = difference;
+        }
+      }
+
+      ResponseText = closestString;
+      Console.WriteLine($"Final: {ResponseText}");
     }
   }
 }
