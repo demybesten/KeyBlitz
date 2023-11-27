@@ -205,7 +205,7 @@ namespace Solution.ViewModels
           { new ChatMessage("system", prompt) }),
         Model = "gpt-4-1106-preview",
         // MaxTokens = 4096,
-        N = 5
+        N = 10
       });
 
 // Check if the completion result was successful and handle the response
@@ -230,7 +230,7 @@ namespace Solution.ViewModels
       {
 
         ResponseTextArray = currentString.Split(' ');
-        Console.WriteLine($"Length: {ResponseTextArray.Length} {currentString}|||\n");
+        Console.WriteLine($"Length({_textLength}): {ResponseTextArray.Length} {currentString}|||\n");
         // Calculate the absolute difference between the target word count and the current string's word count
         int currentWordCount = CountWords(currentString);
         int difference = Math.Abs(_textLength - currentWordCount);
