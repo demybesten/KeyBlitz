@@ -28,11 +28,24 @@ namespace Solution.ViewModels
             Languages.Add("dutch");
             Languages.Add("german");
             Languages.Add("french");
-
-
+            
             SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+        }
 
-
+        private bool ContainsNumber(string value)
+        {
+            return value.Any(char.IsDigit);
+        }
+        
+        private string _errorMessage;
+        public string ErrorMessage {
+            get {
+                return _errorMessage;
+            }
+            set {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+            }
         }
 
         private string _responseText;
@@ -94,8 +107,8 @@ namespace Solution.ViewModels
                 OnPropertyChanged(nameof(TextType));
             }
         }
-
-        private string _complexityLevel;
+        
+        private string _complexityLevel = "basic";
         public string ComplexityLevel {
           get {
             return _complexityLevel;
@@ -123,7 +136,15 @@ namespace Solution.ViewModels
                 return _language;
             }
             set {
-                _language = value;
+                if (!ContainsNumber(value))
+                {
+                    ErrorMessage = "";
+                    _language = value;
+                }
+                else
+                {
+                    ErrorMessage = "Language input can't contain numbers!";
+                }
                 OnPropertyChanged(nameof(Language));
             }
         }
@@ -134,7 +155,15 @@ namespace Solution.ViewModels
                 return _textSubject;
             }
             set {
-                _textSubject = value;
+                if (!ContainsNumber(value))
+                {
+                    ErrorMessage = "";
+                    _textSubject = value;
+                }
+                else
+                {
+                    ErrorMessage = "Subject input can't contain numbers!";
+                }
                 OnPropertyChanged(nameof(TextSubject));
             }
         }
