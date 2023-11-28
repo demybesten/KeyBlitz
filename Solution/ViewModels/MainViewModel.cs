@@ -20,7 +20,7 @@ namespace Solution.ViewModels
         }
 
         public MainViewModel() {
-            _currentViewModel = new KBViewModel();
+            CurrentViewModel = new NewTestViewModel();
         }
     }
 }

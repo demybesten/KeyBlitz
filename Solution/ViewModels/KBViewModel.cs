@@ -52,8 +52,10 @@ namespace Solution.ViewModels
 
     public KBViewModel()
     {
+      timer = new DispatcherTimer();
+      stopWatch = new Stopwatch();
       timer.Tick += timer_Tick;
-      
+
       /*Stack aangemaakt voor front-end */
       FruitStack = new ObservableCollection<string>();
       /*verwijder command */
@@ -63,25 +65,25 @@ namespace Solution.ViewModels
       AddToKeyStackCommand = new RelayCommand<string>(key => AddToKeyStack(key));
 
     }
-    
-    void timer_Tick(object sender, EventArgs e)   
-    {  
+
+    void timer_Tick(object sender, EventArgs e)
+    {
       //Als stopwatch runt
-      if (stopWatch.IsRunning)   
-      { 
+      if (stopWatch.IsRunning)
+      {
         //Haalt time span op en format deze
-        TimeSpan ts = stopWatch.Elapsed;  
-        ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",  
-        ts.Minutes, ts.Seconds, ts.Milliseconds / 10);  
-      }  
-    }  
+        TimeSpan ts = stopWatch.Elapsed;
+        ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
+        ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+      }
+    }
 
     /*functie voor toevoegen karakter*/
     public void AddToKeyStack(string key)
     {
-      stopWatch.Start();  
+      stopWatch.Start();
       timer.Start();
-      
+
       /* Ingedrukte toets waarde omzetten naar char*/
       char eersteChar = key[0];
       /*Ingedrukte toets waarde op stack plaatsen voor back-end*/

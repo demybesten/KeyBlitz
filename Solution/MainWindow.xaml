@@ -8,10 +8,10 @@
         xmlns:views="clr-namespace:Solution.Views" d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" Background="Transparent " AllowsTransparency="True">
-    
+
     <Window.Resources>
-        <DataTemplate DataType="{x:Type vm:KBViewModel}">
-            <views:KBView/>
+        <DataTemplate DataType="{x:Type vm:NewTestViewModel}">
+            <views:NewTestView/>
         </DataTemplate>
     </Window.Resources>
     <Grid>
