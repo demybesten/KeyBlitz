@@ -20,7 +20,7 @@ namespace Solution.ViewModels
     public class KBViewModel : ViewModelBase, INotifyPropertyChanged
     {
 
-     
+
 
         /*Command aangemaakt voor verwijderen van een karkter  */
         public ICommand RemoveCharacter { get; }
@@ -75,7 +75,7 @@ namespace Solution.ViewModels
 
         }
 
-  
+
 
 
         public void AddToString(string key)
@@ -147,9 +147,6 @@ namespace Solution.ViewModels
                 MessageBox.Show($"Er is een fout opgetreden: {ex.Message}");
             }
         }
-
-
-
-
     }
 }
+

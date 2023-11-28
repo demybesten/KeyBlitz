@@ -5,19 +5,26 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <OutputPath>output</OutputPath>
+    <UseWindowsForms>true</UseWindowsForms>
+    <PublishSingleFile>true</PublishSingleFile>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <SelfContained>true</SelfContained>
+    <DebugType>embedded</DebugType>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
     <Folder Include="Converters\" />
-    <Folder Include="Resources\" />
     <Folder Include="Services\" />
     <Folder Include="References\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.4" />
   </ItemGroup>
 
 </Project>
