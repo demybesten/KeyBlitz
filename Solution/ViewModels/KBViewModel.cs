@@ -14,14 +14,18 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System.Collections;
 using System.Diagnostics;
+using System.Windows.Threading;
+
 namespace Solution.ViewModels
 {
   public class KBViewModel : BaseViewModel
   {
-    private bool StartStopwatch = true;
+    private DispatcherTimer timer;
+    private Stopwatch stopWatch;
 
-    private float _elapsedTime;
-    public float ElapsedTime {
+    //Slaat stopwatch value op en wordt gebruikt om te binden aan een label
+    private string _elapsedTime = String.Empty;
+    public string ElapsedTime {
       get {
         return _elapsedTime;
       }
@@ -30,8 +34,6 @@ namespace Solution.ViewModels
         OnPropertyChanged(nameof(ElapsedTime));
       }
     }
-    Stopwatch timePerParse;
-
 
     /*Collectie aangemaakt voor het front-end gedeelte */
     public ObservableCollection<string> FruitStack { get; set; }
@@ -50,6 +52,8 @@ namespace Solution.ViewModels
 
     public KBViewModel()
     {
+      timer.Tick += timer_Tick;
+      
       /*Stack aangemaakt voor front-end */
       FruitStack = new ObservableCollection<string>();
       /*verwijder command */
@@ -59,16 +63,25 @@ namespace Solution.ViewModels
       AddToKeyStackCommand = new RelayCommand<string>(key => AddToKeyStack(key));
 
     }
+    
+    void timer_Tick(object sender, EventArgs e)   
+    {  
+      //Als stopwatch runt
+      if (stopWatch.IsRunning)   
+      { 
+        //Haalt time span op en format deze
+        TimeSpan ts = stopWatch.Elapsed;  
+        ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",  
+        ts.Minutes, ts.Seconds, ts.Milliseconds / 10);  
+      }  
+    }  
 
     /*functie voor toevoegen karakter*/
     public void AddToKeyStack(string key)
     {
-      if (StartStopwatch)
-      {
-        timePerParse = Stopwatch.StartNew();
-        StartStopwatch = false;
-      }
-
+      stopWatch.Start();  
+      timer.Start();
+      
       /* Ingedrukte toets waarde omzetten naar char*/
       char eersteChar = key[0];
       /*Ingedrukte toets waarde op stack plaatsen voor back-end*/
@@ -76,11 +89,9 @@ namespace Solution.ViewModels
       /*Ingedrukte toets waarde op stack plaatsen voor front-end*/
       FruitStack.Add(key);
 
-      if (FruitStack.Count >=30 )
+      if (FruitStack.Count >= 30)
       {
-        timePerParse.Stop();
-        ElapsedTime = timePerParse.ElapsedMilliseconds / 100F;
-        Console.WriteLine(_elapsedTime);
+        stopWatch.Stop();
       }
     }
 
