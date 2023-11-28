@@ -146,7 +146,7 @@
                 Foreground="Gray"
                 FontSize="15"
             />
-            <TextBox Style="{StaticResource RoundedCornersTextBox}"
+            <TextBox 
                 HorizontalAlignment="Center"
                 Margin="0,292,0,0"
                 TextWrapping="Wrap"
