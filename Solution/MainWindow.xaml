@@ -10,8 +10,8 @@
         Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" Background="Transparent " AllowsTransparency="True">
     
     <Window.Resources>
-        <DataTemplate DataType="{x:Type vm:NewTestViewModel}">
-            <views:NewTestView/>
+        <DataTemplate DataType="{x:Type vm:KBViewModel}">
+            <views:KBView/>
         </DataTemplate>
     </Window.Resources>
     <Grid>
