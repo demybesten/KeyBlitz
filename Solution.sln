@@ -5,9 +5,7 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solution", "Solution\Solution.csproj", "{77E7B81F-FDB4-41EB-81C6-FEFF8364F019}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0A581B92-CBB2-4E79-ABB1-87FC79DB2744}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyBlitz.Tests", "KeyBlitz.Tests\KeyBlitz.Tests.csproj", "{D3B1A338-01AC-4FD4-9B74-F1B2C495E474}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\UnitTests.csproj", "{7C5FC8F3-A224-4515-B28D-28784D55DBF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +17,13 @@ Global
 		{77E7B81F-FDB4-41EB-81C6-FEFF8364F019}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77E7B81F-FDB4-41EB-81C6-FEFF8364F019}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77E7B81F-FDB4-41EB-81C6-FEFF8364F019}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3B1A338-01AC-4FD4-9B74-F1B2C495E474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3B1A338-01AC-4FD4-9B74-F1B2C495E474}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3B1A338-01AC-4FD4-9B74-F1B2C495E474}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3B1A338-01AC-4FD4-9B74-F1B2C495E474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C5FC8F3-A224-4515-B28D-28784D55DBF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C5FC8F3-A224-4515-B28D-28784D55DBF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C5FC8F3-A224-4515-B28D-28784D55DBF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C5FC8F3-A224-4515-B28D-28784D55DBF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D3B1A338-01AC-4FD4-9B74-F1B2C495E474} = {0A581B92-CBB2-4E79-ABB1-87FC79DB2744}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D51C048-82A7-4599-84A3-59E45B247B5E}
