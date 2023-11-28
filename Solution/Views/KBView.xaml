@@ -9,32 +9,32 @@
         mc:Ignorable="d" 
         Background="Transparent" Focusable="True"   PreviewKeyDown="MainWindow_PreviewKeyDown" >
     <UserControl.InputBindings>
-        <KeyBinding Key='a' Command="{Binding AddToKeyStackCommand}" CommandParameter='a'/>
-        <KeyBinding Key='b' Command="{Binding AddToKeyStackCommand}" CommandParameter='b'/>
-        <KeyBinding Key="c" Command="{Binding AddToKeyStackCommand}" CommandParameter="c"/>
-        <KeyBinding Key="d" Command="{Binding AddToKeyStackCommand}" CommandParameter="d"/>
-        <KeyBinding Key="e" Command="{Binding AddToKeyStackCommand}" CommandParameter="e"/>
-        <KeyBinding Key="f" Command="{Binding AddToKeyStackCommand}" CommandParameter="f"/>
-        <KeyBinding Key="g" Command="{Binding AddToKeyStackCommand}" CommandParameter="g"/>
-        <KeyBinding Key="h" Command="{Binding AddToKeyStackCommand}" CommandParameter="h"/>
-        <KeyBinding Key="i" Command="{Binding AddToKeyStackCommand}" CommandParameter="i"/>
-        <KeyBinding Key="j" Command="{Binding AddToKeyStackCommand}" CommandParameter="j"/>
-        <KeyBinding Key="k" Command="{Binding AddToKeyStackCommand}" CommandParameter="k"/>
-        <KeyBinding Key="l" Command="{Binding AddToKeyStackCommand}" CommandParameter="l"/>
-        <KeyBinding Key="m" Command="{Binding AddToKeyStackCommand}" CommandParameter="m"/>
-        <KeyBinding Key="n" Command="{Binding AddToKeyStackCommand}" CommandParameter="n"/>
-        <KeyBinding Key="o" Command="{Binding AddToKeyStackCommand}" CommandParameter="o"/>
-        <KeyBinding Key="p" Command="{Binding AddToKeyStackCommand}" CommandParameter="p"/>
-        <KeyBinding Key="q" Command="{Binding AddToKeyStackCommand}" CommandParameter="q"/>
-        <KeyBinding Key="r" Command="{Binding AddToKeyStackCommand}" CommandParameter="r"/>
-        <KeyBinding Key="s" Command="{Binding AddToKeyStackCommand}" CommandParameter="s"/>
-        <KeyBinding Key="t" Command="{Binding AddToKeyStackCommand}" CommandParameter="t"/>
-        <KeyBinding Key="u" Command="{Binding AddToKeyStackCommand}" CommandParameter="u"/>
-        <KeyBinding Key="v" Command="{Binding AddToKeyStackCommand}" CommandParameter="v"/>
-        <KeyBinding Key="w" Command="{Binding AddToKeyStackCommand}" CommandParameter="w"/>
-        <KeyBinding Key="x" Command="{Binding AddToKeyStackCommand}" CommandParameter="x"/>
-        <KeyBinding Key="y" Command="{Binding AddToKeyStackCommand}" CommandParameter="y"/>
-        <KeyBinding Key="z" Command="{Binding AddToKeyStackCommand}" CommandParameter="z"/>
+        <KeyBinding Key='a' Command="{Binding AddCharacterToString}" CommandParameter='a'/>
+        <KeyBinding Key='b' Command="{Binding AddCharacterToString}" CommandParameter='b'/>
+        <KeyBinding Key="c" Command="{Binding AddCharacterToString}" CommandParameter="c"/>
+        <KeyBinding Key="d" Command="{Binding AddCharacterToString}" CommandParameter="d"/>
+        <KeyBinding Key="e" Command="{Binding AddCharacterToString}" CommandParameter="e"/>
+        <KeyBinding Key="f" Command="{Binding AddCharacterToString}" CommandParameter="f"/>
+        <KeyBinding Key="g" Command="{Binding AddCharacterToString}" CommandParameter="g"/>
+        <KeyBinding Key="h" Command="{Binding AddCharacterToString}" CommandParameter="h"/>
+        <KeyBinding Key="i" Command="{Binding AddCharacterToString}" CommandParameter="i"/>
+        <KeyBinding Key="j" Command="{Binding AddCharacterToString}" CommandParameter="j"/>
+        <KeyBinding Key="k" Command="{Binding AddCharacterToString}" CommandParameter="k"/>
+        <KeyBinding Key="l" Command="{Binding AddCharacterToString}" CommandParameter="l"/>
+        <KeyBinding Key="m" Command="{Binding AddCharacterToString}" CommandParameter="m"/>
+        <KeyBinding Key="n" Command="{Binding AddCharacterToString}" CommandParameter="n"/>
+        <KeyBinding Key="o" Command="{Binding AddCharacterToString}" CommandParameter="o"/>
+        <KeyBinding Key="p" Command="{Binding AddCharacterToString}" CommandParameter="p"/>
+        <KeyBinding Key="q" Command="{Binding AddCharacterToString}" CommandParameter="q"/>
+        <KeyBinding Key="r" Command="{Binding AddCharacterToString}" CommandParameter="r"/>
+        <KeyBinding Key="s" Command="{Binding AddCharacterToString}" CommandParameter="s"/>
+        <KeyBinding Key="t" Command="{Binding AddCharacterToString}" CommandParameter="t"/>
+        <KeyBinding Key="u" Command="{Binding AddCharacterToString}" CommandParameter="u"/>
+        <KeyBinding Key="v" Command="{Binding AddCharacterToString}" CommandParameter="v"/>
+        <KeyBinding Key="w" Command="{Binding AddCharacterToString}" CommandParameter="w"/>
+        <KeyBinding Key="x" Command="{Binding AddCharacterToString}" CommandParameter="x"/>
+        <KeyBinding Key="y" Command="{Binding AddCharacterToString}" CommandParameter="y"/>
+        <KeyBinding Key="z" Command="{Binding AddCharacterToString}" CommandParameter="z"/>
 
         <KeyBinding Key="Space" Command="{Binding Spatie}" />
 
@@ -58,7 +58,7 @@
             <StackPanel>
                 <Button Content="Start" Command="{Binding AddBanaanCommand}"/>
 
-                <ListBox ItemsSource="{Binding FruitStack}">
+                <ListBox ItemsSource="{Binding woorden2}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
@@ -67,6 +67,8 @@
              
 
                 </ListBox>
+                
+                
             </StackPanel>
         </Grid>
     </Border>

@@ -25,11 +25,11 @@ namespace Solution.Views
         {
             InitializeComponent();
             DataContext = new KBViewModel();
-           
+
         }
 
-        /*Spatie functie verder neergezet via code behind om werking van spatie te laten werken*/     
-        
+        /*Spatie functie verder neergezet via code behind om werking van spatie te laten werken*/
+
 
 
 
@@ -57,7 +57,6 @@ namespace Solution.Views
             if (e.KeyboardDevice.IsKeyDown(Key.LeftShift) || e.KeyboardDevice.IsKeyDown(Key.RightShift))
             {
                 // Shift is ingedrukt, voeg hoofdletter toe aan de stack
-                viewModel.AddToKeyStack(e.Key.ToString().ToUpper());
             }
            
         }
