@@ -15,9 +15,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Solution {
-    public partial class MainWindow : Window {
-        public MainWindow() {
+namespace Solution
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
             InitializeComponent();
             Hide();
         }
