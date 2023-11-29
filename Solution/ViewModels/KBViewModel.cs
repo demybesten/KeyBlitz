@@ -14,19 +14,69 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows;
 using System.Collections;
 using System.Windows.Documents;
+using System.Reflection;
 
 namespace Solution.ViewModels
 {
     public class KBViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        private string _inputText;
+        private char _displayCharacter;
+        public string[] woorden3;
+        public int woordencount2;
+        public string InputText
+        {
+            get { return _inputText; }
+            set
+            {
+                if (_inputText != value)
+                {
+                    _inputText = value;
+                    OnPropertyChanged();
+                    UpdateDisplayCharacter();
+                }
+            }
+        }
+
+        public char DisplayCharacter
+        {
+            get { return _displayCharacter; }
+            set
+            {
+                if (_displayCharacter != value)
+                {
+                    _displayCharacter = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private void UpdateDisplayCharacter()
+        {
+          
+            DisplayCharacter = !string.IsNullOrEmpty(InputText) ? InputText[woordencount] : default(char);
+
+            // Ieder getypte karakter wordt opgeslagen in de array
+            woorden3[woordencount2] = woorden3[woordencount2] + DisplayCharacter.ToString();
+
+            woordencount++;
+
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
 
 
-        /*Command aangemaakt voor verwijderen van een karkter  */
         public ICommand RemoveCharacter { get; }
 
-        /*Command aangemaakt voor Spatie*/
         public ICommand Spatie { get; }
+        public ICommand Ent { get; }
 
         public RelayCommand<string> AddCharacterToString { get; }
         /*Command aangemaakt voor toevoegen van een karakter */
@@ -48,103 +98,68 @@ namespace Solution.ViewModels
         }
 
         public int woordencount = 0;
-        private ObservableCollection<string> _woorden2;
-
-        public ObservableCollection<string> woorden2
-        {
-            get { return _woorden2; }
-            set
-            {
-                _woorden2 = value;
-                // Voeg eventueel hier logica toe om wijzigingen in de array af te handelen
-            }
-        }
+        
+       
+        
 
         public KBViewModel()
         {
-            woorden2 = new ObservableCollection<string>();
-
-            /*Stack aangemaakt voor front-end */
-            /*verwijder command */
+            // Dit is de array waarin de woorden worden opgeslagen, de 5 is puur voor het testen
+            woorden3 = new string[5];
+            // command voor de backspace functie
             RemoveCharacter = new RelayCommand(DeleteCharacter);
+            // command voor de spatie functie
             Spatie = new RelayCommand(Space);
-
-            AddCharacterToString = new RelayCommand<string>(key => AddToString(key));
-
-            /*add command */
-
-        }
-
-
-
-
-        public void AddToString(string key)
-        {
-
-            woord = woord + key;
-
-
+            // command voor de test functie met enter
+            Ent = new RelayCommand(Enter);
+            
 
         }
 
 
-        /*functie voor verwijderen karakter*/
-
-        private void DeleteCharacter()
+        public void DeleteCharacter()
         {
-
-            if (woordencount > 0)
+            MessageBox.Show("int waarde is " + woordencount2);
+            if (woorden3[0] == null)
             {
-                woordencount--;
-
-                // Haal de oude waarde op
-                woord = woorden2[woordencount];
-                woord = woord.Substring(0, woord.Length - 1);
-
-                // Wijzig de oude waarde (hier kun je je eigen logica voor wijziging toevoegen)
-                // Bijvoorbeeld, je zou een nieuw venster kunnen openen om de waarde te laten bewerken.
-                // Hieronder wordt eenvoudig de originele waarde met " - gewijzigd" toegevoegd.
-                gewijzigdeWaarde = woord;
-
-                // Plaats de gewijzigde waarde op de oorspronkelijke positie
-                woorden2[woordencount] = gewijzigdeWaarde;
-                if (gewijzigdeWaarde.Length == 0) { woordencount--; }
-                MessageBox.Show($"Gewijzigde waarde: {gewijzigdeWaarde}");
-                woordencount++;
+                MessageBox.Show("type eerst wat");
             }
-
             else
             {
-                MessageBox.Show("Geen oude waarde beschikbaar om te wijzigen.");
-            }
-
-        }
-        /*functie voor spatie karakter*/
-        public void Space()
-        {
-            try
-            {
-
-                if (woord.Length > 0)
+                if (woorden3[woordencount2 + 1] != null)
                 {
+                    MessageBox.Show($"Er staat data in array[1]: {woorden3[woordencount2]}");
+                    string origineleWaarde = woorden3[woordencount2];
 
-                    woorden2.Add(woord);
-
-                    woordencount++;
-
-                    MessageBox.Show("Waarde staat in de lijst");
-                    woord = string.Empty; // Reset het woord voor de volgende invoer
+                    // Verwijder de laatste letter
+                    string nieuweWaarde = origineleWaarde.Substring(0, origineleWaarde.Length - 1);
+                    woorden3[woordencount2] = nieuweWaarde;
                 }
                 else
                 {
-                    MessageBox.Show("Het woord mag niet leeg zijn!");
+                    MessageBox.Show("Er staat geen data in array[1].");
+                    woordencount2--;
                 }
-
-
             }
-            catch (Exception ex)
+        }
+
+        // Dit is de spatie functie, het is de bedoeling
+        // dat na iedere spatie een nieuwe waarde in de array wordt gemaakt,
+        // dus na een spatie gaat de array van array[0] naar array[1]
+        public void Space()
+        {
+            MessageBox.Show(woorden3[woordencount2]);
+
+            woordencount2++;
+
+        }
+        // Dit is een test functie, om te kijken of de woorden goed worden opgeslagen in de array
+
+        public void Enter()
+        {
+            foreach (string getal in woorden3)
             {
-                MessageBox.Show($"Er is een fout opgetreden: {ex.Message}");
+                MessageBox.Show(getal);
             }
         }
     }

@@ -4,50 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Solution.Views"
-        xmlns:viewModels="clr-namespace:Solution.ViewModels"
+        xmlns:viewModels="clr-namespace:Solution.ViewModels"    
         Height="455"
         Width="450"
         mc:Ignorable="d"
-        Background="Transparent" Focusable="True"   PreviewKeyDown="MainWindow_PreviewKeyDown"
+        Background="White" Focusable="True"   PreviewKeyDown="MainWindow_PreviewKeyDown"
         d:DataContext="{d:DesignInstance Type=viewModels:KBViewModel }">
     <UserControl.InputBindings>
-        <KeyBinding Key='a' Command="{Binding AddCharacterToString}" CommandParameter='a'/>
-        <KeyBinding Key='b' Command="{Binding AddCharacterToString}" CommandParameter='b'/>
-        <KeyBinding Key="c" Command="{Binding AddCharacterToString}" CommandParameter="c"/>
-        <KeyBinding Key="d" Command="{Binding AddCharacterToString}" CommandParameter="d"/>
-        <KeyBinding Key="e" Command="{Binding AddCharacterToString}" CommandParameter="e"/>
-        <KeyBinding Key="f" Command="{Binding AddCharacterToString}" CommandParameter="f"/>
-        <KeyBinding Key="g" Command="{Binding AddCharacterToString}" CommandParameter="g"/>
-        <KeyBinding Key="h" Command="{Binding AddCharacterToString}" CommandParameter="h"/>
-        <KeyBinding Key="i" Command="{Binding AddCharacterToString}" CommandParameter="i"/>
-        <KeyBinding Key="j" Command="{Binding AddCharacterToString}" CommandParameter="j"/>
-        <KeyBinding Key="k" Command="{Binding AddCharacterToString}" CommandParameter="k"/>
-        <KeyBinding Key="l" Command="{Binding AddCharacterToString}" CommandParameter="l"/>
-        <KeyBinding Key="m" Command="{Binding AddCharacterToString}" CommandParameter="m"/>
-        <KeyBinding Key="n" Command="{Binding AddCharacterToString}" CommandParameter="n"/>
-        <KeyBinding Key="o" Command="{Binding AddCharacterToString}" CommandParameter="o"/>
-        <KeyBinding Key="p" Command="{Binding AddCharacterToString}" CommandParameter="p"/>
-        <KeyBinding Key="q" Command="{Binding AddCharacterToString}" CommandParameter="q"/>
-        <KeyBinding Key="r" Command="{Binding AddCharacterToString}" CommandParameter="r"/>
-        <KeyBinding Key="s" Command="{Binding AddCharacterToString}" CommandParameter="s"/>
-        <KeyBinding Key="t" Command="{Binding AddCharacterToString}" CommandParameter="t"/>
-        <KeyBinding Key="u" Command="{Binding AddCharacterToString}" CommandParameter="u"/>
-        <KeyBinding Key="v" Command="{Binding AddCharacterToString}" CommandParameter="v"/>
-        <KeyBinding Key="w" Command="{Binding AddCharacterToString}" CommandParameter="w"/>
-        <KeyBinding Key="x" Command="{Binding AddCharacterToString}" CommandParameter="x"/>
-        <KeyBinding Key="y" Command="{Binding AddCharacterToString}" CommandParameter="y"/>
-        <KeyBinding Key="z" Command="{Binding AddCharacterToString}" CommandParameter="z"/>
-
-        <KeyBinding Key="Space" Command="{Binding Spatie}" />
-
-
-        <KeyBinding Key="Backspace" Command="{Binding RemoveCharacter}" />
-
 
     </UserControl.InputBindings>
     <Border CornerRadius="25" BorderBrush="Transparent">
 
         <Grid>
+
             <Label
        Content="new tesSt"
        HorizontalAlignment="Left"
@@ -57,11 +26,14 @@
        Foreground="Black"
        FontSize="20"
   />
-            <StackPanel>
-              <Label Content="{Binding ElapsedTime}"
-                />
-              <Button Content="Start" Command="{Binding AddBanaanCommand}"/>
 
+            <StackPanel>
+                <Label Content="{Binding ElapsedTime}"
+                />
+
+                <Button Content="Start" Command="{Binding AddBanaanCommand}"/>
+                <TextBox Grid.Row="0" Width="200" Margin="10" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Grid.Row="1" Content="{Binding DisplayCharacter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <ListBox ItemsSource="{Binding woorden2}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -71,9 +43,16 @@
 
 
                 </ListBox>
-                
-                
+
+
             </StackPanel>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
         </Grid>
     </Border>
 </UserControl>
