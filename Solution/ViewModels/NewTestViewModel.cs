@@ -29,7 +29,7 @@ namespace Solution.ViewModels
             Languages.Add("dutch");
             Languages.Add("german");
             Languages.Add("french");
-            
+
             SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
         }
 
@@ -37,7 +37,7 @@ namespace Solution.ViewModels
         {
             return value.Any(char.IsDigit);
         }
-        
+
         private string _errorMessage;
         public string ErrorMessage {
             get {
@@ -111,7 +111,7 @@ namespace Solution.ViewModels
                 OnPropertyChanged(nameof(TextType));
             }
         }
-        
+
         private string _complexityLevel = "basic";
         public string ComplexityLevel {
           get {
@@ -234,7 +234,7 @@ namespace Solution.ViewModels
           { new ChatMessage("system", prompt) }),
         Model = "gpt-4-1106-preview",
         // MaxTokens = 4096,
-        N = 10
+        N = 5
       });
 
 // Check if the completion result was successful and handle the response
@@ -259,7 +259,7 @@ namespace Solution.ViewModels
       {
 
         ResponseTextArray = currentString.Split(' ');
-        Console.WriteLine($"Length({_textLength}): {ResponseTextArray.Length} {currentString}|||\n");
+        Console.WriteLine($"Length({_textLength}/{ResponseTextArray.Length}):  {currentString}|||\n");
         // Calculate the absolute difference between the target word count and the current string's word count
         int currentWordCount = CountWords(currentString);
         int difference = Math.Abs(_textLength - currentWordCount);
@@ -273,7 +273,9 @@ namespace Solution.ViewModels
       }
 
       ResponseText = closestString;
-      Console.WriteLine($"Final: {ResponseText}");
+      ResponseTextArray = ResponseText.Split(' ');
+
+      Console.WriteLine($"Final({TextLength}/{ResponseTextArray.Length}): {ResponseText}");
     }
   }
 }
