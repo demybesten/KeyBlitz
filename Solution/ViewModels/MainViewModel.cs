@@ -20,7 +20,7 @@ namespace Solution.ViewModels
         }
 
         public MainViewModel() {
-            CurrentViewModel = new NewTestViewModel();
+            CurrentViewModel = new HeaderViewModel();
         }
     }
 }
