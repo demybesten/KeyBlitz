@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using OpenAI.GPT3;
 using OpenAI.GPT3.Managers;
-using OpenAI.GPT3.ObjectModels;
 using OpenAI.GPT3.ObjectModels.RequestModels;
+using Solution.Helpers;
 using Solution.Services;
 using static Solution.Helpers.Helpers;
 
 namespace Solution.ViewModels
 {
     public class NewTestViewModel : BaseViewModel{
+        public ICommand NavigateHomeCommand { get; }
 
-        public NewTestViewModel() {
+        public NewTestViewModel(NavigationStore navigationStore)
+        {
+
+            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(navigationStore,() => new HomeViewModel(navigationStore));
+
             _textLength = 20;
             ComplexityLevels.Add("basic");
             ComplexityLevels.Add("average");
