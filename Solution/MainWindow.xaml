@@ -7,13 +7,16 @@
         xmlns:vm="clr-namespace:Solution.ViewModels"
         xmlns:views="clr-namespace:Solution.Views" d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+        Title="MainWindow" WindowState="Maximized">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:NewTestViewModel}">
             <views:NewTestView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TypeTextViewModel}">
+            <views:TypeTextView/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}"/>
+        <ContentControl Content="{Binding CurrentViewModel}" HorizontalAlignment="Stretch"/>
     </Grid>
 </Window>

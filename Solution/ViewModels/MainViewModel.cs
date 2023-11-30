@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Solution.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Solution.ViewModels
         }
 
         public MainViewModel() {
-            _currentViewModel = new NewTestViewModel();
+            _currentViewModel = new TypeTextViewModel();
         }
     }
 }
