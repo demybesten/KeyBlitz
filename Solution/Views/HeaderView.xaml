@@ -4,6 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Solution.Views"
+        xmlns:viewModels="clr-namespace:Solution.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewModels:HeaderViewModel}"
         mc:Ignorable="d">
     
     <Border Background="{StaticResource PanelBackgroundColor1}" 
@@ -35,7 +37,9 @@
                             BorderBrush="Transparent"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
+                            Command="{Binding NavigateNewTestCommand}"
                             Margin="0,15,0,0"/>
+
                     <Button Grid.Column="2"
                             Style="{StaticResource GrayIsMouseOver}"
                             Content="leaderboard"
@@ -45,6 +49,7 @@
                             BorderBrush="Transparent"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
+                            Command="{Binding NavigateKBViewCommand}"
                             Margin="0,15,0,0"/>
                     <Button Grid.Column="3"
                             Style="{StaticResource GrayIsMouseOver}"

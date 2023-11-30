@@ -10,7 +10,7 @@ namespace Solution
         {
             NavigationStore navigationStore = new NavigationStore();
 
-            navigationStore.CurrentViewModel = new HomeViewModel(navigationStore);//startup view
+            navigationStore.CurrentViewModel = new HeaderViewModel(navigationStore);//startup view
             
             MainWindow = new MainWindow()
             {

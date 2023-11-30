@@ -12,7 +12,7 @@ namespace Solution.Views
         public KBView()
         {
             InitializeComponent();
-            DataContext = new KBViewModel();
+            // DataContext = new KBViewModel();
            
         }
 

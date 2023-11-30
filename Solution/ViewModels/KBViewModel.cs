@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-
-using GalaSoft.MvvmLight.Command;
 using System.Diagnostics;
 using System.Windows.Threading;
+using Solution.Helpers;
+using Solution.Services;
+using RelayCommand = GalaSoft.MvvmLight.Command.RelayCommand;
 
 namespace Solution.ViewModels
 {
@@ -40,9 +41,15 @@ namespace Solution.ViewModels
 
     /*Command aangemaakt voor toevoegen van een karakter */
     public RelayCommand<string> AddToKeyStackCommand { get; }
+    
+    public ICommand NavigateHomeViewCommand { get; }// eerst Command aanmaken
 
-    public KBViewModel()
+    public KBViewModel(NavigationStore navigationStore)
     {
+      
+      NavigateHomeViewCommand = new NavigateCommand<HomeViewModel>(navigationStore,() => new HomeViewModel(navigationStore));
+
+      
       timer = new DispatcherTimer();
       stopWatch = new Stopwatch();
       timer.Tick += timer_Tick;
