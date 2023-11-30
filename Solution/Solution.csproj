@@ -26,4 +26,11 @@
     <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\KeyBlitzLogo.png" />
+    <Resource Include="Resources\KeyBlitzLogo.png" />
+    <None Remove="Resources\KeyBlitzLogoBannerTransparent.png" />
+    <Resource Include="Resources\KeyBlitzLogoBannerTransparent.png" />
+  </ItemGroup>
+
 </Project>

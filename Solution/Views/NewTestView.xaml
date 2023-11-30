@@ -10,16 +10,10 @@
         mc:Ignorable="d"
         Background="Transparent">
     
-    
-
     <Border CornerRadius="25" BorderBrush="Transparent">
         <Grid>
             <Grid.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="/Resources/StylingTemplates.xaml"/>
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
+                
             </Grid.Resources>
             <Label
                  Content="new test"
@@ -27,7 +21,7 @@
                  Margin="23,30,0,0"
                  VerticalAlignment="Top"
                  FontFamily="Lucida Console"
-                 Foreground="White"
+                 Foreground="{StaticResource MainTextColor}"
                  FontSize="20"
             />
             <Label
@@ -36,7 +30,7 @@
                 Margin="48,84,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
-                Foreground="Gray"
+                Foreground="{StaticResource SecondaryTextColor}"
                 FontSize="15"
             />
             <Slider
@@ -55,7 +49,7 @@
                 HorizontalAlignment="Right"
                 Margin="0,113,397,0"
                 VerticalAlignment="Top"
-                Foreground="White"
+                Foreground="{StaticResource MainTextColor}"
                 FontFamily="Lucida Console" 
                 Height="20" 
                 Width="51"
@@ -66,7 +60,7 @@
                 HorizontalAlignment="Center"
                 Height="169"
                 Margin="0,80,0,0"
-                Background="Black"
+                Background="{StaticResource PanelBackgroundColor2}"
                 VerticalAlignment="Top"
                 Width="4"
             />
@@ -76,7 +70,7 @@
                 Margin="44,184,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
-                Foreground="Gray"
+                Foreground="{StaticResource SecondaryTextColor}"
                 FontSize="15"
             />
             <ComboBox Style="{StaticResource CustomComboBoxStyle}"
@@ -85,11 +79,10 @@
                 Width="143"
                 Height="30"
                 FontFamily="Lucida Console"
-                Foreground="White"
+                Foreground="{StaticResource MainTextColor}"
                 FontSize="15"
                 ItemsSource="{Binding ComplexityLevels}"
                 Text="{Binding ComplexityLevel}"
-                Background="Black"
             />
 
             <Label
@@ -98,7 +91,7 @@
                 Margin="245,84,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
-                Foreground="Gray"
+                Foreground="{StaticResource SecondaryTextColor}"
                 FontSize="15"
             />
             <ComboBox Style="{StaticResource CustomComboBoxStyle}"
@@ -108,7 +101,7 @@
                 Width="143"
                 Height="30"
                 FontFamily="Lucida Console"
-                Foreground="White"
+                Foreground="{StaticResource MainTextColor}"
                 FontSize="15"
                 IsEditable="True"
                 ItemsSource="{Binding Languages}"
@@ -120,7 +113,7 @@
                 Margin="245,184,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
-                Foreground="Gray"
+                Foreground="{StaticResource SecondaryTextColor}"
                 FontSize="15"
             />
             <ComboBox Style="{StaticResource CustomComboBoxStyle}"
@@ -130,7 +123,7 @@
                 Width="143"
                 Height="30"
                 FontFamily="Lucida Console"
-                Foreground="White"
+                Foreground="{StaticResource MainTextColor}"
                 FontSize="15"
                 ItemsSource="{Binding TextTypes}"
                 SelectedValue="{Binding TextType}"
@@ -141,7 +134,7 @@
                 Margin="48,262,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
-                Foreground="Gray"
+                Foreground="{StaticResource SecondaryTextColor}"
                 FontSize="15"
             />
             <TextBox 
@@ -151,10 +144,10 @@
                 VerticalAlignment="Top"
                 Width="346" Height="76"
                 FontFamily="Lucida Console"
-                Foreground="White"
+                Foreground="{StaticResource MainTextColor}"
                 FontSize="15"
                 Text="{Binding TextSubject}"
-                Background="#040d16"
+                Background="{StaticResource PanelBackgroundColor1}"
                 Padding="5"
                 BorderBrush="Transparent"
                 BorderThickness="1"
@@ -165,8 +158,8 @@
                 Margin="53,384,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
-                Foreground="White"
-                Background="#040d16"
+                Foreground="{StaticResource MainTextColor}"
+                Background="{StaticResource PanelBackgroundColor1}"
                 FontSize="15" Height="30"
                 Width="155"
                 BorderBrush="Transparent"
@@ -179,8 +172,8 @@
                 Margin="245,384,0,0"
                 VerticalAlignment="Top"
                 FontFamily="Lucida Console"
-                Foreground="White"
-                Background="#040d16"
+                Foreground="{StaticResource MainTextColor}"
+                Background="{StaticResource PanelBackgroundColor1}"
                 FontSize="15" 
                 Height="30"
                 Width="155"
@@ -190,7 +183,7 @@
             <Label
                 Content="{Binding ErrorMessage}"
                 FontFamily="Lucida Console"
-                Foreground="Red"
+                Foreground="{StaticResource ErrorMessageColor}"
                 FontSize="12"
                 HorizontalAlignment="Center"
                 Margin="0,55,0,0"
@@ -198,8 +191,8 @@
         </Grid>
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#0B2438" Offset="0.0"/>
-                <GradientStop Color="#071826" Offset="1.0"/>
+                <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0"/>
+                <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0"/>
             </LinearGradientBrush>
         </Border.Background>
     </Border>
