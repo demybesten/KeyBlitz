@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Solution.Services;
 
 namespace Solution.ViewModels
 {
-    public class MainViewModel : BaseViewModel {
-        private object _currentViewModel;
-        public object CurrentViewModel {
-            get {
-                return _currentViewModel;
-            }
-            set {
-                _currentViewModel = value;
-                OnPropertyChanged(nameof(CurrentViewModel));
-            }
+    public class MainViewModel : BaseViewModel
+    {
+        private readonly NavigationStore _navigationStore;
+
+        public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
+
+        public MainViewModel(NavigationStore navigationStore)
+        {
+            _navigationStore = navigationStore;
+
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 
-        public MainViewModel() {
-            CurrentViewModel = new HomeViewModel();
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }

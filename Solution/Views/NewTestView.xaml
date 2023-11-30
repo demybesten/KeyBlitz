@@ -3,14 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solution.Views"
-        xmlns:viewmodels="clr-namespace:Solution.ViewModels"
-        d:DataContext="{d:DesignInstance Type=viewmodels:NewTestViewModel}"
+        xmlns:viewModels="clr-namespace:Solution.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewModels:NewTestViewModel}"
         Height="455"
         Width="450"
         mc:Ignorable="d"
-        Background="Transparent"
-        xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+        Background="Transparent">
     
     
 
@@ -172,6 +170,8 @@
                 FontSize="15" Height="30"
                 Width="155"
                 BorderBrush="Transparent"
+                Command="{Binding NavigateHomeCommand}"
+
             />
             <Button Style="{StaticResource RoundedCornersButton}"
                 Content="start"
