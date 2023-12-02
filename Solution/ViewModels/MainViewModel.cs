@@ -1,23 +1,30 @@
-﻿using Solution.Services;
+﻿using Solution.Helpers;
+using Solution.Services;
 
 namespace Solution.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private readonly NavigationStore _navigationStore;
+        private INavigationService _navigation;
 
-        public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
-
-        public MainViewModel(NavigationStore navigationStore)
+        public INavigationService Navigation
         {
-            _navigationStore = navigationStore;
-
-            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            get => _navigation;
+            set
+            {
+                _navigation = value;
+                OnPropertyChanged();
+            }
         }
 
-        private void OnCurrentViewModelChanged()
+        public RelayCommand NavigateToHomeCommand { get; set; }
+        public RelayCommand NavigateToKBViewCommand { get; set; }
+
+        public MainViewModel(INavigationService navService)
         {
-            OnPropertyChanged(nameof(CurrentViewModel));
+            Navigation = navService;
+            NavigateToHomeCommand = new RelayCommand(o => { Navigation.NavigateTo<HomeViewModel>(); }, o => true);
+            NavigateToKBViewCommand = new RelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
         }
     }
 }

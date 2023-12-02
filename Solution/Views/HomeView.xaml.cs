@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
+using System.Windows.Controls;
 
 namespace Solution.Views;
 
 public partial class HomeView : UserControl
 {
-  public HomeView()
-  {
-    InitializeComponent();
-  }
+    public HomeView()
+    {
+        InitializeComponent();
+    }
 }
-

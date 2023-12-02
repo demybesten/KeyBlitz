@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Windows.Threading;
+using GalaSoft.MvvmLight.CommandWpf;
 using Solution.Helpers;
 using Solution.Services;
 using RelayCommand = GalaSoft.MvvmLight.Command.RelayCommand;
@@ -44,12 +45,8 @@ namespace Solution.ViewModels
     
     public ICommand NavigateHomeViewCommand { get; }// eerst Command aanmaken
 
-    public KBViewModel(NavigationStore navigationStore)
+    public KBViewModel()
     {
-      
-      NavigateHomeViewCommand = new NavigateCommand<HomeViewModel>(navigationStore,() => new HomeViewModel(navigationStore));
-
-      
       timer = new DispatcherTimer();
       stopWatch = new Stopwatch();
       timer.Tick += timer_Tick;

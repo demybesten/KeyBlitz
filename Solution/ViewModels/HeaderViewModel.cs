@@ -6,14 +6,26 @@ namespace Solution.ViewModels
 {
     public class HeaderViewModel : BaseViewModel
     {
-        public ICommand NavigateNewTestCommand { get; }// eerst Command aanmaken
-        public ICommand NavigateKBViewCommand { get; }// eerst Command aanmaken
+        private INavigationService _navigation;
 
-
-        public HeaderViewModel(NavigationStore navigationStore)
+        public INavigationService Navigation
         {
-            NavigateNewTestCommand = new NavigateCommand<NewTestViewModel>(navigationStore,() => new NewTestViewModel(navigationStore));
-            NavigateKBViewCommand = new NavigateCommand<KBViewModel>(navigationStore,() => new KBViewModel(navigationStore));
+            get => _navigation;
+            set
+            {
+                _navigation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RelayCommand NavigateToHomeCommand { get; set; }
+        public RelayCommand NavigateToKBViewCommand { get; set; }
+
+        public HeaderViewModel(INavigationService navService)
+        {
+            Navigation = navService;
+            NavigateToHomeCommand = new RelayCommand(o => { Navigation.NavigateTo<HomeViewModel>(); }, o => true);
+            NavigateToKBViewCommand = new RelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
         }
     }
 }

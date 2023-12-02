@@ -7,25 +7,14 @@
         xmlns:views="clr-namespace:Solution.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowStyle="ThreeDBorderWindow">
-  <ContentControl Content="{Binding CurrentViewModel}">
-      <ContentControl.Resources>
-          
-          <DataTemplate DataType="{x:Type viewModels:HomeViewModel }">
-          <views:HomeView/>
-          </DataTemplate>          
-          
-          <DataTemplate DataType="{x:Type viewModels:NewTestViewModel }">
-          <views:NewTestView/>
-          </DataTemplate>         
-          
-          <DataTemplate DataType="{x:Type viewModels:HeaderViewModel }">
-          <views:HeaderView/>
-          </DataTemplate>   
-          
-          <DataTemplate DataType="{x:Type viewModels:KBViewModel }">
-          <views:KBView/>
-          </DataTemplate>
-          
-        </ContentControl.Resources>
-      </ContentControl>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+       <views:HeaderView Grid.Column="0"/>
+        
+        <ContentControl Grid.Column="1" Content="{Binding  Navigation.CurrentView}"></ContentControl>
+    </Grid>
 </Window>

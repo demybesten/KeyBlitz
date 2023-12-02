@@ -11,17 +11,15 @@ using OpenAI.GPT3.ObjectModels.RequestModels;
 using Solution.Helpers;
 using Solution.Services;
 using static Solution.Helpers.Helpers;
+using RelayCommand = Solution.Helpers.RelayCommand;
 
 namespace Solution.ViewModels
 {
     public class NewTestViewModel : BaseViewModel{
         public ICommand NavigateHomeCommand { get; }
 
-        public NewTestViewModel(NavigationStore navigationStore)
+        public NewTestViewModel()
         {
-
-            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(navigationStore,() => new HomeViewModel(navigationStore));
-
             _textLength = 20;
             ComplexityLevels.Add("basic");
             ComplexityLevels.Add("average");

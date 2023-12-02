@@ -13,6 +13,7 @@
             VerticalAlignment="Top"
             Height="100">
         <Grid>
+
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -21,6 +22,7 @@
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0"
                            Source="/Solution;component/Resources/KeyBlitzLogoBannerTransparent.png"
@@ -71,6 +73,9 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Margin="0,15,15,0"/>
+                    
+                    <ContentControl Grid.Column="5" Content="{Binding  Navigation.CurrentView}"></ContentControl>
+
                 </Grid>  
             </StackPanel> 
         </Grid>
