@@ -39,7 +39,7 @@
                             BorderBrush="Transparent"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Command="{Binding NavigateNewTestCommand}"
+                            Command="{Binding NavigateToHomeCommand}"
                             Margin="0,15,0,0"/>
 
                     <Button Grid.Column="2"
@@ -51,7 +51,7 @@
                             BorderBrush="Transparent"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Command="{Binding NavigateKBViewCommand}"
+                            Command="{Binding NavigateToKBViewCommand}"
                             Margin="0,15,0,0"/>
                     <Button Grid.Column="3"
                             Style="{StaticResource GrayIsMouseOver}"
