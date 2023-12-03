@@ -10,9 +10,14 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Button Height="25"        
-                Content="New Test"
-                Command="{Binding NavigateToNewTestView}"
-        />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="ScoreView" 
+                       Foreground="White" 
+                       FontSize="25" />
+            <Button Content="NewTest"
+                    Height="25"
+                    Command="{Binding NavigateToNewTestView}"
+            />
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -11,7 +11,7 @@ using OpenAI.GPT3.ObjectModels.RequestModels;
 using Solution.Helpers;
 using Solution.Services;
 using static Solution.Helpers.Helpers;
-using RelayCommand = Solution.Helpers.RelayCommand;
+using RelayCommand = Solution.Helpers.SendPromptCommand;
 
 namespace Solution.ViewModels
 {
@@ -32,7 +32,7 @@ namespace Solution.ViewModels
             Languages.Add("german");
             Languages.Add("french");
 
-            SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+            SendPromptCommand = new SendPromptCommand(async () => await SendPrompt(), () => true);
         }
 
         private bool ContainsNumber(string value)

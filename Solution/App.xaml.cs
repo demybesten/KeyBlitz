@@ -14,11 +14,12 @@ namespace Solution
         {
             IServiceCollection services = new ServiceCollection();
             
-            services.AddSingleton<MainWindow>(ServiceProvider => new MainWindow
+            services.AddSingleton<MainWindow>(serviceProvider => new MainWindow
             {
-                DataContext = ServiceProvider.GetRequiredService<MainViewModel>()
+                DataContext = serviceProvider.GetRequiredService<MainViewModel>()
             });
             services.AddSingleton<MainViewModel>();
+            services.AddSingleton<ScoreViewModel>();
             services.AddSingleton<HomeViewModel>();
             services.AddSingleton<KBViewModel>();
             services.AddSingleton<NewTestViewModel>();
