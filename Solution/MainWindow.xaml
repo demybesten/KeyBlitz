@@ -7,14 +7,8 @@
         xmlns:views="clr-namespace:Solution.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowStyle="ThreeDBorderWindow">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        
-       <views:HeaderView Grid.Column="0"/>
-        
-        <ContentControl Grid.Column="1" Content="{Binding  Navigation.CurrentView}"></ContentControl>
-    </Grid>
+    <StackPanel>
+        <views:HeaderView/>
+        <ContentControl Content="{Binding  Navigation.CurrentView}"></ContentControl>
+    </StackPanel>
 </Window>

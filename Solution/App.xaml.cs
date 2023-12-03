@@ -21,6 +21,8 @@ namespace Solution
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<HomeViewModel>();
             services.AddSingleton<KBViewModel>();
+            services.AddSingleton<NewTestViewModel>();
+            services.AddSingleton<HeaderViewModel>();
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
