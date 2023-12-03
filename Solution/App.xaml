@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
              xmlns:views="clr-namespace:Solution.Views">
+    
     <Application.Resources>
         
         <ResourceDictionary>
@@ -10,23 +11,23 @@
                 <ResourceDictionary Source="/Resources/StylingTemplates.xaml"/>
                 <ResourceDictionary Source="/Resources/UIColors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate DataType="{x:Type viewModels:HeaderViewModel}">
+                <views:HeaderView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModels:NewTestViewModel}">
+                <views:NewTestView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+                <views:HomeView />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModels:KBViewModel}">
+                <views:KBView />
+            </DataTemplate>
+            
         </ResourceDictionary>
-
-        <DataTemplate DataType="{x:Type viewModels:HeaderViewModel}">
-            <views:HeaderView />
-        </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type viewModels:NewTestViewModel}">
-            <views:NewTestView />
-        </DataTemplate>
-
-        <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
-            <views:HomeView />
-        </DataTemplate>
-
-        <DataTemplate DataType="{x:Type viewModels:KBViewModel}">
-            <views:KBView />
-        </DataTemplate>
-
     </Application.Resources>
 </Application>
