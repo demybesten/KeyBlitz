@@ -4,6 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Solution.Views"
+             xmlns:viewModels="clr-namespace:Solution.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:HomeViewModel}"
+
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Background="#252525">
@@ -13,8 +16,9 @@
                        Foreground="White" 
                        FontSize="25" />
             <Button Content="NewTest"
-                    Height="25
-                    "/>
+                    Height="25"
+                    Command="{Binding NavigateToNewTestView}"
+                    />
         </StackPanel>
     </Grid>
 </UserControl>
