@@ -4,6 +4,7 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Solution.Services;
 using Solution.Views;
+using ScoreViewModel = Solution.ViewModels.ScoreViewModel;
 
 namespace Solution
 {
@@ -38,6 +39,8 @@ namespace Solution
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            INavigationService navigationService = _serviceProvider.GetRequiredService<INavigationService>();
+            navigationService.NavigateTo<ScoreViewModel>();
            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
            mainWindow.Show();
            base.OnStartup(e);
