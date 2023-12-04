@@ -25,4 +25,6 @@ public class ScoreViewModel : BaseViewModel
         NavigateToNewTestView = new RelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
 
     }
+    
+    
 }
