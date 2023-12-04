@@ -34,6 +34,7 @@
             </Grid.ColumnDefinitions>
             <Label
                 Grid.Row="1"
+                Grid.Column="0"
                 Content="average wpm"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource SecondaryTextColor}"
@@ -42,7 +43,8 @@
                 Margin="20,0,0,0"/>
             <Label
                 Grid.Row="1"
-                Content="126"
+                Grid.Column="0"
+                Content="{Binding AverageRPM}"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
                 FontSize="20"
@@ -50,6 +52,7 @@
                 Margin="20,20,0,0"/>
             <Label
                 Grid.Row="2"
+                Grid.Column="0"
                 Content="average cpm"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource SecondaryTextColor}"
@@ -58,7 +61,8 @@
                 Margin="20,0,0,0"/>
             <Label
                 Grid.Row="2"
-                Content="618"
+                Grid.Column="0"
+                Content="{Binding AverageCPM}"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
                 FontSize="20"
@@ -66,6 +70,7 @@
                 Margin="20,20,0,0"/>
             <Label
                 Grid.Row="3"
+                Grid.Column="0"
                 Content="average accuracy"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource SecondaryTextColor}"
@@ -74,7 +79,8 @@
                 Margin="20,0,0,0"/>
             <Label
                 Grid.Row="3"
-                Content="95%"
+                Grid.Column="0"
+                Content="{Binding AverageAccuracy}"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
                 FontSize="20"
@@ -82,6 +88,7 @@
                 Margin="20,20,0,0"/>
             <Label
                 Grid.Row="4"
+                Grid.Column="0"
                 Content="words typed"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource SecondaryTextColor}"
@@ -90,7 +97,8 @@
                 Margin="20,0,0,0"/>
             <Label
                 Grid.Row="4"
-                Content="54.932"
+                Grid.Column="0"
+                Content="{Binding WordsTyped}"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
                 FontSize="20"
@@ -108,7 +116,7 @@
             <Label
                 Grid.Row="4"
                 Grid.Column="1"
-                Content="419"
+                Content="{Binding TestsTaken}"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
                 FontSize="20"
@@ -126,7 +134,7 @@
             <Label
                 Grid.Row="4"
                 Grid.Column="2"
-                Content="53"
+                Content="{Binding MpGamesPlayed}"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
                 FontSize="20"
@@ -144,7 +152,7 @@
             <Label
                 Grid.Row="4"
                 Grid.Column="3"
-                Content="15"
+                Content="{Binding MpGamesWon}"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
                 FontSize="20"
