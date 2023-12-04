@@ -3,6 +3,7 @@ using Solution.ViewModels;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Solution.Services;
+using Solution.Views;
 
 namespace Solution
 {
@@ -20,7 +21,8 @@ namespace Solution
             });
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<ScoreViewModel>();
-            services.AddSingleton<HomeViewModel>();
+            services.AddSingleton<LeaderboardViewModel>();
+            services.AddSingleton<AccountViewModel>();
             services.AddSingleton<KBViewModel>();
             services.AddSingleton<NewTestViewModel>();
             services.AddSingleton<HeaderViewModel>();

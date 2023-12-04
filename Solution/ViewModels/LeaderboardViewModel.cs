@@ -3,7 +3,7 @@ using Solution.Services;
 
 namespace Solution.ViewModels;
 
-public class HomeViewModel : BaseViewModel
+public class LeaderboardViewModel : BaseViewModel
 {
     public INavigationService _Navigation;
 
@@ -19,7 +19,7 @@ public class HomeViewModel : BaseViewModel
     
     public RelayCommand NavigateToNewTestView { get; set; }
 
-    public HomeViewModel(INavigationService navigation)
+    public LeaderboardViewModel(INavigationService navigation)
     {
         Navigation = navigation;
         NavigateToNewTestView = new RelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);

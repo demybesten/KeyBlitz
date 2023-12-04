@@ -17,14 +17,17 @@ namespace Solution.ViewModels
             }
         }
 
-        public RelayCommand NavigateToHomeCommand { get; set; }
+        public RelayCommand NavigateToLeaderboardViewCommand { get; set; }
         public RelayCommand NavigateToKBViewCommand { get; set; }
+        public RelayCommand NavigateToScoreViewCommand { get; set; }
 
         public MainViewModel(INavigationService navService)
         {
             Navigation = navService;
-            NavigateToHomeCommand = new RelayCommand(o => { Navigation.NavigateTo<HomeViewModel>(); }, o => true);
+            NavigateToLeaderboardViewCommand = new RelayCommand(o => { Navigation.NavigateTo<LeaderboardViewModel>(); }, o => true);
             NavigateToKBViewCommand = new RelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
+            NavigateToScoreViewCommand = new RelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
+            // NavigateToKBViewCommand = new RelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
         }
     }
 }

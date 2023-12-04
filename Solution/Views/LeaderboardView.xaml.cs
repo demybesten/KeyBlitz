@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace Solution.Views;
 
-public partial class HomeView : UserControl
+public partial class LeaderboardView : UserControl
 {
-    public HomeView()
+    public LeaderboardView()
     {
         InitializeComponent();
     }

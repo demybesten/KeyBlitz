@@ -35,4 +35,17 @@
     <Resource Include="Resources\KeyBlitzLogoBannerTransparent.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Views\LeaderboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AccountView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>
