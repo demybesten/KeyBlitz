@@ -4,65 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Solution.Views"
-        xmlns:viewModels="clr-namespace:Solution.ViewModels"
+        xmlns:viewModels="clr-namespace:Solution.ViewModels"    
         Height="455"
         Width="450"
         mc:Ignorable="d"
-        Background="Transparent" Focusable="True"   PreviewKeyDown="MainWindow_PreviewKeyDown"
+        Background="White" Focusable="True"   PreviewKeyDown="MainWindow_PreviewKeyDown"
         d:DataContext="{d:DesignInstance Type=viewModels:KBViewModel }">
     <UserControl.InputBindings>
-        <KeyBinding Key='a' Command="{Binding AddToKeyStackCommand}" CommandParameter='a'/>
-        <KeyBinding Key='b' Command="{Binding AddToKeyStackCommand}" CommandParameter='b'/>
-        <KeyBinding Key="c" Command="{Binding AddToKeyStackCommand}" CommandParameter="c"/>
-        <KeyBinding Key="d" Command="{Binding AddToKeyStackCommand}" CommandParameter="d"/>
-        <KeyBinding Key="e" Command="{Binding AddToKeyStackCommand}" CommandParameter="e"/>
-        <KeyBinding Key="f" Command="{Binding AddToKeyStackCommand}" CommandParameter="f"/>
-        <KeyBinding Key="g" Command="{Binding AddToKeyStackCommand}" CommandParameter="g"/>
-        <KeyBinding Key="h" Command="{Binding AddToKeyStackCommand}" CommandParameter="h"/>
-        <KeyBinding Key="i" Command="{Binding AddToKeyStackCommand}" CommandParameter="i"/>
-        <KeyBinding Key="j" Command="{Binding AddToKeyStackCommand}" CommandParameter="j"/>
-        <KeyBinding Key="k" Command="{Binding AddToKeyStackCommand}" CommandParameter="k"/>
-        <KeyBinding Key="l" Command="{Binding AddToKeyStackCommand}" CommandParameter="l"/>
-        <KeyBinding Key="m" Command="{Binding AddToKeyStackCommand}" CommandParameter="m"/>
-        <KeyBinding Key="n" Command="{Binding AddToKeyStackCommand}" CommandParameter="n"/>
-        <KeyBinding Key="o" Command="{Binding AddToKeyStackCommand}" CommandParameter="o"/>
-        <KeyBinding Key="p" Command="{Binding AddToKeyStackCommand}" CommandParameter="p"/>
-        <KeyBinding Key="q" Command="{Binding AddToKeyStackCommand}" CommandParameter="q"/>
-        <KeyBinding Key="r" Command="{Binding AddToKeyStackCommand}" CommandParameter="r"/>
-        <KeyBinding Key="s" Command="{Binding AddToKeyStackCommand}" CommandParameter="s"/>
-        <KeyBinding Key="t" Command="{Binding AddToKeyStackCommand}" CommandParameter="t"/>
-        <KeyBinding Key="u" Command="{Binding AddToKeyStackCommand}" CommandParameter="u"/>
-        <KeyBinding Key="v" Command="{Binding AddToKeyStackCommand}" CommandParameter="v"/>
-        <KeyBinding Key="w" Command="{Binding AddToKeyStackCommand}" CommandParameter="w"/>
-        <KeyBinding Key="x" Command="{Binding AddToKeyStackCommand}" CommandParameter="x"/>
-        <KeyBinding Key="y" Command="{Binding AddToKeyStackCommand}" CommandParameter="y"/>
-        <KeyBinding Key="z" Command="{Binding AddToKeyStackCommand}" CommandParameter="z"/>
-
-        <KeyBinding Key="Space" Command="{Binding Spatie}" />
-
-
-        <KeyBinding Key="Backspace" Command="{Binding RemoveCharacter}" />
-
 
     </UserControl.InputBindings>
     <Border CornerRadius="25" BorderBrush="Transparent">
 
         <Grid>
-            <Label
-       Content="new tesSt"
-       HorizontalAlignment="Left"
-       Margin="23,30,0,0"
-       VerticalAlignment="Top"
-       FontFamily="Lucida Console"
-       Foreground="Black"
-       FontSize="20"
-  />
-            <StackPanel>
-              <Label Content="{Binding ElapsedTime}"
-                />
-              <Button Content="Start" Command="{Binding AddBanaanCommand}"/>
 
-                <ListBox ItemsSource="{Binding FruitStack}">
+            
+
+            <StackPanel>
+                <Label Content="{Binding ElapsedTime}"
+                />
+
+
+                <TextBox x:Name="MyTextBox" Grid.Row="0" Width="200" Margin="10" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Grid.Row="1" Content="{Binding DisplayCharacter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ListBox ItemsSource="{Binding woorden2}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
@@ -71,7 +35,16 @@
 
 
                 </ListBox>
+
+
             </StackPanel>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
         </Grid>
     </Border>
 </UserControl>

@@ -1,120 +1,114 @@
-﻿using System;
-using System.Collections.Generic;
+
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Diagnostics;
-using System.Windows.Threading;
-using GalaSoft.MvvmLight.CommandWpf;
-using Solution.Helpers;
-using Solution.Services;
-using RelayCommand = GalaSoft.MvvmLight.Command.RelayCommand;
+using System.Windows;
+using System.Xml.Schema;
 
 namespace Solution.ViewModels
 {
-  public class KBViewModel : BaseViewModel
-  {
-    private DispatcherTimer timer;
-    private Stopwatch stopWatch;
-
-    //Slaat stopwatch value op en wordt gebruikt om te binden aan een label
-    private string _elapsedTime = String.Empty;
-    public string ElapsedTime {
-      get {
-        return _elapsedTime;
-      }
-      set {
-        _elapsedTime = value;
-        OnPropertyChanged(nameof(ElapsedTime));
-      }
-    }
-
-    /*Collectie aangemaakt voor het front-end gedeelte */
-    public ObservableCollection<string> FruitStack { get; set; }
-
-    /*Stack aangemaakt voor het back-end gedeelte */
-    Stack<char> CharacterStack = new Stack<char>();
-
-    /*Command aangemaakt voor verwijderen van een karkter  */
-    public ICommand RemoveCharacter { get; }
-
-    /*Command aangemaakt voor Spatie*/
-    public ICommand Spatie { get; }
-
-    /*Command aangemaakt voor toevoegen van een karakter */
-    public RelayCommand<string> AddToKeyStackCommand { get; }
-    
-    public ICommand NavigateHomeViewCommand { get; }// eerst Command aanmaken
-
-    public KBViewModel()
+    public class KBViewModel : ViewModelBase, INotifyPropertyChanged
     {
-      timer = new DispatcherTimer();
-      stopWatch = new Stopwatch();
-      timer.Tick += timer_Tick;
+        // Input veld waarde
+        private string _inputText;
+        // laatst getype karakter
+        private char _displayCharacter;
+        // string met getypte woorden
+        private string[] woorden3;
+        // Array cel waarde
+        public int woordencount;
 
-      /*Stack aangemaakt voor front-end */
-      FruitStack = new ObservableCollection<string>();
-      /*verwijder command */
-      RemoveCharacter = new RelayCommand(DeleteCharacter);
-      Spatie = new RelayCommand(Space);
-      /*add command */
-      AddToKeyStackCommand = new RelayCommand<string>(key => AddToKeyStack(key));
 
+        // Getter en setter Input veld waarde
+        public string InputText
+        {
+            get { return _inputText; }
+            set
+            {
+                if (_inputText != value)
+                {
+                    _inputText = value;
+                    OnPropertyChanged();
+                    UpdateDisplayCharacter();
+                }
+            }
+        }
+
+        // Getter en setter laatst getype karakter
+        public char DisplayCharacter
+        {
+            get { return _displayCharacter; }
+            set
+            {
+                if (_displayCharacter != value)
+                {
+                    _displayCharacter = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public KBViewModel()
+        {
+            // array waar woorden in komen
+            woorden3 = new string[10];
+            // woorden counter
+            woordencount = 0;
+
+            // Functie voor backspace
+            RemoveCharacter = new RelayCommand(DeleteCharacter);
+            // Functie voor spatie
+            Spatie = new RelayCommand(Space);
+
+        }
+
+        // Comand voor backspace
+        public ICommand RemoveCharacter { get; }
+
+        // Comand voor spatie
+        public ICommand Spatie { get; }
+  
+
+        // Functie voor zichtbaar maken van laatst getypte karakter
+        private void UpdateDisplayCharacter()
+        {
+            DisplayCharacter = !string.IsNullOrEmpty(InputText) ? InputText[InputText.Length - 1] : default(char);
+
+           
+        }
+        // Functie voor backspace
+        public void DeleteCharacter()
+        {
+            if (woordencount == 0 && string.IsNullOrEmpty(InputText))
+            {
+                MessageBox.Show("geen woorden beschikbaar");
+
+            }
+            if (woordencount != 0 && string.IsNullOrEmpty(InputText))
+            {
+                woorden3[woordencount] = "";
+                woordencount--;
+                InputText = woorden3[woordencount] + " ";
+            }
+        }
+        // Functie voor spatie
+        public void Space()
+        {
+            woorden3[woordencount] = InputText;
+            woordencount++;
+            InputText = "";
+        }
+   
+
+       // event voor het live bijwerken
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
-
-    void timer_Tick(object sender, EventArgs e)
-    {
-      //Als stopwatch runt
-      if (stopWatch.IsRunning)
-      {
-        //Haalt time span op en format deze
-        TimeSpan ts = stopWatch.Elapsed;
-        ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
-        ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
-      }
-    }
-
-    /*functie voor toevoegen karakter*/
-    public void AddToKeyStack(string key)
-    {
-      stopWatch.Start();
-      timer.Start();
-
-      /* Ingedrukte toets waarde omzetten naar char*/
-      char eersteChar = key[0];
-      /*Ingedrukte toets waarde op stack plaatsen voor back-end*/
-      CharacterStack.Push(eersteChar);
-      /*Ingedrukte toets waarde op stack plaatsen voor front-end*/
-      FruitStack.Add(key);
-
-      if (FruitStack.Count >= 30)
-      {
-        stopWatch.Stop();
-      }
-    }
-
-    /*functie voor verwijderen karakter*/
-    private void DeleteCharacter()
-    {
-      /*Controleer of er items in de stack staan*/
-      if (CharacterStack.Count > 0)
-      {
-        /*Verwijder karakter van de stack voor back-end*/
-        CharacterStack.Pop();
-        /*Verwijder karakter van de stack voor front-end*/
-        FruitStack.RemoveAt(CharacterStack.Count);
-      }
-
-    }
-    /*functie voor spatie karakter*/
-    public void Space()
-    {
-      /*Spatie op stack plaatsen voor back-end*/
-      CharacterStack.Push(' ');
-
-      /*Spatie op stack plaatsen voor front-end*/
-      FruitStack.Add(" ");
-    }
-
-
-  }
 }
