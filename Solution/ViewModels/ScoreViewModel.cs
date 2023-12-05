@@ -18,14 +18,14 @@ public class ScoreViewModel : BaseViewModel
         }
     }
 
-    public RelayCommand NavigateToNewTestView { get; set; }
-    public RelayCommand NavigateToMultiplayerView { get; set; }
+    public NavRelayCommand NavigateToNewTestView { get; set; }
+    public NavRelayCommand NavigateToMultiplayerView { get; set; }
 
     public ScoreViewModel(INavigationService navigation)
     {
         Navigation = navigation;
-        NavigateToNewTestView = new RelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
-        NavigateToMultiplayerView = new RelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
+        NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
+        NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
 
     }
 
