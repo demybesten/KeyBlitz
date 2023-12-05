@@ -9,17 +9,25 @@
 
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
+  <Border>
+    <Border.Background>
+      <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0" />
+        <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0" />
+      </LinearGradientBrush>
+    </Border.Background>
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="3*" />
-        </Grid.ColumnDefinitions>
-        <Label Grid.Column="0" Content="AccountView"></Label>
-        <Button Grid.Column="1" Content="NewTest"
-                Height="25"
-                Command="{Binding NavigateToNewTestView}" />
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="3*" />
+      </Grid.ColumnDefinitions>
+      <Label Foreground="{StaticResource MainTextColor}" Grid.Column="0" Content="AccountView"></Label>
+      <Button Grid.Column="1" Content="NewTest"
+              Height="25"
+              Command="{Binding NavigateToNewTestView}" />
     </Grid>
+  </Border>
 </UserControl>

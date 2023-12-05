@@ -15,7 +15,7 @@ namespace Solution
         public App()
         {
             IServiceCollection services = new ServiceCollection();
-            
+
             services.AddSingleton<MainWindow>(serviceProvider => new MainWindow
             {
                 DataContext = serviceProvider.GetRequiredService<MainViewModel>()
@@ -24,6 +24,7 @@ namespace Solution
             services.AddSingleton<ScoreViewModel>();
             services.AddSingleton<LeaderboardViewModel>();
             services.AddSingleton<AccountViewModel>();
+            services.AddSingleton<MultiplayerViewModel>();
             services.AddSingleton<KBViewModel>();
             services.AddSingleton<NewTestViewModel>();
             services.AddSingleton<HeaderViewModel>();
@@ -32,8 +33,8 @@ namespace Solution
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
                 viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
 
-            
-            
+
+
             _serviceProvider = services.BuildServiceProvider();
         }
 

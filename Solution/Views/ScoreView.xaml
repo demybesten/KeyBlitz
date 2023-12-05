@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:ScoreViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="450" 
+             d:DesignHeight="450"
              d:DesignWidth="800">
     <Border>
         <Border.Background>
@@ -167,7 +167,8 @@
                 Background="{StaticResource PanelBackgroundColor1}"
                 FontSize="15"
                 Content="new test"
-                Margin="-20,0,0,0"/>
+                Margin="-20,0,0,0"
+                Command="{Binding NavigateToNewTestView}"/>
             <Button Style="{StaticResource RoundedCornersButton}"
                 Grid.Row="5"
                 Grid.Column="2"
@@ -177,7 +178,8 @@
                 Background="{StaticResource PanelBackgroundColor1}"
                 FontSize="15"
                 Content="multiplayer"
-                Margin="20,0,0,0"/>
+                Margin="20,0,0,0"
+                Command="{Binding NavigateToMultiplayerView}"/>
         </Grid>
     </Border>
 </UserControl>

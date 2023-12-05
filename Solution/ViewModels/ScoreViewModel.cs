@@ -1,5 +1,6 @@
 using Solution.Helpers;
 using Solution.Services;
+using Solution.Views;
 
 namespace Solution.ViewModels;
 
@@ -16,13 +17,15 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    
+
     public RelayCommand NavigateToNewTestView { get; set; }
+    public RelayCommand NavigateToMultiplayerView { get; set; }
 
     public ScoreViewModel(INavigationService navigation)
     {
         Navigation = navigation;
         NavigateToNewTestView = new RelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
+        NavigateToMultiplayerView = new RelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
 
     }
 
@@ -36,7 +39,7 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(AverageRPM));
         }
     }
-    
+
     private int _averageCPM = 618;
     public int AverageCPM
     {
@@ -47,7 +50,7 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(AverageCPM));
         }
     }
-    
+
     private int _averageAccuracy = 95;
     public int AverageAccuracy
     {
@@ -58,7 +61,7 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(AverageAccuracy));
         }
     }
-    
+
     private int _wordsTyped = 54932;
     public int WordsTyped
     {
@@ -69,7 +72,7 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(WordsTyped));
         }
     }
-    
+
     private int _testsTaken = 419;
     public int TestsTaken
     {
@@ -80,7 +83,7 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(TestsTaken));
         }
     }
-    
+
     private int _mpGamesPlayed = 53;
     public int MpGamesPlayed
     {
@@ -91,7 +94,7 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(MpGamesPlayed));
         }
     }
-    
+
     private int _mpGamesWon = 15;
     public int MpGamesWon
     {

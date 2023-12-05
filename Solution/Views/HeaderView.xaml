@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Solution.Views"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewModels:HeaderViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
              mc:Ignorable="d">
 
     <Border Background="{StaticResource PanelBackgroundColor1}"
@@ -60,7 +60,7 @@
                             BorderBrush="Transparent"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Margin="0,15,0,0" 
+                            Margin="0,15,0,0"
                             Command="{Binding NavigateToAccountViewCommand}"/>
                     <Button Grid.Column="4"
                             Style="{StaticResource GrayIsMouseOver}"
