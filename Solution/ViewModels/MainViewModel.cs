@@ -1,4 +1,4 @@
-﻿using Solution.Helpers;
+using Solution.Helpers;
 using Solution.Services;
 
 namespace Solution.ViewModels
