@@ -40,7 +40,7 @@ namespace Solution.ViewModels
 
         public TypeTextViewModel()
         {
-            MyCommand = new SendPromptCommand(ExecuteMyCommand);
+            MyCommand = new RelayCommand(ExecuteMyCommand);
             //Lines = new ObservableCollection<FormattedTextLine>();
 
             //InitializeText();
