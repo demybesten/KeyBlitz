@@ -50,7 +50,7 @@ namespace Solution.ViewModels
             Languages.Add("french");
 
 
-            // SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+            SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
         }
 
         private bool ContainsNumber(string value)
@@ -192,9 +192,7 @@ namespace Solution.ViewModels
             }
         }
 
-         public NavRelayCommand SendPromptCommand { get; }
-
-
+         public RelayCommand SendPromptCommand { get; }
 
     public async Task SendPrompt()
     {
