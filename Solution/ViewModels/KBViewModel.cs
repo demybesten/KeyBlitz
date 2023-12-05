@@ -1,13 +1,33 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows.Input;
 using System.Windows;
+using System.Windows.Threading;
 using Solution.Helpers;
 
 namespace Solution.ViewModels
 {
     public class KBViewModel : BaseViewModel, INotifyPropertyChanged
     {
+
+      public DispatcherTimer timer;
+      public Stopwatch stopWatch;
+
+      //Slaat stopwatch value op en wordt gebruikt om te binden aan een label
+      private string _elapsedTime = String.Empty;
+      public string ElapsedTime {
+        get {
+          return _elapsedTime;
+        }
+        set {
+          _elapsedTime = value;
+          OnPropertyChanged(nameof(ElapsedTime));
+        }
+      }
+
         // Input veld waarde
         private string _inputText;
         // laatst getype karakter
@@ -49,6 +69,10 @@ namespace Solution.ViewModels
 
         public KBViewModel()
         {
+          stopWatch = new Stopwatch();
+          timer = new DispatcherTimer();
+          //live timer event
+          timer.Tick += timer_Tick;
             // array waar woorden in komen
             woorden3 = new string[10];
             // woorden counter
@@ -59,6 +83,18 @@ namespace Solution.ViewModels
             // Functie voor spatie
             Spatie = new RelayCommand(Space);
 
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+          //Als stopwatch runt
+          if (stopWatch.IsRunning)
+          {
+            //Haalt time span op en format deze
+            TimeSpan ts = stopWatch.Elapsed;
+            ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
+              ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+          }
         }
 
         // Comand voor backspace
@@ -73,7 +109,13 @@ namespace Solution.ViewModels
         {
             DisplayCharacter = !string.IsNullOrEmpty(InputText) ? InputText[InputText.Length - 1] : default(char);
 
+            stopWatch.Start();
+            timer.Start();
 
+            if (woordencount >= 5)
+            {
+              stopWatch.Stop();
+            }
         }
         // Functie voor backspace
         public void DeleteCharacter()
