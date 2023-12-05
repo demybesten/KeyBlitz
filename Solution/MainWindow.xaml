@@ -3,18 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solution"
-        xmlns:vm="clr-namespace:Solution.ViewModels"
-        xmlns:views="clr-namespace:Solution.Views" d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        xmlns:viewModels="clr-namespace:Solution.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
+
+        xmlns:views="clr-namespace:Solution.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" Background="Transparent " AllowsTransparency="True">
-    
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type vm:KBViewModel}">
-            <views:KBView/>
-        </DataTemplate>
-    </Window.Resources>
-    <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}"/>
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" WindowStyle="ThreeDBorderWindow" WindowState="Maximized">
+    <StackPanel>
+        <views:HeaderView/>
+        <ContentControl Height="750" Content="{Binding  Navigation.CurrentView}"></ContentControl>
+    </StackPanel>
 </Window>

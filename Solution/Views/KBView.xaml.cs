@@ -1,3 +1,4 @@
+
 ﻿    using Solution.ViewModels;
     using System;
     using System.Collections.Generic;
@@ -25,7 +26,6 @@
             {
                 InitializeComponent();
                 DataContext = new KBViewModel();
-
             }
 
             /*Spatie functie en backspace functie verder neergezet via code behind om werking van spatie en backspace te laten werken*/

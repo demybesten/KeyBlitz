@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -18,13 +18,39 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Converters\" />
-    <Folder Include="Services\" />
     <Folder Include="References\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\KeyBlitzLogo.png" />
+    <Resource Include="Resources\KeyBlitzLogo.png" />
+    <None Remove="Resources\KeyBlitzLogoBannerTransparent.png" />
+    <Resource Include="Resources\KeyBlitzLogoBannerTransparent.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\LeaderboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AccountView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MultiplayerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

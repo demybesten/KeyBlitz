@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using OpenAI.GPT3;
 using OpenAI.GPT3.Managers;
-using OpenAI.GPT3.ObjectModels;
 using OpenAI.GPT3.ObjectModels.RequestModels;
+using Solution.Helpers;
 using Solution.Services;
 using static Solution.Helpers.Helpers;
+using RelayCommand = Solution.Helpers.SendPromptCommand;
 
 namespace Solution.ViewModels
 {
     public class NewTestViewModel : BaseViewModel{
+        public ICommand NavigateHomeCommand { get; }
 
-        public NewTestViewModel() {
+        public NewTestViewModel()
+        {
             _textLength = 20;
             ComplexityLevels.Add("basic");
             ComplexityLevels.Add("average");
@@ -29,15 +31,15 @@ namespace Solution.ViewModels
             Languages.Add("dutch");
             Languages.Add("german");
             Languages.Add("french");
-            
-            SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+
+            SendPromptCommand = new SendPromptCommand(async () => await SendPrompt(), () => true);
         }
 
         private bool ContainsNumber(string value)
         {
             return value.Any(char.IsDigit);
         }
-        
+
         private string _errorMessage;
         public string ErrorMessage {
             get {
@@ -111,7 +113,7 @@ namespace Solution.ViewModels
                 OnPropertyChanged(nameof(TextType));
             }
         }
-        
+
         private string _complexityLevel = "basic";
         public string ComplexityLevel {
           get {
@@ -234,7 +236,7 @@ namespace Solution.ViewModels
           { new ChatMessage("system", prompt) }),
         Model = "gpt-4-1106-preview",
         // MaxTokens = 4096,
-        N = 10
+        N = 5
       });
 
 // Check if the completion result was successful and handle the response
@@ -259,7 +261,7 @@ namespace Solution.ViewModels
       {
 
         ResponseTextArray = currentString.Split(' ');
-        Console.WriteLine($"Length({_textLength}): {ResponseTextArray.Length} {currentString}|||\n");
+        Console.WriteLine($"Length({_textLength}/{ResponseTextArray.Length}):  {currentString}|||\n");
         // Calculate the absolute difference between the target word count and the current string's word count
         int currentWordCount = CountWords(currentString);
         int difference = Math.Abs(_textLength - currentWordCount);
@@ -273,7 +275,9 @@ namespace Solution.ViewModels
       }
 
       ResponseText = closestString;
-      Console.WriteLine($"Final: {ResponseText}");
+      ResponseTextArray = ResponseText.Split(' ');
+
+      Console.WriteLine($"Final({TextLength}/{ResponseTextArray.Length}): {ResponseText}");
     }
   }
 }
