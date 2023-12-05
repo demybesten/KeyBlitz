@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Solution.Views"
-        xmlns:viewModels="clr-namespace:Solution.ViewModels"    
+        xmlns:viewModels="clr-namespace:Solution.ViewModels"
         Height="455"
         Width="450"
         mc:Ignorable="d"
@@ -17,16 +17,13 @@
 
         <Grid>
 
-            
+
 
             <StackPanel>
-                <Label Content="{Binding ElapsedTime}"
-                />
-
-
+                <Label Content="{Binding ElapsedTime}"/>
                 <TextBox x:Name="MyTextBox" Grid.Row="0" Width="200" Margin="10" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="1" Content="{Binding DisplayCharacter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ListBox ItemsSource="{Binding woorden2}">
+                <ListBox BorderThickness="0" ItemsSource="{Binding woorden2}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
