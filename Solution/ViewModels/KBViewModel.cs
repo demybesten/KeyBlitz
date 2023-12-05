@@ -1,16 +1,12 @@
-
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows;
-using System.Xml.Schema;
+using Solution.Helpers;
 
 namespace Solution.ViewModels
 {
-    public class KBViewModel : ViewModelBase, INotifyPropertyChanged
+    public class KBViewModel : BaseViewModel, INotifyPropertyChanged
     {
         // Input veld waarde
         private string _inputText;
@@ -70,14 +66,14 @@ namespace Solution.ViewModels
 
         // Comand voor spatie
         public ICommand Spatie { get; }
-  
+
 
         // Functie voor zichtbaar maken van laatst getypte karakter
         private void UpdateDisplayCharacter()
         {
             DisplayCharacter = !string.IsNullOrEmpty(InputText) ? InputText[InputText.Length - 1] : default(char);
 
-           
+
         }
         // Functie voor backspace
         public void DeleteCharacter()
@@ -101,7 +97,7 @@ namespace Solution.ViewModels
             woordencount++;
             InputText = "";
         }
-   
+
 
        // event voor het live bijwerken
         public event PropertyChangedEventHandler PropertyChanged;

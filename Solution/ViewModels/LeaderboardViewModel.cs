@@ -16,13 +16,13 @@ public class LeaderboardViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    
-    public RelayCommand NavigateToNewTestView { get; set; }
+
+    public NavRelayCommand NavigateToNewTestView { get; set; }
 
     public LeaderboardViewModel(INavigationService navigation)
     {
         Navigation = navigation;
-        NavigateToNewTestView = new RelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
+        NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
 
     }
 }

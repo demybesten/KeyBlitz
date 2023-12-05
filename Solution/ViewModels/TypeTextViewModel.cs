@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Solution.Helpers;
 
 namespace Solution.ViewModels
 {
@@ -28,32 +29,6 @@ namespace Solution.ViewModels
             TextRuns.Add(new Run(text) { Foreground = color });
         }
     }*/
-
-    public class RelayCommand : ICommand
-    {
-        private Action _execute;
-
-        public RelayCommand(Action execute)
-        {
-            _execute = execute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            _execute();
-        }
-    }
 
     public class TypeTextViewModel : BaseViewModel
     {

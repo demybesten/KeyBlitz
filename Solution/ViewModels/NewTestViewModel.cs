@@ -9,17 +9,34 @@ using OpenAI.GPT3;
 using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using Solution.Helpers;
-using Solution.Services;
 using static Solution.Helpers.Helpers;
-using RelayCommand = Solution.Helpers.SendPromptCommand;
+using Solution.Services;
+using RelayCommand = Solution.Helpers.RelayCommand;
 
 namespace Solution.ViewModels
 {
     public class NewTestViewModel : BaseViewModel{
-        public ICommand NavigateHomeCommand { get; }
 
-        public NewTestViewModel()
+      public INavigationService _Navigation;
+
+      public INavigationService Navigation
+      {
+        get => _Navigation;
+        set
         {
+          _Navigation = value;
+          OnPropertyChanged();
+        }
+      }
+
+      public NavRelayCommand NavigateToKBView { get; set; }
+
+        public NewTestViewModel(INavigationService navigation)
+        {
+
+          Navigation = navigation;
+          NavigateToKBView = new NavRelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
+
             _textLength = 20;
             ComplexityLevels.Add("basic");
             ComplexityLevels.Add("average");
@@ -32,7 +49,8 @@ namespace Solution.ViewModels
             Languages.Add("german");
             Languages.Add("french");
 
-            SendPromptCommand = new SendPromptCommand(async () => await SendPrompt(), () => true);
+
+            // SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
         }
 
         private bool ContainsNumber(string value)
@@ -174,7 +192,7 @@ namespace Solution.ViewModels
             }
         }
 
-         public RelayCommand SendPromptCommand { get; }
+         public NavRelayCommand SendPromptCommand { get; }
 
 
 

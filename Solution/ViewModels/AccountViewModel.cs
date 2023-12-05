@@ -16,13 +16,13 @@ public class AccountViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    
-    public RelayCommand NavigateToNewTestView { get; set; }
+
+    public NavRelayCommand NavigateToNewTestView { get; set; }
 
     public AccountViewModel(INavigationService navigation)
     {
         Navigation = navigation;
-        NavigateToNewTestView = new RelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
+        NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
 
     }
 }

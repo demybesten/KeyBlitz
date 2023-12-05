@@ -17,18 +17,18 @@ namespace Solution.ViewModels
             }
         }
 
-        public RelayCommand NavigateToLeaderboardViewCommand { get; set; }
-        public RelayCommand NavigateToKBViewCommand { get; set; }
-        public RelayCommand NavigateToScoreViewCommand { get; set; }
-        public RelayCommand NavigateToAccountViewCommand { get; set; }
+        public NavRelayCommand NavigateToLeaderboardViewCommand { get; set; }
+        public NavRelayCommand NavigateToKBViewCommand { get; set; }
+        public NavRelayCommand NavigateToScoreViewCommand { get; set; }
+        public NavRelayCommand NavigateToAccountViewCommand { get; set; }
 
         public MainViewModel(INavigationService navService)
         {
             Navigation = navService;
-            NavigateToLeaderboardViewCommand = new RelayCommand(o => { Navigation.NavigateTo<LeaderboardViewModel>(); }, o => true);
-            NavigateToKBViewCommand = new RelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
-            NavigateToScoreViewCommand = new RelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
-            NavigateToAccountViewCommand = new RelayCommand(o => { Navigation.NavigateTo<AccountViewModel>(); }, o => true);
+            NavigateToLeaderboardViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<LeaderboardViewModel>(); }, o => true);
+            NavigateToKBViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
+            NavigateToScoreViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
+            NavigateToAccountViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<AccountViewModel>(); }, o => true);
         }
     }
 }
