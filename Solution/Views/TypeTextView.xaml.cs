@@ -36,12 +36,12 @@ namespace Solution.Views
             InitializeComponent();
             ServiceLocator.RegisterTextUpdater(this);
             Colors = new List<String> { "#FFFFFF", "#CC4C4C", "#F2B233", "#752B33" };
-            Word myWord = new Word("Test", new List<int> { 0, 0 });
+            /*Word myWord = new Word("Test", new List<int> { 0, 0 });
             updateText(new List<Word> {
                 new Word("Helloo", new List<int> { 0, 0, 1, 0, 0, 3}),
                 new Word("beautiful", new List<int> { 0, 0, 0, 0, 0, 0, 0, 2, 2}),
                 new Word("world!", new List<int>{ 0, 1, 0, 0})
-            });
+            });*/
         }
 
         public void updateText(List<Word> words)

@@ -40,6 +40,10 @@
                 <views:KBView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:TypeTextViewModel}">
+                <views:TypeTextView/>
+            </DataTemplate>
+
         </ResourceDictionary>
 
     </Application.Resources>

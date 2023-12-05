@@ -1,4 +1,5 @@
-﻿using Solution.Services;
+﻿using Solution.Helpers;
+using Solution.Services;
 using Solution.Views;
 using System;
 using System.Collections.Generic;
@@ -29,46 +30,26 @@ namespace Solution.ViewModels
         }
     }*/
 
-    public class RelayCommand : ICommand
-    {
-        private Action _execute;
-
-        public RelayCommand(Action execute)
-        {
-            _execute = execute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            _execute();
-        }
-    }
-
     public class TypeTextViewModel : BaseViewModel
     {
         private readonly ITextUpdater? _textUpdater;
         //public ObservableCollection<FormattedTextLine> Lines { get; set; }
 
-        public ICommand MyCommand { get; }
+        public ICommand MyCommand { get; private set; }
 
         public TypeTextViewModel()
         {
-            MyCommand = new RelayCommand(ExecuteMyCommand);
+            MyCommand = new SendPromptCommand(ExecuteMyCommand);
             //Lines = new ObservableCollection<FormattedTextLine>();
 
             //InitializeText();
-
+            ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
+            if (_textUpdater != null)
+            {
+                _textUpdater.updateText(new List<Word>{
+                    new Word("Working!", new List<int> {0,0,0}),
+                });
+            }
         }
 
         private void ExecuteMyCommand()

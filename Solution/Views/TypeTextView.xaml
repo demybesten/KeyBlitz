@@ -1,4 +1,6 @@
 ﻿<UserControl x:Class="Solution.Views.TypeTextView"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,9 +10,14 @@
         Background="Black"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch">
-    <UserControl.InputBindings>
-        <KeyBinding Key="F5" Command="{Binding MyCommand}"/>
-    </UserControl.InputBindings>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <cmd:EventToCommand Command="{Binding MyCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.DataContext>
+        <viewmodels:TypeTextViewModel/>
+    </UserControl.DataContext>
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
