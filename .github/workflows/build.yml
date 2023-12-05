@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '6.0.100'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build project
+      run: dotnet build --configuration Release
+
+    - name: Publish artifact
+      run: dotnet publish -c Release -o publish
+      working-directory: Solution
+
+    - name: Archive artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: KeyBlitz
+        path: D:\a\KeyBlitz\KeyBlitz\Solution\publish

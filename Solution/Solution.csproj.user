@@ -1,16 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup />
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\ybosman\source\repos\demybesten\KeyBlitz\Solution\Properties\PublishProfiles\ClickOnceProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\NewTestView.xaml.cs">
+    <Compile Update="Views\KBView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\TypeTextView.xaml.cs">
+    <Compile Update="Views\NewTestView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -18,10 +20,10 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\NewTestView.xaml">
+    <Page Update="Views\KBView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\TypeTextView.xaml">
+    <Page Update="Views\NewTestView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

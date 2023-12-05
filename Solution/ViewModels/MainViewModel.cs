@@ -1,27 +1,34 @@
-﻿using Solution.Views;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Solution.Helpers;
+using Solution.Services;
 
 namespace Solution.ViewModels
 {
-    public class MainViewModel : BaseViewModel {
-        private object _currentViewModel;
-        public object CurrentViewModel {
-            get {
-                return _currentViewModel;
-            }
-            set {
-                _currentViewModel = value;
-                OnPropertyChanged(nameof(CurrentViewModel));
+    public class MainViewModel : BaseViewModel
+    {
+        private INavigationService _navigation;
+
+        public INavigationService Navigation
+        {
+            get => _navigation;
+            set
+            {
+                _navigation = value;
+                OnPropertyChanged();
             }
         }
 
-        public MainViewModel() {
-            _currentViewModel = new TypeTextViewModel();
+        public RelayCommand NavigateToLeaderboardViewCommand { get; set; }
+        public RelayCommand NavigateToKBViewCommand { get; set; }
+        public RelayCommand NavigateToScoreViewCommand { get; set; }
+        public RelayCommand NavigateToAccountViewCommand { get; set; }
+
+        public MainViewModel(INavigationService navService)
+        {
+            Navigation = navService;
+            NavigateToLeaderboardViewCommand = new RelayCommand(o => { Navigation.NavigateTo<LeaderboardViewModel>(); }, o => true);
+            NavigateToKBViewCommand = new RelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
+            NavigateToScoreViewCommand = new RelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
+            NavigateToAccountViewCommand = new RelayCommand(o => { Navigation.NavigateTo<AccountViewModel>(); }, o => true);
         }
     }
 }
