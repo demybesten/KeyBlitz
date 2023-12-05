@@ -17,22 +17,14 @@
 
         <Grid>
 
-            <Label
-       Content="new tesSt"
-       HorizontalAlignment="Left"
-       Margin="23,30,0,0"
-       VerticalAlignment="Top"
-       FontFamily="Lucida Console"
-       Foreground="Black"
-       FontSize="20"
-  />
+            
 
             <StackPanel>
                 <Label Content="{Binding ElapsedTime}"
                 />
 
-                <Button Content="Start" Command="{Binding AddBanaanCommand}"/>
-                <TextBox Grid.Row="0" Width="200" Margin="10" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBox x:Name="MyTextBox" Grid.Row="0" Width="200" Margin="10" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Grid.Row="1" Content="{Binding DisplayCharacter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <ListBox ItemsSource="{Binding woorden2}">
                     <ListBox.ItemsPanel>

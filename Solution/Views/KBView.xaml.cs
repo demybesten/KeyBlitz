@@ -28,11 +28,7 @@
 
             }
 
-            /*Spatie functie verder neergezet via code behind om werking van spatie te laten werken*/
-
-
-
-
+            /*Spatie functie en backspace functie verder neergezet via code behind om werking van spatie en backspace te laten werken*/
             private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
             {
                 KBViewModel viewModel = DataContext as KBViewModel;
@@ -44,21 +40,8 @@
                 {
                     viewModel.Space();
                 }
+                e.Handled = true;
             }
-
-            /*Controleer of enter is ingetoetst*/
-
-            if (e.Key == Key.Enter)
-                {
-
-
-                    if (viewModel != null)
-                    {
-                        viewModel.Enter();
-                    }
-                    e.Handled = true; // Voorkom dat het evenement verder wordt verwerkt
-
-                }
             /*Controleer of back is ingetoetst*/
 
             if (e.Key == Key.Back)
@@ -66,17 +49,10 @@
                     if (viewModel != null)
                     {
                         viewModel.DeleteCharacter();
+                    MyTextBox.Select(MyTextBox.Text.Length, 0);
+
                     }
-                }
-               
-           
             }
-
-
-
-
-
-
-
+        }
         }
     }
