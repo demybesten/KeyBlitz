@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Extensions.Configuration;
 using OpenAI.GPT3;
 using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels.RequestModels;
@@ -31,6 +32,8 @@ namespace Solution.ViewModels
 
       public NavRelayCommand NavigateToTypeTextView { get; set; }
 
+      private string _apiKey;
+
         public NewTestViewModel(INavigationService navigation)
         {
 
@@ -48,6 +51,9 @@ namespace Solution.ViewModels
             Languages.Add("dutch");
             Languages.Add("german");
             Languages.Add("french");
+
+            var config = new ConfigurationBuilder().AddUserSecrets<NewTestViewModel>().Build();
+            _apiKey = config["ApiKey"];
 
 
             SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
@@ -196,6 +202,7 @@ namespace Solution.ViewModels
 
     public async Task SendPrompt()
     {
+      Console.WriteLine(_apiKey);
       Console.WriteLine("Generating....");
       Dictionary<string, string> complexities = new Dictionary<string, string>
       {
@@ -239,7 +246,7 @@ namespace Solution.ViewModels
 
 
       // Declare the API key
-      var apiKey = "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";
+      var apiKey = _apiKey;
 
 // Create an instance of the OpenAIService class
       var gpt3 = new OpenAIService(new OpenAiOptions()
