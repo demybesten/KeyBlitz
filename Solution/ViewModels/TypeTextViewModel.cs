@@ -77,7 +77,7 @@ namespace Solution.ViewModels
             PressChar = new CharacterEventCommand(ProcessChar);
             PressBackspace = new RelayCommand(DeleteCharacter);
             tempList = new List<int> { };
-            TheText = new List<string> { "Hello", "my", "beautiful", "world!" };
+            TheText = new List<string> { "Hello", "my", "beautiful", "world!", "I", "am", "writing", "to", "you", "today", "to", "tell", "you", "this", "system", "is", "completely", "functional.", "Enjoy!" };
             UserInput = new List<string> { "" };
 
             ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
