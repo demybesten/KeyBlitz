@@ -5,19 +5,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solution.Views" xmlns:viewmodels="clr-namespace:Solution.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TypeTextViewModel}"
+        xmlns:local="clr-namespace:Solution.Views"
+        xmlns:viewmodels="clr-namespace:Solution.ViewModels"
+        xmlns:converters="clr-namespace:Solution.Converters"
+        d:DataContext="{d:DesignInstance Type=viewmodels:TypeTextViewModel}"
         mc:Ignorable="d"
         Background="Black"
         HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch">
+        VerticalAlignment="Stretch"
+        Focusable="True"
+        Loaded="UserControl_Loaded">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Back" Command="{Binding PressBackspaceCommand}"/>
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+        <converters:TextInputEventArgsToCharConverter x:Key="TextInputConverter"/>
+    </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cmd:EventToCommand Command="{Binding MyCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <UserControl.DataContext>
-        <viewmodels:TypeTextViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -26,7 +34,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <TextBlock TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="DynamicTextDisplay" FontSize="46" FontFamily="Lucida Console" FontWeight="ExtraBold">
-            
+
         </TextBlock>
     </Grid>
 </UserControl>

@@ -31,6 +31,34 @@ namespace Solution.ViewModels
         }
     }*/
 
+    public class CharacterEventCommand : ICommand
+    {
+        private readonly Action<object> _execute;
+        private readonly Func<object, bool> _canExecute;
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public CharacterEventCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute == null || _canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            _execute(parameter);
+        }
+    }
+
     public class TypeTextViewModel : BaseViewModel
     {
         private readonly ITextUpdater? _textUpdater;
@@ -38,19 +66,110 @@ namespace Solution.ViewModels
 
         public ICommand MyCommand { get; private set; }
 
+        public ICommand PressChar { get; private set; }
+
+        public ICommand PressBackspace { get; private set; }
+
         public TypeTextViewModel()
         {
             MyCommand = new RelayCommand(ExecuteMyCommand);
+            PressChar = new CharacterEventCommand(ProcessChar);
+            PressBackspace = new RelayCommand(DeleteCharacter);
+            tempList = new List<int> { };
+            TheText = new List<string> { "Hello", "my", "beautiful", "world!" };
+            UserInput = new List<string> { "" };
             //Lines = new ObservableCollection<FormattedTextLine>();
 
             //InitializeText();
             ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
+
             if (_textUpdater != null)
             {
                 _textUpdater.updateText(new List<Word>{
                     new Word("Working!", new List<int> {0,0,0}),
                 });
             }
+        }
+
+        private void updateText(List<Word> words)
+        {
+            ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
+            if (_textUpdater != null)
+            {
+                _textUpdater.updateText(words);
+            }
+        }
+
+        public List<string> TheText;
+        public List<string> UserInput;
+        public List<int> tempList;
+
+        private void ProcessChar(object parameter)
+        {
+            /*var text = parameter as string;
+            if (text != null)
+            {
+                tempList.Add(0);
+                updateText(new List<Word>
+                {
+                    new Word("temp", tempList),
+                });
+            } else
+            {
+                updateText(new List<Word>
+                {
+                    new Word("no text", new List<int> {}),
+                });
+            }*/
+            var text = parameter as string;
+            if (text == " ")
+            {
+                UserInput.Add("");
+            } else
+            {
+                UserInput[UserInput.Count - 1] = UserInput[UserInput.Count - 1] + text;
+            }
+            updateInput();
+        }
+
+        private void updateInput()
+        {
+            List<Word> myList = new List<Word> { };
+            for (int w = 0; w < TheText.Count; w++)
+            {
+                string word = TheText[w];
+                string typedWord = "";
+                if (w < UserInput.Count)
+                {
+                    typedWord = UserInput[w];
+                }
+                List<int> intList = new List<int> { };
+
+                for (int i = 0; i < word.Length; i++)
+                {
+                    //char character = word[i];
+                    if (i < typedWord.Length)
+                    {
+                        intList.Add(0);
+                    }
+                    else if (w < UserInput.Count - 1)
+                    {
+                        intList.Add(2);
+                    }
+                }
+
+                if (typedWord.Length > word.Length)
+                {
+                    for (int i = word.Length; i < typedWord.Length; i++)
+                    {
+                        intList.Add(3);
+                    }
+                    word = word + typedWord.Substring(word.Length, typedWord.Length - word.Length);
+                }
+
+                myList.Add(new Word(word, intList));
+            }
+            updateText(myList);
         }
 
         private void ExecuteMyCommand()
@@ -64,13 +183,13 @@ namespace Solution.ViewModels
             }
         }
 
-        public void InitializeText()
+        public void DeleteCharacter()
         {
-            /*var line1 = new FormattedTextLine();
-            line1.AddRun("Hell", Brushes.Black);
-            line1.AddRun("o ", Brushes.Orange);
-            line1.AddRun("World", Brushes.Red);
-            Lines.Add(line1);*/
+            if (UserInput[UserInput.Count].Length > 0) {
+                UserInput[UserInput.Count] = UserInput[UserInput.Count].Substring(1, UserInput[UserInput.Count].Length - 1);
+            } else if (UserInput.Count > 1) {
+                UserInput.RemoveAt(UserInput.Count - 1);
+            }
         }
     }
 }

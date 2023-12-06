@@ -1,4 +1,5 @@
 ﻿using Solution.Services;
+using Solution.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,9 +32,19 @@ namespace Solution.Views
     {
         public List<String> Colors { get; set; }
 
+        public ICommand OnTextInputCommand
+        {
+            get { return (ICommand)GetValue(OnTextInputCommandProperty); }
+            set { SetValue(OnTextInputCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty OnTextInputCommandProperty =
+            DependencyProperty.Register("OnTextInputCommand", typeof(ICommand), typeof(TypeTextView), new PropertyMetadata(null));
+
         public TypeTextView()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => this.Focus();
             ServiceLocator.RegisterTextUpdater(this);
             Colors = new List<String> { "#FFFFFF", "#CC4C4C", "#F2B233", "#752B33" };
             /*Word myWord = new Word("Test", new List<int> { 0, 0 });
@@ -68,6 +79,26 @@ namespace Solution.Views
                 }
                 // implement some kind of word wrapping here
                 DynamicTextDisplay.Inlines.Add(" ");
+            }
+        }
+
+        protected override void OnPreviewTextInput(TextCompositionEventArgs e)
+        {
+            base.OnPreviewTextInput(e);
+
+            string inputText = e.Text;
+            System.Diagnostics.Debug.WriteLine($"Input text: {inputText}");
+
+            OnTextInputCommand?.Execute(e.Text);
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as TypeTextViewModel;
+
+            if (viewModel != null)
+            {
+                OnTextInputCommand = viewModel.PressChar;
             }
         }
     }
