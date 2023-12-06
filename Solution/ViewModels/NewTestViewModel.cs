@@ -12,7 +12,7 @@ using OpenAI.GPT3.ObjectModels.RequestModels;
 using Solution.Helpers;
 using static Solution.Helpers.Helpers;
 using Solution.Services;
-using RelayCommand = Solution.Helpers.RelayCommand;
+using RelayCommand = Solution.Helpers.RelayCommand; 
 
 namespace Solution.ViewModels
 {
@@ -213,7 +213,7 @@ namespace Solution.ViewModels
 
     public async Task SendPrompt()
     {
-      _showLoading = true;
+        ShowLoading = true;
       Console.WriteLine(_showLoading);
       Console.WriteLine("Generating....");
       Dictionary<string, string> complexities = new Dictionary<string, string>
@@ -304,7 +304,7 @@ namespace Solution.ViewModels
 
       if (closestString != "")
       {
-        _showLoading = false;
+          ShowLoading = false;
       }
 
       ResponseText = closestString;
