@@ -7,7 +7,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Solution.Views"
         xmlns:viewmodels="clr-namespace:Solution.ViewModels"
-        xmlns:converters="clr-namespace:Solution.Converters"
         d:DataContext="{d:DesignInstance Type=viewmodels:TypeTextViewModel}"
         mc:Ignorable="d"
         Background="Black"
@@ -18,9 +17,6 @@
     <UserControl.InputBindings>
         <KeyBinding Key="Back" Command="{Binding PressBackspaceCommand}"/>
     </UserControl.InputBindings>
-    <UserControl.Resources>
-        <converters:TextInputEventArgsToCharConverter x:Key="TextInputConverter"/>
-    </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cmd:EventToCommand Command="{Binding MyCommand}" />
