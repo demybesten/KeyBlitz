@@ -25,7 +25,6 @@ namespace Solution
             services.AddSingleton<LeaderboardViewModel>();
             services.AddSingleton<AccountViewModel>();
             services.AddSingleton<MultiplayerViewModel>();
-            services.AddSingleton<KBViewModel>();
             services.AddSingleton<NewTestViewModel>();
             services.AddSingleton<HeaderViewModel>();
             services.AddSingleton<TypeTextViewModel>();
@@ -42,7 +41,7 @@ namespace Solution
         protected override void OnStartup(StartupEventArgs e)
         {
             INavigationService navigationService = _serviceProvider.GetRequiredService<INavigationService>();
-            navigationService.NavigateTo<TypeTextViewModel>();
+            navigationService.NavigateTo<ScoreViewModel>();
            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
            mainWindow.Show();
            base.OnStartup(e);

@@ -32,12 +32,8 @@
                 <views:AccountView />
             </DataTemplate>
 
-          <DataTemplate DataType="{x:Type viewModels:MultiplayerViewModel}">
-            <views:MultiplayerView />
-          </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModels:KBViewModel}">
-                <views:KBView />
+            <DataTemplate DataType="{x:Type viewModels:MultiplayerViewModel}">
+                <views:MultiplayerView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:TypeTextViewModel}">

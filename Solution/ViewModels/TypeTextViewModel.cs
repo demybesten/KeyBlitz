@@ -13,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Solution.Helpers;
+using System.Windows;
 
 namespace Solution.ViewModels
 {
@@ -78,17 +79,8 @@ namespace Solution.ViewModels
             tempList = new List<int> { };
             TheText = new List<string> { "Hello", "my", "beautiful", "world!" };
             UserInput = new List<string> { "" };
-            //Lines = new ObservableCollection<FormattedTextLine>();
 
-            //InitializeText();
             ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
-
-            if (_textUpdater != null)
-            {
-                _textUpdater.updateText(new List<Word>{
-                    new Word("Working!", new List<int> {0,0,0}),
-                });
-            }
         }
 
         private void updateText(List<Word> words)
@@ -125,7 +117,7 @@ namespace Solution.ViewModels
             if (text == " ")
             {
                 UserInput.Add("");
-            } else
+            } else if (text?.Length == 1)
             {
                 UserInput[UserInput.Count - 1] = UserInput[UserInput.Count - 1] + text;
             }
@@ -150,7 +142,13 @@ namespace Solution.ViewModels
                     //char character = word[i];
                     if (i < typedWord.Length)
                     {
-                        intList.Add(0);
+                        if (typedWord[i].Equals(word[i]))
+                        {
+                            intList.Add(0);
+                        } else
+                        {
+                            intList.Add(1);
+                        }
                     }
                     else if (w < UserInput.Count - 1)
                     {
@@ -175,20 +173,17 @@ namespace Solution.ViewModels
         private void ExecuteMyCommand()
         {
             ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
-            if (_textUpdater != null)
-            {
-                _textUpdater.updateText(new List<Word>{
-                    new Word("Working!", new List<int> {0,0,0}),
-                });
-            }
+            updateInput();
         }
 
         public void DeleteCharacter()
         {
-            if (UserInput[UserInput.Count].Length > 0) {
-                UserInput[UserInput.Count] = UserInput[UserInput.Count].Substring(1, UserInput[UserInput.Count].Length - 1);
+            if (UserInput[UserInput.Count-1].Length > 0) {
+                UserInput[UserInput.Count-1] = UserInput[UserInput.Count-1].Substring(0, UserInput[UserInput.Count - 1].Length - 1);
+                updateInput();
             } else if (UserInput.Count > 1) {
                 UserInput.RemoveAt(UserInput.Count - 1);
+                updateInput();
             }
         }
     }
