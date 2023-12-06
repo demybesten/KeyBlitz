@@ -22,10 +22,15 @@
                 <RowDefinition Height="0.75*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
-                <Border Width="600" Height="250" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="2">
-                    <Grid Width="600" Height="250" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="2">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.25*"/>
+                            <RowDefinition Height="0.1*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" Background="{StaticResource PanelBackgroundColor1}" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="1" >
@@ -39,9 +44,10 @@
                                         Content="accuracy"
                                         FontFamily="Lucida Console"
                                         Foreground="{StaticResource MainTextColor}"
-                                        FontSize="15"
+                                        FontSize="18"
                                         VerticalAlignment="Center"
-                                        FontWeight="Bold"/>
+                                        FontWeight="Bold"
+                                        Margin="25,0,0,0"/>
                                 </Border>
                                 <Border Grid.Column="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="1">
                                     <Label
@@ -50,7 +56,8 @@
                                         Foreground="{StaticResource MainTextColor}"
                                         FontSize="15"
                                         VerticalAlignment="Center"
-                                        FontWeight="Bold"/>
+                                        FontWeight="Bold"
+                                        Margin="25,0,0,0"/>
                                 </Border>
                             </Grid>
                         </Border>
@@ -82,49 +89,49 @@
                                                        Content="characters typed"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource SecondaryTextColor}"
-                                                       FontSize="12"
+                                                       FontSize="18"
                                                        HorizontalContentAlignment="Left"
-                                                       Margin="10,10,0,0"
+                                                       Margin="25,25,0,0"
                                                        FontWeight="Bold"/>
                                                 <Label Grid.Row="0"
                                                        Content="{Binding CharactersTyped}"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource MainTextColor}"
-                                                       FontSize="20"
+                                                       FontSize="28"
                                                        HorizontalContentAlignment="Left"
-                                                       Margin="10,30,0,0"/>
+                                                       Margin="25,45,0,0"/>
                                                 
                                                 <Label Grid.Row="1"
                                                        Content="characters correct"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource SecondaryTextColor}"
-                                                       FontSize="11"
+                                                       FontSize="18"
                                                        HorizontalContentAlignment="Left"
-                                                       Margin="10,10,0,0"
+                                                       Margin="25,25,0,0"
                                                        FontWeight="Bold"/>
                                                 <Label Grid.Row="1"
                                                        Content="{Binding CharactersCorrect}"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource MainTextColor}"
-                                                       FontSize="20"
+                                                       FontSize="28"
                                                        HorizontalContentAlignment="Left"
-                                                       Margin="10,30,0,0"/>
+                                                       Margin="25,45,0,0"/>
                                                 
                                                 <Label Grid.Row="2"
                                                        Content="words typed"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource SecondaryTextColor}"
-                                                       FontSize="12"
+                                                       FontSize="18"
                                                        HorizontalContentAlignment="Left"
-                                                       Margin="10,10,0,0"
+                                                       Margin="25,25,0,0"
                                                        FontWeight="Bold"/>
                                                 <Label Grid.Row="2"
                                                        Content="{Binding WordsTyped}"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource MainTextColor}"
-                                                       FontSize="20"
+                                                       FontSize="28"
                                                        HorizontalContentAlignment="Left"
-                                                       Margin="10,30,0,0"/>
+                                                       Margin="25,45,0,0"/>
                                             </Grid>
                                         </Border>
                                     </Grid>
@@ -143,7 +150,7 @@
                                                Content="wpm"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource SecondaryTextColor}"
-                                               FontSize="15"
+                                               FontSize="18"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,10,0,0"
                                                FontWeight="Bold"/>
@@ -151,14 +158,14 @@
                                                Content="{Binding WordsPerMinute}"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource MainTextColor}"
-                                               FontSize="20"
+                                               FontSize="28"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,30,0,0"/>
                                         <Label Grid.Column="1" Grid.Row="0"
                                                Content="cpm"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource SecondaryTextColor}"
-                                               FontSize="15"
+                                               FontSize="18"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,10,0,0"
                                                FontWeight="Bold"/>
@@ -166,14 +173,14 @@
                                                Content="{Binding CharactersPerMinute}"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource MainTextColor}"
-                                               FontSize="20"
+                                               FontSize="28"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,30,0,0"/>
                                         <Label Grid.Column="0" Grid.Row="1"
                                                Content="time spent"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource SecondaryTextColor}"
-                                               FontSize="15"
+                                               FontSize="18"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,10,0,0"
                                                FontWeight="Bold"/>
@@ -181,14 +188,14 @@
                                                Content="{Binding TimeSpent}"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource MainTextColor}"
-                                               FontSize="20"
+                                               FontSize="28"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,30,0,0"/>
                                         <Label Grid.Column="1" Grid.Row="1"
                                                Content="total score"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource SecondaryTextColor}"
-                                               FontSize="15"
+                                               FontSize="18"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,10,0,0"
                                                FontWeight="Bold"/>
@@ -196,7 +203,7 @@
                                                Content="{Binding TotalScore}"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource MainTextColor}"
-                                               FontSize="20"
+                                               FontSize="28"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,30,0,0"/>
                                     </Grid>
@@ -214,22 +221,22 @@
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0"
                             Style="{StaticResource RoundedCornersButton}"
-                            Width="175"
-                            Height="30"
+                            Width="200"
+                            Height="35"
                             Content="repeat test"
                             HorizontalAlignment="Right"
-                            Margin="0,0,20,0"
+                            Margin="0,0,30,0"
                             Background="{StaticResource PanelBackgroundColor1}"
                             FontFamily="Lucida Console"
                             Foreground="{StaticResource MainTextColor}"
                             FontSize="15"/>
                     <Button Grid.Column="1"
                             Style="{StaticResource RoundedCornersButton}"
-                            Width="175"
-                            Height="30"
+                            Width="200"
+                            Height="35"
                             Content="done"
                             HorizontalAlignment="Left"
-                            Margin="20,0,0,0"
+                            Margin="30,0,0,0"
                             Background="{StaticResource PanelBackgroundColor1}"
                             FontFamily="Lucida Console"
                             Foreground="{StaticResource MainTextColor}"

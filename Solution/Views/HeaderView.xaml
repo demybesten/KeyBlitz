@@ -26,7 +26,7 @@
                     <Image Grid.Column="0"
                            Source="/Solution;component/Resources/KeyBlitzLogoBannerTransparent.png"
                            Height="65"
-                           Margin="15,16,0,0" />
+                           Margin="15,16,0,0"/>
                     <Button Grid.Column="1"
                             Style="{StaticResource GrayIsMouseOver}"
                             Content="play"
