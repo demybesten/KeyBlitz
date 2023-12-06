@@ -17,7 +17,7 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="3*" />
@@ -26,6 +26,8 @@
                     <Image Grid.Column="0"
                            Source="/Solution;component/Resources/KeyBlitzLogoBannerTransparent.png"
                            Height="65"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
                            Margin="15,16,0,0"/>
                     <Button Grid.Column="1"
                             Style="{StaticResource GrayIsMouseOver}"
