@@ -28,6 +28,7 @@ namespace Solution
             services.AddSingleton<NewTestViewModel>();
             services.AddSingleton<HeaderViewModel>();
             services.AddSingleton<TypeTextViewModel>();
+            services.AddSingleton<TestResultsViewModel>();
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>

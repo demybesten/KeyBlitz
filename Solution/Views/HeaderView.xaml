@@ -26,8 +26,6 @@
                     <Image Grid.Column="0"
                            Source="/Solution;component/Resources/KeyBlitzLogoBannerTransparent.png"
                            Height="65"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left"
                            Margin="15,16,0,0" />
                     <Button Grid.Column="1"
                             Style="{StaticResource GrayIsMouseOver}"
@@ -69,6 +67,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Margin="0,15,15,0"
+                            Command="{Binding NavigateToTestResultsViewCommand}"
                             >
                         <Button.Content>
                             <fa:ImageAwesome
