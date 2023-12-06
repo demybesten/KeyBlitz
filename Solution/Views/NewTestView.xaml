@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              d:DataContext="{d:DesignInstance Type=viewModels:NewTestViewModel}"
              Height="455"
              Width="450"
@@ -13,9 +14,13 @@
 
   <Border CornerRadius="25" BorderBrush="Transparent">
     <Grid>
-      <Grid.Resources>
+      <Label Content="{Binding ShowLoading}"/>
 
-      </Grid.Resources>
+      <!-- <fa:ImageAwesome Icon="Refresh" Spin="True" Height="48" Width="48" /> -->
+
+      <Popup IsOpen="{Binding ShowLoading}">
+        <Label Content="LOADING"/>
+      </Popup>
       <Label
         Content="new test"
         HorizontalAlignment="Left"

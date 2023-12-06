@@ -105,6 +105,17 @@ namespace Solution.ViewModels
             }
         }
 
+        private bool _showLoading = false;
+        public bool ShowLoading {
+          get {
+            return _showLoading;
+          }
+          set {
+            _showLoading = value;
+            OnPropertyChanged(nameof(ShowLoading));
+          }
+        }
+
         private ObservableCollection<string> _complexityLevels = new ObservableCollection<string>();
         public ObservableCollection<string> ComplexityLevels {
             get {
@@ -202,7 +213,8 @@ namespace Solution.ViewModels
 
     public async Task SendPrompt()
     {
-      Console.WriteLine(_apiKey);
+      _showLoading = true;
+      Console.WriteLine(_showLoading);
       Console.WriteLine("Generating....");
       Dictionary<string, string> complexities = new Dictionary<string, string>
       {
@@ -242,22 +254,16 @@ namespace Solution.ViewModels
                       "Do NOT go over the specified wordcount!!!\n" +
                       "DO NOT USE ANY CHARACTERS OUTSIDE THE LATIN ALPHABET, REPLACE FOREIGN LETTERS WITH ALPHANUMERIC CHARACTERS!!!";
 
-
-
-
-      // Declare the API key
-      var apiKey = _apiKey;
-
 // Create an instance of the OpenAIService class
       var gpt3 = new OpenAIService(new OpenAiOptions()
-        { ApiKey = apiKey });
+        { ApiKey = _apiKey });
 // Create a chat completion request
       var completionResult = await gpt3.ChatCompletion.CreateCompletion
       (new ChatCompletionCreateRequest()
       {
         Messages = new List<ChatMessage>(new ChatMessage[]
           { new ChatMessage("system", prompt) }),
-        Model = "gpt-4-1106-preview",
+        Model = "gpt-3.5-turbo",
         // MaxTokens = 4096,
         N = 5
       });
@@ -282,7 +288,6 @@ namespace Solution.ViewModels
 
       foreach (string currentString in resultArray)
       {
-
         ResponseTextArray = currentString.Split(' ');
         Console.WriteLine($"Length({_textLength}/{ResponseTextArray.Length}):  {currentString}|||\n");
         // Calculate the absolute difference between the target word count and the current string's word count
@@ -297,10 +302,15 @@ namespace Solution.ViewModels
         }
       }
 
+      if (closestString != "")
+      {
+        _showLoading = false;
+      }
+
       ResponseText = closestString;
       ResponseTextArray = ResponseText.Split(' ');
 
-      Console.WriteLine($"Final({TextLength}/{ResponseTextArray.Length}): {ResponseText}");
+      Console.WriteLine($"Final({TextLength}/{ResponseTextArray.Length} showloading:{_showLoading}): {ResponseText}");
     }
   }
 }
