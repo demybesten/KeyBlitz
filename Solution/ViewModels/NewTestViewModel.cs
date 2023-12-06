@@ -29,13 +29,13 @@ namespace Solution.ViewModels
         }
       }
 
-      public NavRelayCommand NavigateToKBView { get; set; }
+      public NavRelayCommand NavigateToTypeTextView { get; set; }
 
         public NewTestViewModel(INavigationService navigation)
         {
 
           Navigation = navigation;
-          NavigateToKBView = new NavRelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
+          NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
             _textLength = 20;
             ComplexityLevels.Add("basic");

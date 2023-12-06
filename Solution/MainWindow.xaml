@@ -8,9 +8,16 @@
 
         xmlns:views="clr-namespace:Solution.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="ThreeDBorderWindow" WindowState="Maximized">
-    <StackPanel>
-        <views:HeaderView/>
-        <ContentControl Height="750" Content="{Binding  Navigation.CurrentView}"></ContentControl>
-    </StackPanel>
+        Title="MainWindow" WindowStyle="ThreeDBorderWindow" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- For Header, takes space as needed -->
+            <RowDefinition Height="*"/>
+            <!-- For Content, takes remaining space -->
+        </Grid.RowDefinitions>
+
+        <views:HeaderView Grid.Row="0"/>
+        <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}"/>
+    </Grid>
 </Window>

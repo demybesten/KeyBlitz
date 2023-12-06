@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Solution.Helpers;
 using Solution.ViewModels;

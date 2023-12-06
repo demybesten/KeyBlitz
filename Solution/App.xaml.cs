@@ -25,9 +25,9 @@ namespace Solution
             services.AddSingleton<LeaderboardViewModel>();
             services.AddSingleton<AccountViewModel>();
             services.AddSingleton<MultiplayerViewModel>();
-            services.AddSingleton<KBViewModel>();
             services.AddSingleton<NewTestViewModel>();
             services.AddSingleton<HeaderViewModel>();
+            services.AddSingleton<TypeTextViewModel>();
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>

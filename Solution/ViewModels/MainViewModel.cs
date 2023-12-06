@@ -18,7 +18,7 @@ namespace Solution.ViewModels
         }
 
         public NavRelayCommand NavigateToLeaderboardViewCommand { get; set; }
-        public NavRelayCommand NavigateToKBViewCommand { get; set; }
+        public NavRelayCommand NavigateToTypeTextViewCommand { get; set; }
         public NavRelayCommand NavigateToScoreViewCommand { get; set; }
         public NavRelayCommand NavigateToAccountViewCommand { get; set; }
 
@@ -26,7 +26,7 @@ namespace Solution.ViewModels
         {
             Navigation = navService;
             NavigateToLeaderboardViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<LeaderboardViewModel>(); }, o => true);
-            NavigateToKBViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<KBViewModel>(); }, o => true);
+            NavigateToTypeTextViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
             NavigateToScoreViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
             NavigateToAccountViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<AccountViewModel>(); }, o => true);
         }

@@ -1,4 +1,5 @@
 ﻿using Solution.Services;
+using Solution.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,17 +32,23 @@ namespace Solution.Views
     {
         public List<String> Colors { get; set; }
 
+        public ICommand OnTextInputCommand
+        {
+            get { return (ICommand)GetValue(OnTextInputCommandProperty); }
+            set { SetValue(OnTextInputCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty OnTextInputCommandProperty =
+            DependencyProperty.Register("OnTextInputCommand", typeof(ICommand), typeof(TypeTextView), new PropertyMetadata(null));
+
+
+
         public TypeTextView()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => this.Focus();
             ServiceLocator.RegisterTextUpdater(this);
             Colors = new List<String> { "#FFFFFF", "#CC4C4C", "#F2B233", "#752B33" };
-            Word myWord = new Word("Test", new List<int> { 0, 0 });
-            updateText(new List<Word> {
-                new Word("Helloo", new List<int> { 0, 0, 1, 0, 0, 3}),
-                new Word("beautiful", new List<int> { 0, 0, 0, 0, 0, 0, 0, 2, 2}),
-                new Word("world!", new List<int>{ 0, 1, 0, 0})
-            });
         }
 
         public void updateText(List<Word> words)
@@ -57,8 +64,6 @@ namespace Solution.Views
 
                     if (i < word.Indices.Count && word.Indices[i] >= 0 && word.Indices[i] < Colors.Count)
                     {
-                        //color = (Brush)Colors[word.Indices[i]];
-                        //color = Brushes.Red;
                         String hex = Colors[word.Indices[i]];
                         Console.WriteLine(hex);
                         color = new SolidColorBrush((Color)ColorConverter.ConvertFromString(hex));
@@ -68,6 +73,46 @@ namespace Solution.Views
                 }
                 // implement some kind of word wrapping here
                 DynamicTextDisplay.Inlines.Add(" ");
+            }
+        }
+
+        protected override void OnPreviewTextInput(TextCompositionEventArgs e)
+        {
+            base.OnPreviewTextInput(e);
+
+            string inputText = e.Text;
+            System.Diagnostics.Debug.WriteLine($"Input text: {inputText}");
+
+            OnTextInputCommand?.Execute(e.Text);
+        }
+
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+
+            if (e.Key == Key.Back)
+            {
+                var viewModel = DataContext as TypeTextViewModel;
+
+                if (viewModel != null)
+                {
+                    viewModel.DeleteCharacter();
+                }
+
+                e.Handled = true;
+            } else if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as TypeTextViewModel;
+
+            if (viewModel != null)
+            {
+                OnTextInputCommand = viewModel.PressChar;
             }
         }
     }
