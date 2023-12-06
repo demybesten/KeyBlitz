@@ -114,7 +114,7 @@ namespace Solution.ViewModels
             _showLoading = value;
             OnPropertyChanged(nameof(ShowLoading));
           }
-        }
+        } 
 
         private ObservableCollection<string> _complexityLevels = new ObservableCollection<string>();
         public ObservableCollection<string> ComplexityLevels {
@@ -213,8 +213,8 @@ namespace Solution.ViewModels
 
     public async Task SendPrompt()
     {
-      _showLoading = true;
-      Console.WriteLine(_showLoading);
+      ShowLoading = true;
+      Console.WriteLine(ShowLoading);
       Console.WriteLine("Generating....");
       Dictionary<string, string> complexities = new Dictionary<string, string>
       {
@@ -304,13 +304,13 @@ namespace Solution.ViewModels
 
       if (closestString != "")
       {
-        _showLoading = false;
+        ShowLoading = false;
       }
 
       ResponseText = closestString;
       ResponseTextArray = ResponseText.Split(' ');
 
-      Console.WriteLine($"Final({TextLength}/{ResponseTextArray.Length} showloading:{_showLoading}): {ResponseText}");
+      Console.WriteLine($"Final({TextLength}/{ResponseTextArray.Length} showloading:{ShowLoading}): {ResponseText}");
     }
   }
 }

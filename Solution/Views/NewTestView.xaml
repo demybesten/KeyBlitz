@@ -12,183 +12,183 @@
              mc:Ignorable="d"
              Background="Transparent">
 
-  <Border CornerRadius="25" BorderBrush="Transparent">
-    <Grid>
-      <Label Content="{Binding ShowLoading}"/>
+    <Border CornerRadius="25" BorderBrush="Transparent">
+        <Grid>
+            <Label Foreground="{StaticResource MainTextColor}"
+                   Content="{Binding ShowLoading}" />
 
-      <!-- <fa:ImageAwesome Icon="Refresh" Spin="True" Height="48" Width="48" /> -->
-
-      <Popup IsOpen="{Binding ShowLoading}">
-        <Label Content="LOADING"/>
-      </Popup>
-      <Label
-        Content="new test"
-        HorizontalAlignment="Left"
-        Margin="23,30,0,0"
-        VerticalAlignment="Top"
-        FontFamily="Lucida Console"
-        Foreground="{StaticResource MainTextColor}"
-        FontSize="20" />
-      <Label
-        Content="length"
-        HorizontalAlignment="Left"
-        Margin="48,84,0,0"
-        VerticalAlignment="Top"
-        FontFamily="Lucida Console"
-        Foreground="{StaticResource SecondaryTextColor}"
-        FontSize="15" />
-      <Slider
-        HorizontalAlignment="Left"
-        Margin="53,115,0,0"
-        VerticalAlignment="Top"
-        Maximum="200"
-        Minimum="20"
-        IsSnapToTickEnabled="True"
-        TickFrequency="20"
-        Width="140"
-        Value="{Binding TextLength}" />
-      <Label
-        Content="{Binding TextLength}"
-        HorizontalAlignment="Right"
-        Margin="0,113,397,0"
-        VerticalAlignment="Top"
-        Foreground="{StaticResource MainTextColor}"
-        FontFamily="Lucida Console"
-        Height="20"
-        Width="51"
-        HorizontalContentAlignment="Right"
-        RenderTransformOrigin="0.5,0.5" />
-      <Border
-        HorizontalAlignment="Center"
-        Height="169"
-        Margin="0,80,0,0"
-        Background="{StaticResource PanelBackgroundColor2}"
-        VerticalAlignment="Top"
-        Width="4" />
-      <Label
-        Content="complexity"
-        HorizontalAlignment="Left"
-        Margin="44,184,0,0"
-        VerticalAlignment="Top"
-        FontFamily="Lucida Console"
-        Foreground="{StaticResource SecondaryTextColor}"
-        FontSize="15" />
-      <ComboBox Style="{StaticResource CustomComboBoxStyle}"
+            <Popup IsOpen="{Binding ShowLoading,Mode=OneWay}">
+                <fa:ImageAwesome Icon="Spinner" Spin="True" Height="48" Width="48" />
+            </Popup>
+            
+            <Label
+                Content="new test"
                 HorizontalAlignment="Left"
-                Margin="53,0,0,0"
-                Width="143"
-                Height="30"
-                FontFamily="Lucida Console"
-                Foreground="{StaticResource MainTextColor}"
-                FontSize="15"
-                ItemsSource="{Binding ComplexityLevels}"
-                Text="{Binding ComplexityLevel}" />
-
-      <Label
-        Content="language"
-        HorizontalAlignment="Left"
-        Margin="245,84,0,0"
-        VerticalAlignment="Top"
-        FontFamily="Lucida Console"
-        Foreground="{StaticResource SecondaryTextColor}"
-        FontSize="15" />
-      <ComboBox Style="{StaticResource CustomComboBoxStyle}"
-                HorizontalAlignment="Left"
-                Margin="256,109,0,0"
+                Margin="23,30,0,0"
                 VerticalAlignment="Top"
-                Width="143"
-                Height="30"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
-                FontSize="15"
-                IsEditable="True"
-                ItemsSource="{Binding Languages}"
-                Text="{Binding Language}" />
-      <Label
-        Content="text type"
-        HorizontalAlignment="Left"
-        Margin="245,184,0,0"
-        VerticalAlignment="Top"
-        FontFamily="Lucida Console"
-        Foreground="{StaticResource SecondaryTextColor}"
-        FontSize="15" />
-      <ComboBox Style="{StaticResource CustomComboBoxStyle}"
+                FontSize="20" />
+            <Label
+                Content="length"
                 HorizontalAlignment="Left"
-                Margin="256,0,0,0"
-                VerticalAlignment="Center"
-                Width="143"
-                Height="30"
+                Margin="48,84,0,0"
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="{StaticResource SecondaryTextColor}"
+                FontSize="15" />
+            <Slider
+                HorizontalAlignment="Left"
+                Margin="53,115,0,0"
+                VerticalAlignment="Top"
+                Maximum="200"
+                Minimum="20"
+                IsSnapToTickEnabled="True"
+                TickFrequency="20"
+                Width="140"
+                Value="{Binding TextLength}" />
+            <Label
+                Content="{Binding TextLength}"
+                HorizontalAlignment="Right"
+                Margin="0,113,397,0"
+                VerticalAlignment="Top"
+                Foreground="{StaticResource MainTextColor}"
+                FontFamily="Lucida Console"
+                Height="20"
+                Width="51"
+                HorizontalContentAlignment="Right"
+                RenderTransformOrigin="0.5,0.5" />
+            <Border
+                HorizontalAlignment="Center"
+                Height="169"
+                Margin="0,80,0,0"
+                Background="{StaticResource PanelBackgroundColor2}"
+                VerticalAlignment="Top"
+                Width="4" />
+            <Label
+                Content="complexity"
+                HorizontalAlignment="Left"
+                Margin="44,184,0,0"
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="{StaticResource SecondaryTextColor}"
+                FontSize="15" />
+            <ComboBox Style="{StaticResource CustomComboBoxStyle}"
+                      HorizontalAlignment="Left"
+                      Margin="53,0,0,0"
+                      Width="143"
+                      Height="30"
+                      FontFamily="Lucida Console"
+                      Foreground="{StaticResource MainTextColor}"
+                      FontSize="15"
+                      ItemsSource="{Binding ComplexityLevels}"
+                      Text="{Binding ComplexityLevel}" />
+
+            <Label
+                Content="language"
+                HorizontalAlignment="Left"
+                Margin="245,84,0,0"
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="{StaticResource SecondaryTextColor}"
+                FontSize="15" />
+            <ComboBox Style="{StaticResource CustomComboBoxStyle}"
+                      HorizontalAlignment="Left"
+                      Margin="256,109,0,0"
+                      VerticalAlignment="Top"
+                      Width="143"
+                      Height="30"
+                      FontFamily="Lucida Console"
+                      Foreground="{StaticResource MainTextColor}"
+                      FontSize="15"
+                      IsEditable="True"
+                      ItemsSource="{Binding Languages}"
+                      Text="{Binding Language}" />
+            <Label
+                Content="text type"
+                HorizontalAlignment="Left"
+                Margin="245,184,0,0"
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="{StaticResource SecondaryTextColor}"
+                FontSize="15" />
+            <ComboBox Style="{StaticResource CustomComboBoxStyle}"
+                      HorizontalAlignment="Left"
+                      Margin="256,0,0,0"
+                      VerticalAlignment="Center"
+                      Width="143"
+                      Height="30"
+                      FontFamily="Lucida Console"
+                      Foreground="{StaticResource MainTextColor}"
+                      FontSize="15"
+                      ItemsSource="{Binding TextTypes}"
+                      SelectedValue="{Binding TextType}" />
+            <Label
+                Content="subject (optional)"
+                HorizontalAlignment="Left"
+                Margin="48,262,0,0"
+                VerticalAlignment="Top"
+                FontFamily="Lucida Console"
+                Foreground="{StaticResource SecondaryTextColor}"
+                FontSize="15" />
+            <TextBox
+                HorizontalAlignment="Center"
+                Margin="0,292,0,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
+                Width="346" Height="76"
                 FontFamily="Lucida Console"
                 Foreground="{StaticResource MainTextColor}"
                 FontSize="15"
-                ItemsSource="{Binding TextTypes}"
-                SelectedValue="{Binding TextType}" />
-      <Label
-        Content="subject (optional)"
-        HorizontalAlignment="Left"
-        Margin="48,262,0,0"
-        VerticalAlignment="Top"
-        FontFamily="Lucida Console"
-        Foreground="{StaticResource SecondaryTextColor}"
-        FontSize="15" />
-      <TextBox
-        HorizontalAlignment="Center"
-        Margin="0,292,0,0"
-        TextWrapping="Wrap"
-        VerticalAlignment="Top"
-        Width="346" Height="76"
-        FontFamily="Lucida Console"
-        Foreground="{StaticResource MainTextColor}"
-        FontSize="15"
-        Text="{Binding TextSubject}"
-        Background="{StaticResource PanelBackgroundColor1}"
-        Padding="5"
-        BorderBrush="Transparent"
-        BorderThickness="1" />
-      <Button Style="{StaticResource RoundedCornersButton}"
-              Content="cancel"
-              HorizontalAlignment="Left"
-              Margin="53,384,0,0"
-              VerticalAlignment="Top"
-              FontFamily="Lucida Console"
-              Foreground="{StaticResource MainTextColor}"
-              Background="{StaticResource PanelBackgroundColor1}"
-              FontSize="15" Height="30"
-              Width="155"
-              BorderBrush="Transparent"
-              Command="{Binding NavigateToTypeTextView}" />
-      <Button Style="{StaticResource RoundedCornersButton}"
-              Content="start"
-              HorizontalAlignment="Left"
-              Margin="245,384,0,0"
-              VerticalAlignment="Top"
-              FontFamily="Lucida Console"
-              Foreground="{StaticResource MainTextColor}"
-              Background="{StaticResource PanelBackgroundColor1}"
-              FontSize="15"
-              Height="30"
-              Width="155"
-              BorderBrush="Transparent">
-        <i:Interaction.Triggers>
-          <i:EventTrigger EventName="Click">
-            <i:InvokeCommandAction Command="{Binding SendPromptCommand}" />
-            <i:InvokeCommandAction Command="{Binding NavigateToKBView}" />
-          </i:EventTrigger>
-        </i:Interaction.Triggers>
-      </Button>
-      <Label
-        Content="{Binding ErrorMessage}"
-        FontFamily="Lucida Console"
-        Foreground="{StaticResource ErrorMessageColor}"
-        FontSize="12"
-        HorizontalAlignment="Center"
-        Margin="0,55,0,0" />
-    </Grid>
-    <Border.Background>
-      <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0" />
-        <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0" />
-      </LinearGradientBrush>
-    </Border.Background>
-  </Border>
+                Text="{Binding TextSubject}"
+                Background="{StaticResource PanelBackgroundColor1}"
+                Padding="5"
+                BorderBrush="Transparent"
+                BorderThickness="1" />
+            <Button Style="{StaticResource RoundedCornersButton}"
+                    Content="cancel"
+                    HorizontalAlignment="Left"
+                    Margin="53,384,0,0"
+                    VerticalAlignment="Top"
+                    FontFamily="Lucida Console"
+                    Foreground="{StaticResource MainTextColor}"
+                    Background="{StaticResource PanelBackgroundColor1}"
+                    FontSize="15" Height="30"
+                    Width="155"
+                    BorderBrush="Transparent"
+                    Command="{Binding NavigateToTypeTextView}" />
+            <Button Style="{StaticResource RoundedCornersButton}"
+                    Content="start"
+                    HorizontalAlignment="Left"
+                    Margin="245,384,0,0"
+                    VerticalAlignment="Top"
+                    FontFamily="Lucida Console"
+                    Foreground="{StaticResource MainTextColor}"
+                    Background="{StaticResource PanelBackgroundColor1}"
+                    FontSize="15"
+                    Height="30"
+                    Width="155"
+                    BorderBrush="Transparent">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SendPromptCommand}" />
+                        <i:InvokeCommandAction Command="{Binding NavigateToKBView}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Label
+                Content="{Binding ErrorMessage}"
+                FontFamily="Lucida Console"
+                Foreground="{StaticResource ErrorMessageColor}"
+                FontSize="12"
+                HorizontalAlignment="Center"
+                Margin="0,55,0,0" />
+        </Grid>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0" />
+                <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0" />
+            </LinearGradientBrush>
+        </Border.Background>
+    </Border>
 </UserControl>
