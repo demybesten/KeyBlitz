@@ -7,13 +7,12 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:helpers="clr-namespace:Solution.Helpers"
              xmlns:fa5="http://schemas.fontawesome.com/icons/"
-             d:DataContext="{d:DesignInstance Type=viewModels:NewTestViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewModels:ScoreViewModel}"
              Height="455"
              Width="450"
              mc:Ignorable="d"
              Background="Transparent">
     <UserControl.Resources>
-        <!-- Define the BoolToVisibilityConverter -->
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
 
@@ -181,7 +180,7 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding SendPromptCommand}" />
-                        <i:InvokeCommandAction Command="{Binding NavigateToKBView}" />
+                        <i:InvokeCommandAction Command="{Binding NavigateToTypeTextView}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
