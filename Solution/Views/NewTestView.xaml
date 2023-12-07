@@ -163,8 +163,7 @@
                     Background="{StaticResource PanelBackgroundColor1}"
                     FontSize="15" Height="30"
                     Width="155"
-                    BorderBrush="Transparent"
-                    Command="{Binding NavigateToTypeTextView}" />
+                    BorderBrush="Transparent"/>
             <Button Style="{StaticResource RoundedCornersButton}"
                     Content="start"
                     HorizontalAlignment="Left"
@@ -180,7 +179,7 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding SendPromptCommand}" />
-                        <i:InvokeCommandAction Command="{Binding NavigateToTypeTextView}" />
+                        <!-- <i:InvokeCommandAction Command="{Binding NavigateToTypeTextView}" /> -->
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>

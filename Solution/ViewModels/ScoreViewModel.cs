@@ -228,6 +228,7 @@ public class ScoreViewModel : BaseViewModel
     if (ResponseText != "")
     {
       ShowLoading = false;
+      NavigateToTypeTextView.Execute(null);
     }
   }
 
