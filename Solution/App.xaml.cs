@@ -25,13 +25,15 @@ namespace Solution
             services.AddSingleton<LeaderboardViewModel>();
             services.AddSingleton<AccountViewModel>();
             services.AddSingleton<MultiplayerViewModel>();
-            services.AddSingleton<SendPrompt>();
             services.AddSingleton<HeaderViewModel>();
-            services.AddSingleton<TypeTextViewModel>();
-            services.AddSingleton<TestResultsViewModel>();
+
+            services.AddSingleton<SendPrompt>();
+            services.AddSingleton<IDataService, PassTestStats>();
             services.AddSingleton<INavigationService, NavigationService>();
 
-            services.AddScoped<ScoreViewModel>();
+            services.AddSingleton<ScoreViewModel>();
+            services.AddSingleton<TypeTextViewModel>();
+            services.AddSingleton<TestResultsViewModel>();
 
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
                 viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
