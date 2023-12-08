@@ -152,7 +152,7 @@ namespace Solution.ViewModels
     {
       if (UserInput.Count >= 5) //wanneer de timer stopt
       {
-        stopWatch.Stop();
+                StopTimer();
       }
 
       List<Word> myList = new List<Word> { };
@@ -227,5 +227,21 @@ namespace Solution.ViewModels
           ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
       }
     }
-  }
+        public void StopTimer()
+        {
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            double tijd = ts.TotalSeconds + ts.TotalMilliseconds / 1000.0;
+
+            int aantalwoorden = TheText.Count; // Controleer of dit het juiste aantal woorden is in jouw context
+
+            // Bereken WPM
+            double wpm = (aantalwoorden / tijd) * 60; // WPM = (aantal woorden / tijd in minuten)
+
+            MessageBox.Show("klaar " + Convert.ToInt32(wpm) + " WPM");
+        }
+
+
+
+    }
 }
