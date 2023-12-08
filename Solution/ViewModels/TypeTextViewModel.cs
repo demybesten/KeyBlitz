@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Microsoft.VisualBasic.ApplicationServices;
@@ -58,6 +59,7 @@ namespace Solution.ViewModels
 
     public DispatcherTimer timer;
     public Stopwatch stopWatch;
+    
 
     //Slaat stopwatch value op en wordt gebruikt om te binden aan een label
     private string _elapsedTime = String.Empty;
@@ -140,6 +142,7 @@ namespace Solution.ViewModels
       updateInput();
     }
 
+    
     private void updateInput()
     {
       List<Word> myList = new List<Word> { };
@@ -182,17 +185,13 @@ namespace Solution.ViewModels
         }
 
         myList.Add(new Word(word, intList));
-
-        Console.WriteLine($"UserInput:{UserInput.Count}");
-        Console.WriteLine($"TheText:{TheText.Count}");
-
-
+        
         if ( UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
                                                  UserInput[UserInput.Count-1].Length == TheText[TheText.Count-1].Length &&
                                                  GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
                                                  GetLastChar.GetLastCharacter(TheText[TheText.Count - 1])))
         {
-          stopWatch.Stop();
+          StopTimer();
           // text finished
         }
 
@@ -216,6 +215,32 @@ namespace Solution.ViewModels
         updateInput();
       }
     }
+    
+    public void StopTimer()
+    {
+      stopWatch.Stop();
+      
+      string[] timeParts = ElapsedTime.Split(':');
+      int minutes = int.Parse(timeParts[0]);
+      int seconds = int.Parse(timeParts[1]);
+      int milliseconds = int.Parse(timeParts[2]);
+      double totalSeconds = minutes * 60 + seconds + milliseconds / 1000D;
+      
+      int amountOfWords = TheText.Count; // Controleer of dit het juiste aantal woorden is in jouw context
+      // Bereken WPM
+
+      int amountOfCharacters = 0;
+      foreach (var text in TheText)
+      {
+        amountOfCharacters += text.Length;
+      }
+      
+      int wpm = Convert.ToInt32((amountOfWords / totalSeconds) * 60); // WPM = (aantal woorden / tijd in minuten)
+      int cpm = Convert.ToInt32((amountOfCharacters / totalSeconds) * 60);
+      
+      Console.WriteLine($"Words per minute: {wpm}");
+      Console.WriteLine($"Chars per minute: {cpm}");
+    }
 
     void timer_Tick(object sender, EventArgs e)
     {
@@ -225,7 +250,7 @@ namespace Solution.ViewModels
         //Haalt time span op en format deze
         TimeSpan ts = stopWatch.Elapsed;
         ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
-          ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+          ts.Minutes, ts.Seconds, ts.Milliseconds / 1);
       }
     }
   }
