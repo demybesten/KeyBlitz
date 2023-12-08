@@ -1,0 +1,249 @@
+﻿<UserControl x:Class="Solution.Views.TestResultsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:Solution.ViewModels"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             d:DataContext="{d:DesignInstance Type=viewModels:TestResultsViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <Border>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0"/>
+                <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="0.75*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Background="{StaticResource PanelBackgroundColor1}" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="1" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="1">
+                                    <Label
+                                        Content="accuracy"
+                                        FontFamily="Lucida Console"
+                                        Foreground="{StaticResource MainTextColor}"
+                                        FontSize="18"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Margin="25,0,0,0"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="1">
+                                    <Label
+                                        Content="speed"
+                                        FontFamily="Lucida Console"
+                                        Foreground="{StaticResource MainTextColor}"
+                                        FontSize="15"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Margin="25,0,0,0"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0">
+                                            <Grid>
+                                                <wpf:PieChart/>
+                                            </Grid>
+                                        </Border>
+                                        <Border Grid.Column="1">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="1*"/>
+                                                    <RowDefinition Height="1*"/>
+                                                    <RowDefinition Height="1*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0"
+                                                       Content="characters typed"
+                                                       FontFamily="Lucida Console"
+                                                       Foreground="{StaticResource SecondaryTextColor}"
+                                                       FontSize="18"
+                                                       HorizontalContentAlignment="Left"
+                                                       Margin="25,25,0,0"
+                                                       FontWeight="Bold"/>
+                                                <Label Grid.Row="0"
+                                                       Content="{Binding CharactersTyped}"
+                                                       FontFamily="Lucida Console"
+                                                       Foreground="{StaticResource MainTextColor}"
+                                                       FontSize="28"
+                                                       HorizontalContentAlignment="Left"
+                                                       Margin="25,45,0,0"/>
+                                                
+                                                <Label Grid.Row="1"
+                                                       Content="characters correct"
+                                                       FontFamily="Lucida Console"
+                                                       Foreground="{StaticResource SecondaryTextColor}"
+                                                       FontSize="18"
+                                                       HorizontalContentAlignment="Left"
+                                                       Margin="25,25,0,0"
+                                                       FontWeight="Bold"/>
+                                                <Label Grid.Row="1"
+                                                       Content="{Binding CharactersCorrect}"
+                                                       FontFamily="Lucida Console"
+                                                       Foreground="{StaticResource MainTextColor}"
+                                                       FontSize="28"
+                                                       HorizontalContentAlignment="Left"
+                                                       Margin="25,45,0,0"/>
+                                                
+                                                <Label Grid.Row="2"
+                                                       Content="words typed"
+                                                       FontFamily="Lucida Console"
+                                                       Foreground="{StaticResource SecondaryTextColor}"
+                                                       FontSize="18"
+                                                       HorizontalContentAlignment="Left"
+                                                       Margin="25,25,0,0"
+                                                       FontWeight="Bold"/>
+                                                <Label Grid.Row="2"
+                                                       Content="{Binding WordsTyped}"
+                                                       FontFamily="Lucida Console"
+                                                       Foreground="{StaticResource MainTextColor}"
+                                                       FontSize="28"
+                                                       HorizontalContentAlignment="Left"
+                                                       Margin="25,45,0,0"/>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Column="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Column="0" Grid.Row="0"
+                                               Content="wpm"
+                                               FontFamily="Lucida Console"
+                                               Foreground="{StaticResource SecondaryTextColor}"
+                                               FontSize="18"
+                                               HorizontalContentAlignment="Left"
+                                               Margin="10,10,0,0"
+                                               FontWeight="Bold"/>
+                                        <Label Grid.Column="0" Grid.Row="0"
+                                               Content="{Binding WordsPerMinute}"
+                                               FontFamily="Lucida Console"
+                                               Foreground="{StaticResource MainTextColor}"
+                                               FontSize="28"
+                                               HorizontalContentAlignment="Left"
+                                               Margin="10,30,0,0"/>
+                                        <Label Grid.Column="1" Grid.Row="0"
+                                               Content="cpm"
+                                               FontFamily="Lucida Console"
+                                               Foreground="{StaticResource SecondaryTextColor}"
+                                               FontSize="18"
+                                               HorizontalContentAlignment="Left"
+                                               Margin="10,10,0,0"
+                                               FontWeight="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="0"
+                                               Content="{Binding CharactersPerMinute}"
+                                               FontFamily="Lucida Console"
+                                               Foreground="{StaticResource MainTextColor}"
+                                               FontSize="28"
+                                               HorizontalContentAlignment="Left"
+                                               Margin="10,30,0,0"/>
+                                        <Label Grid.Column="0" Grid.Row="1"
+                                               Content="time spent"
+                                               FontFamily="Lucida Console"
+                                               Foreground="{StaticResource SecondaryTextColor}"
+                                               FontSize="18"
+                                               HorizontalContentAlignment="Left"
+                                               Margin="10,10,0,0"
+                                               FontWeight="Bold"/>
+                                        <Label Grid.Column="0" Grid.Row="1"
+                                               Content="{Binding TimeSpent}"
+                                               FontFamily="Lucida Console"
+                                               Foreground="{StaticResource MainTextColor}"
+                                               FontSize="28"
+                                               HorizontalContentAlignment="Left"
+                                               Margin="10,30,0,0"/>
+                                        <Label Grid.Column="1" Grid.Row="1"
+                                               Content="total score"
+                                               FontFamily="Lucida Console"
+                                               Foreground="{StaticResource SecondaryTextColor}"
+                                               FontSize="18"
+                                               HorizontalContentAlignment="Left"
+                                               Margin="10,10,0,0"
+                                               FontWeight="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="1"
+                                               Content="{Binding TotalScore}"
+                                               FontFamily="Lucida Console"
+                                               Foreground="{StaticResource MainTextColor}"
+                                               FontSize="28"
+                                               HorizontalContentAlignment="Left"
+                                               Margin="10,30,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"
+                            Style="{StaticResource RoundedCornersButton}"
+                            Width="200"
+                            Height="35"
+                            Content="repeat test"
+                            HorizontalAlignment="Right"
+                            Margin="0,0,30,0"
+                            Background="{StaticResource PanelBackgroundColor1}"
+                            FontFamily="Lucida Console"
+                            Foreground="{StaticResource MainTextColor}"
+                            FontSize="15"/>
+                    <Button Grid.Column="1"
+                            Style="{StaticResource RoundedCornersButton}"
+                            Width="200"
+                            Height="35"
+                            Content="done"
+                            HorizontalAlignment="Left"
+                            Margin="30,0,0,0"
+                            Background="{StaticResource PanelBackgroundColor1}"
+                            FontFamily="Lucida Console"
+                            Foreground="{StaticResource MainTextColor}"
+                            FontSize="15"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
+
