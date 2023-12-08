@@ -3,19 +3,11 @@ using Solution.Services;
 using Solution.Views;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using Solution.Helpers;
-using System.Windows;
 using System.Windows.Threading;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace Solution.ViewModels
 {
@@ -150,11 +142,6 @@ namespace Solution.ViewModels
 
     private void updateInput()
     {
-      if (UserInput.Count >= 5) //wanneer de timer stopt
-      {
-        stopWatch.Stop();
-      }
-
       List<Word> myList = new List<Word> { };
       for (int w = 0; w < TheText.Count; w++)
       {
@@ -195,6 +182,20 @@ namespace Solution.ViewModels
         }
 
         myList.Add(new Word(word, intList));
+
+        Console.WriteLine($"UserInput:{UserInput.Count}");
+        Console.WriteLine($"TheText:{TheText.Count}");
+
+
+        if ( UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
+                                                 UserInput[UserInput.Count-1].Length == TheText[TheText.Count-1].Length &&
+                                                 GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
+                                                 GetLastChar.GetLastCharacter(TheText[TheText.Count - 1])))
+        {
+          stopWatch.Stop();
+          // text finished
+        }
+
       }
       updateText(myList);
     }
