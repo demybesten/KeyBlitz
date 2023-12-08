@@ -29,7 +29,14 @@
         <GradientStop Color="#071826" Offset="1.0" />
       </LinearGradientBrush>
     </Grid.Background>
-    <Label Content="{Binding ElapsedTime}" Foreground="{StaticResource SecondaryTextColor}" />
+    <Label 
+      Content="{Binding ElapsedTime}" 
+      Foreground="{StaticResource MainTextColor}" 
+      HorizontalAlignment="Center"
+      FontFamily="Lucida Console"
+      FontSize="26"
+      Margin="0,25,0,0"
+      />
 
     <TextBlock TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                x:Name="DynamicTextDisplay" FontSize="46" FontFamily="Lucida Console" FontWeight="ExtraBold">
