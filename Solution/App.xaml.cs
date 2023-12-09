@@ -20,21 +20,21 @@ namespace Solution
             {
                 DataContext = serviceProvider.GetRequiredService<MainViewModel>()
             });
+            
+            services.AddSingleton<IDataService, PassTestStats>();
+            services.AddSingleton<INavigationService, NavigationService>();
+            
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<ScoreViewModel>();
             services.AddSingleton<LeaderboardViewModel>();
             services.AddSingleton<AccountViewModel>();
             services.AddSingleton<MultiplayerViewModel>();
             services.AddSingleton<HeaderViewModel>();
-
             services.AddSingleton<SendPrompt>();
-            services.AddSingleton<IDataService, PassTestStats>();
-            services.AddSingleton<INavigationService, NavigationService>();
-
             services.AddSingleton<ScoreViewModel>();
             services.AddSingleton<TypeTextViewModel>();
             services.AddSingleton<TestResultsViewModel>();
-
+            
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
                 viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
 
@@ -47,9 +47,9 @@ namespace Solution
         {
             INavigationService navigationService = _serviceProvider.GetRequiredService<INavigationService>();
             navigationService.NavigateTo<TypeTextViewModel>();
-           var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-           mainWindow.Show();
-           base.OnStartup(e);
+            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();
+            base.OnStartup(e);
         }
     }
 }

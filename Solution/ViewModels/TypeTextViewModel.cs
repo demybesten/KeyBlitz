@@ -110,6 +110,7 @@ namespace Solution.ViewModels
       {
         _wpm = value;
         OnPropertyChanged(nameof(Wpm));
+        Console.WriteLine("WordsPerMinute changed in typing model: " + value);
       }
     }
     public int _cpm;
@@ -154,8 +155,11 @@ namespace Solution.ViewModels
 
     public ICommand PressBackspace { get; private set; }
 
-    public TypeTextViewModel(IDataService passTestStats)
+    public TypeTextViewModel(INavigationService navigation,IDataService passTestStats)
     {
+      Navigation = navigation;
+      NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
+      
       this.passTestStats = passTestStats;
       _weight = 69;
       MyCommand = new RelayCommand(ExecuteMyCommand);
@@ -172,6 +176,20 @@ namespace Solution.ViewModels
 
       ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
     }
+    
+    public INavigationService _Navigation;
+
+    public INavigationService Navigation
+    {
+      get => _Navigation;
+      set
+      {
+        _Navigation = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public NavRelayCommand NavigateToTestResultsView { get; set; }
 
     private void updateText(List<Word> words)
     {
@@ -271,6 +289,7 @@ namespace Solution.ViewModels
                                                GetLastChar.GetLastCharacter(TheText[TheText.Count - 1])))
       {
         StopTimer();
+        CalculateScore();
         // text finished
       }
     }
@@ -295,7 +314,11 @@ namespace Solution.ViewModels
     public void StopTimer()
     {
       stopWatch.Stop();
+    }
 
+    public void CalculateScore()
+    {
+      // nog ff in aparta method stoppen
       string[] timeParts = ElapsedTime.Split(':');
       int minutes = int.Parse(timeParts[0]);
       int seconds = int.Parse(timeParts[1]);
@@ -325,29 +348,31 @@ namespace Solution.ViewModels
 
       passTestStats.AmountOfCorrectChars = _amountOfCorrectChars;
       passTestStats.AmountOfTypedChars = _amountOfTypedChars;
-      passTestStats.AmountOfTypedChars = _amountOfTypedChars;
+      passTestStats.AmountOfCorrectWords = _amountOfCorrectWords;
+      passTestStats.ElapsedTime = ElapsedTime;
 
-      _wpm = Convert.ToInt32((_amountOfCorrectWords / totalSeconds) * 60); // WPM = (aantal woorden / tijd in minuten)
-      passTestStats.Wpm = _wpm;
+      Wpm = Convert.ToInt32((_amountOfCorrectWords / totalSeconds) * 60); // WPM = (aantal woorden / tijd in minuten)
+      passTestStats.Wpm = Wpm;
 
-      _cpm = Convert.ToInt32((_amountOfTypedChars / totalSeconds) * 60);
-      passTestStats.Cpm = _cpm;
+      Cpm = Convert.ToInt32((_amountOfTypedChars / totalSeconds) * 60);
+      passTestStats.Cpm = Cpm;
 
 
-      _accuracy = Convert.ToInt32(_amountOfCorrectChars / _amountOfTypedChars * 100);
-      passTestStats.Accuracy = _accuracy;
+      Accuracy = Convert.ToInt32(_amountOfCorrectChars / _amountOfTypedChars * 100);
+      passTestStats.Accuracy = Accuracy;
 
-      _score = _wpm * (1 - _weight) + _accuracy * _weight;
-      passTestStats.Score = _score;
+      Score = _wpm * (1 - _weight) + _accuracy * _weight;
+      passTestStats.Score = Score;
 
 
       Console.WriteLine($"Words per minute: {_wpm}");
       Console.WriteLine($"Chars per minute: {_cpm}");
-      Console.WriteLine($"Accuracy: ({_amountOfCorrectChars}/{_amountOfTypedChars}) {_accuracy}%");
-      Console.WriteLine($"Score: {_score}");
+      Console.WriteLine($"Accuracy({_amountOfCorrectChars}/{_amountOfTypedChars}): {_accuracy}%");
+      Console.WriteLine($"Score: {_score}"); 
+      NavigateToTestResultsView.Execute(null);
     }
 
-    void timer_Tick(object sender, EventArgs e)
+    private void timer_Tick(object sender, EventArgs e)
     {
       //Als stopwatch runt
       if (stopWatch.IsRunning)

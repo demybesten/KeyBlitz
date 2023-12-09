@@ -1,98 +1,132 @@
 ﻿using System;
+using Solution.Helpers;
 using Solution.Services;
 
 namespace Solution.ViewModels
 {
     public class TestResultsViewModel : BaseViewModel
     {
-      public TestResultsViewModel(IDataService passTestStats)
+      public TestResultsViewModel(INavigationService navigation,IDataService passTestStats)
       {
+          
+          Navigation = navigation;
+          NavigateToScoreView = new NavRelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
+          
         this.passTestStats = passTestStats;
-
-        this.passTestStats.DataChanged += (sender, args) =>
-        {
+        
           // Handle the data change in ViewModelB
-          _wordsPerMinute = this.passTestStats.Wpm;
-          // Do something with the data
-        };
+          Wpm = this.passTestStats.Wpm;
+          Cpm = this.passTestStats.Cpm;
+          Score = this.passTestStats.Score;
+          ElapsedTime = this.passTestStats.ElapsedTime;
+          Accuracy = this.passTestStats.Accuracy;
+          AmountOfCorrectChars = this.passTestStats.AmountOfCorrectChars;
+          AmountOfTypedChars = this.passTestStats.AmountOfTypedChars;
+          AmountOfCorrectWords = this.passTestStats.AmountOfCorrectWords;
+          Console.WriteLine($"in test results{Wpm}");
 
       }
+      
+      public INavigationService _Navigation;
+
+      public INavigationService Navigation
+      {
+          get => _Navigation;
+          set
+          {
+              _Navigation = value;
+              OnPropertyChanged();
+          }
+      }
+      public NavRelayCommand NavigateToScoreView { get; set; }
+      
       private readonly IDataService passTestStats;
 
-        private int _wordsPerMinute;
-        public int WordsPerMinute {
+        private int _wpm;
+        public int Wpm {
             get {
-                return _wordsPerMinute;
+                return _wpm;
             }
             set {
-                _wordsPerMinute = value;
-                OnPropertyChanged(nameof(WordsPerMinute));
+                _wpm = value;
+                OnPropertyChanged(nameof(Wpm));
             }
         }
 
-        private int _charactersPerMinute = 619;
-        public int CharactersPerMinute {
+        private int _cpm;
+        public int Cpm {
             get {
-                return _charactersPerMinute;
+                return _cpm;
             }
             set {
-                _charactersPerMinute = value;
-                OnPropertyChanged(nameof(CharactersPerMinute));
+                _cpm = value;
+                OnPropertyChanged(nameof(Cpm));
             }
         }
 
-        private string _timeSpent = "00:26";
-        public string TimeSpent {
+        private string _elapsedTime;
+        public string ElapsedTime {
             get {
-                return _timeSpent;
+                return _elapsedTime;
             }
             set {
-                _timeSpent = value;
-                OnPropertyChanged(nameof(TimeSpent));
+                _elapsedTime = value;
+                OnPropertyChanged(nameof(ElapsedTime));
             }
         }
 
-        private int _totalScore = 523;
-        public int TotalScore {
+        private int _score;
+        public int Score {
             get {
-                return _totalScore;
+                return _score;
             }
             set {
-                _totalScore = value;
-                OnPropertyChanged(nameof(TotalScore));
+                _score = value;
+                OnPropertyChanged(nameof(Score));
+            }
+        }
+        
+        private int _accuracy;
+        public int Accuracy {
+            get {
+                return _accuracy;
+            }
+            set {
+                _accuracy = value;
+                OnPropertyChanged(nameof(Accuracy));
             }
         }
 
-        private int _charactersTyped = 70;
-        public int CharactersTyped {
+        private double _amountOfCorrectChars;
+        public double AmountOfCorrectChars {
             get {
-                return _charactersTyped;
+                return _amountOfCorrectChars;
             }
             set {
-                _charactersTyped = value;
-                OnPropertyChanged(nameof(CharactersTyped));
+                _amountOfCorrectChars = value;
+                OnPropertyChanged(nameof(AmountOfCorrectChars));
             }
         }
 
-        private int _charactersCorrect = 65;
-        public int CharactersCorrect {
+        private double _amountOfTypedChars;
+        public double AmountOfTypedChars {
             get {
-                return _charactersCorrect;
+                return _amountOfTypedChars;
             }
             set {
-                _charactersCorrect = value;
-                OnPropertyChanged(nameof(CharactersCorrect));
+                _amountOfTypedChars = value;
+                OnPropertyChanged(nameof(AmountOfTypedChars));
             }
         }
 
-        private int _wordsTyped = 20;
-        public int WordsTyped {
+        private double _amountOfCorrectWords;
+        public double AmountOfCorrectWords {
             get {
-                return _wordsTyped;
+                return _amountOfCorrectWords;
             }
             set {
-                _wordsTyped = value;
-                OnPropertyChanged(nameof(WordsTyped));
+                _amountOfCorrectWords = value;
+                OnPropertyChanged(nameof(AmountOfCorrectWords));
             }
         }
 

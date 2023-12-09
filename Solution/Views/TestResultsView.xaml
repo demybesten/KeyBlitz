@@ -94,7 +94,7 @@
                                                        Margin="25,25,0,0"
                                                        FontWeight="Bold"/>
                                                 <Label Grid.Row="0"
-                                                       Content="{Binding CharactersTyped}"
+                                                       Content="{Binding AmountOfTypedChars}"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource MainTextColor}"
                                                        FontSize="28"
@@ -110,7 +110,7 @@
                                                        Margin="25,25,0,0"
                                                        FontWeight="Bold"/>
                                                 <Label Grid.Row="1"
-                                                       Content="{Binding CharactersCorrect}"
+                                                       Content="{Binding AmountOfCorrectChars}"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource MainTextColor}"
                                                        FontSize="28"
@@ -126,7 +126,7 @@
                                                        Margin="25,25,0,0"
                                                        FontWeight="Bold"/>
                                                 <Label Grid.Row="2"
-                                                       Content="{Binding WordsTyped}"
+                                                       Content="{Binding AmountOfCorrectWords}"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource MainTextColor}"
                                                        FontSize="28"
@@ -155,7 +155,7 @@
                                                Margin="10,10,0,0"
                                                FontWeight="Bold"/>
                                         <Label Grid.Column="0" Grid.Row="0"
-                                               Content="{Binding WordsPerMinute}"
+                                               Content="{Binding Wpm, Mode=OneWay}"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource MainTextColor}"
                                                FontSize="28"
@@ -170,14 +170,14 @@
                                                Margin="10,10,0,0"
                                                FontWeight="Bold"/>
                                         <Label Grid.Column="1" Grid.Row="0"
-                                               Content="{Binding CharactersPerMinute}"
+                                               Content="{Binding Cpm}"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource MainTextColor}"
                                                FontSize="28"
                                                HorizontalContentAlignment="Left"
                                                Margin="10,30,0,0"/>
                                         <Label Grid.Column="0" Grid.Row="1"
-                                               Content="time spent"
+                                               Content="time spent (M:S:MS)"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource SecondaryTextColor}"
                                                FontSize="18"
@@ -185,7 +185,7 @@
                                                Margin="10,10,0,0"
                                                FontWeight="Bold"/>
                                         <Label Grid.Column="0" Grid.Row="1"
-                                               Content="{Binding TimeSpent}"
+                                               Content="{Binding ElapsedTime}"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource MainTextColor}"
                                                FontSize="28"
@@ -200,7 +200,7 @@
                                                Margin="10,10,0,0"
                                                FontWeight="Bold"/>
                                         <Label Grid.Column="1" Grid.Row="1"
-                                               Content="{Binding TotalScore}"
+                                               Content="{Binding Score}"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource MainTextColor}"
                                                FontSize="28"
@@ -240,7 +240,8 @@
                             Background="{StaticResource PanelBackgroundColor1}"
                             FontFamily="Lucida Console"
                             Foreground="{StaticResource MainTextColor}"
-                            FontSize="15"/>
+                            FontSize="15"
+                            Command="{Binding NavigateToScoreView}"/>
                 </Grid>
             </Grid>
         </Grid>
