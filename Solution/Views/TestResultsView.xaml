@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:liveCharts="clr-namespace:LiveCharts;assembly=LiveCharts"
              d:DataContext="{d:DesignInstance Type=viewModels:TestResultsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="1080" d:DesignWidth="1920">
@@ -75,7 +76,19 @@
                                         </Grid.ColumnDefinitions>
                                         <Border Grid.Column="0">
                                             <Grid>
-                                                <wpf:PieChart/>
+                                                <wpf:PieChart InnerRadius="100"> 
+                                                    <wpf:PieChart.Series>
+                                                        <wpf:PieSeries Values="{Binding Accuracy}" Fill="LimeGreen"/>
+                                                        <wpf:PieSeries Values="{Binding RemainingAccuracy}" Fill="Red"/>
+                                                    </wpf:PieChart.Series>
+                                                </wpf:PieChart>
+                                                <Label
+                                                    Content="{Binding Accuracy}"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="Lucida Console"
+                                                    Foreground="{StaticResource MainTextColor}"
+                                                    FontSize="36"/>
                                             </Grid>
                                         </Border>
                                         <Border Grid.Column="1">
@@ -152,7 +165,7 @@
                                                Foreground="{StaticResource SecondaryTextColor}"
                                                FontSize="18"
                                                HorizontalContentAlignment="Left"
-                                               Margin="10,10,0,0"
+                                               Margin="25,25,0,0"
                                                FontWeight="Bold"/>
                                         <Label Grid.Column="0" Grid.Row="0"
                                                Content="{Binding Wpm, Mode=OneWay}"
@@ -160,14 +173,14 @@
                                                Foreground="{StaticResource MainTextColor}"
                                                FontSize="28"
                                                HorizontalContentAlignment="Left"
-                                               Margin="10,30,0,0"/>
+                                               Margin="25,45,0,0"/>
                                         <Label Grid.Column="1" Grid.Row="0"
                                                Content="cpm"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource SecondaryTextColor}"
                                                FontSize="18"
                                                HorizontalContentAlignment="Left"
-                                               Margin="10,10,0,0"
+                                               Margin="25,25,0,0"
                                                FontWeight="Bold"/>
                                         <Label Grid.Column="1" Grid.Row="0"
                                                Content="{Binding Cpm}"
@@ -175,14 +188,14 @@
                                                Foreground="{StaticResource MainTextColor}"
                                                FontSize="28"
                                                HorizontalContentAlignment="Left"
-                                               Margin="10,30,0,0"/>
+                                               Margin="25,45,0,0"/>
                                         <Label Grid.Column="0" Grid.Row="1"
                                                Content="time spent (M:S:MS)"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource SecondaryTextColor}"
                                                FontSize="18"
                                                HorizontalContentAlignment="Left"
-                                               Margin="10,10,0,0"
+                                               Margin="25,25,0,0"
                                                FontWeight="Bold"/>
                                         <Label Grid.Column="0" Grid.Row="1"
                                                Content="{Binding ElapsedTime}"
@@ -190,14 +203,14 @@
                                                Foreground="{StaticResource MainTextColor}"
                                                FontSize="28"
                                                HorizontalContentAlignment="Left"
-                                               Margin="10,30,0,0"/>
+                                               Margin="25,45,0,0"/>
                                         <Label Grid.Column="1" Grid.Row="1"
                                                Content="total score"
                                                FontFamily="Lucida Console"
                                                Foreground="{StaticResource SecondaryTextColor}"
                                                FontSize="18"
                                                HorizontalContentAlignment="Left"
-                                               Margin="10,10,0,0"
+                                               Margin="25,25,0,0"
                                                FontWeight="Bold"/>
                                         <Label Grid.Column="1" Grid.Row="1"
                                                Content="{Binding Score}"
@@ -205,7 +218,7 @@
                                                Foreground="{StaticResource MainTextColor}"
                                                FontSize="28"
                                                HorizontalContentAlignment="Left"
-                                               Margin="10,30,0,0"/>
+                                               Margin="25,45,0,0"/>
                                     </Grid>
                                 </Border>
                             </Grid>
