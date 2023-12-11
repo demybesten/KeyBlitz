@@ -26,12 +26,9 @@ namespace Solution.ViewModels
           Score = this.passTestStats.Score;
           ElapsedTime = this.passTestStats.ElapsedTime;
           Accuracy = this.passTestStats.Accuracy;
-          RemainingAccuracy = 100 - this.passTestStats.Accuracy;
           AmountOfCorrectChars = this.passTestStats.AmountOfCorrectChars;
           AmountOfTypedChars = this.passTestStats.AmountOfTypedChars;
           AmountOfCorrectWords = this.passTestStats.AmountOfCorrectWords;
-          Console.WriteLine($"in test results{Wpm}");
-
       }
       
       public INavigationService _Navigation;
@@ -101,32 +98,7 @@ namespace Solution.ViewModels
             }
             set {
                 _accuracy = value;
-                OnPropertyChanged(nameof(AccuracyEnumerable));
-            }
-        }
-        public ObservableCollection<int> AccuracyEnumerable => new ObservableCollection<int> { _accuracy };
-
-        private int _remainingAccuracy;
-        public int RemainingAccuracy
-        {
-            get {
-                return _remainingAccuracy;
-            }
-            set {
-                _remainingAccuracy = value;
-                OnPropertyChanged(nameof(RemainingAccuracyEnumerable));
-            }
-        }
-        public ObservableCollection<int> RemainingAccuracyEnumerable => new ObservableCollection<int> { _remainingAccuracy };
-
-        private double _amountOfCorrectChars;
-        public double AmountOfCorrectChars {
-            get {
-                return _amountOfCorrectChars;
-            }
-            set {
-                _amountOfCorrectChars = value;
-                OnPropertyChanged(nameof(AmountOfCorrectChars));
+                OnPropertyChanged(nameof(Accuracy));
             }
         }
 
