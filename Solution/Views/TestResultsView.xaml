@@ -76,12 +76,12 @@
                                         </Grid.ColumnDefinitions>
                                         <Border Grid.Column="0">
                                             <Grid>
-                                                <wpf:PieChart InnerRadius="100"> 
-                                                    <wpf:PieChart.Series>
-                                                        <wpf:PieSeries Values="{Binding Accuracy}" Fill="LimeGreen"/>
-                                                        <wpf:PieSeries Values="{Binding RemainingAccuracy}" Fill="Red"/>
-                                                    </wpf:PieChart.Series>
-                                                </wpf:PieChart>
+                                                <!-- <wpf:PieChart InnerRadius="100">  -->
+                                                <!--     <wpf:PieChart.Series> -->
+                                                <!--         <wpf:PieSeries Values="{Binding Accuracy}" Fill="LimeGreen"/> -->
+                                                <!--         <wpf:PieSeries Values="{Binding RemainingAccuracy}" Fill="Red"/> -->
+                                                <!--     </wpf:PieChart.Series> -->
+                                                <!-- </wpf:PieChart> -->
                                                 <Label
                                                     Content="{Binding Accuracy}"
                                                     HorizontalAlignment="Center"
@@ -113,7 +113,7 @@
                                                        FontSize="28"
                                                        HorizontalContentAlignment="Left"
                                                        Margin="25,45,0,0"/>
-                                                
+
                                                 <Label Grid.Row="1"
                                                        Content="characters correct"
                                                        FontFamily="Lucida Console"
@@ -129,7 +129,7 @@
                                                        FontSize="28"
                                                        HorizontalContentAlignment="Left"
                                                        Margin="25,45,0,0"/>
-                                                
+
                                                 <Label Grid.Row="2"
                                                        Content="words typed"
                                                        FontFamily="Lucida Console"
