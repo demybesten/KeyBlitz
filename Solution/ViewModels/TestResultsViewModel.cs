@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using LiveCharts;
 using Solution.Helpers;
 using Solution.Services;
+using Solution.Views;
 
 namespace Solution.ViewModels
 {
@@ -15,6 +16,7 @@ namespace Solution.ViewModels
           
           Navigation = navigation;
           NavigateToScoreView = new NavRelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
+          NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
           
         this.passTestStats = passTestStats;
         
@@ -44,6 +46,7 @@ namespace Solution.ViewModels
           }
       }
       public NavRelayCommand NavigateToScoreView { get; set; }
+      public NavRelayCommand NavigateToTypeTextView { get; set; }
       
       private readonly IDataService passTestStats;
 

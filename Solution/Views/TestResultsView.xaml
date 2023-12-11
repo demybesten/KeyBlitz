@@ -242,7 +242,8 @@
                             Background="{StaticResource PanelBackgroundColor1}"
                             FontFamily="Lucida Console"
                             Foreground="{StaticResource MainTextColor}"
-                            FontSize="15"/>
+                            FontSize="15"
+                            Command="{Binding NavigateToTypeTextView}"/>
                     <Button Grid.Column="1"
                             Style="{StaticResource RoundedCornersButton}"
                             Width="200"
