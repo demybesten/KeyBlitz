@@ -46,7 +46,7 @@ namespace Solution
         protected override void OnStartup(StartupEventArgs e)
         {
             INavigationService navigationService = _serviceProvider.GetRequiredService<INavigationService>();
-            navigationService.NavigateTo<TypeTextViewModel>();
+            navigationService.NavigateTo<ScoreViewModel>();
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
             base.OnStartup(e);

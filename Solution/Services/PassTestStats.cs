@@ -16,4 +16,6 @@ public class PassTestStats : IDataService
   public int Accuracy { get; set; }
 
   public string ElapsedTime { get; set; }
+
+  public string? Text { get; set; }
 }

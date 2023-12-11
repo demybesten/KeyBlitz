@@ -13,8 +13,12 @@ namespace Solution.ViewModels;
 
 public class ScoreViewModel : BaseViewModel
 {
-  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt )
+
+  private readonly IDataService passTestStats;
+
+  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats)
   {
+    this.passTestStats = passTestStats;
     Navigation = navigation;
     NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
     NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
@@ -225,9 +229,10 @@ public class ScoreViewModel : BaseViewModel
     ShowLoading = true;
     Console.WriteLine("Generating....");
     ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
-    if (ResponseText != "")
+    if (ResponseText != "" && ResponseText != null)
     {
       ShowLoading = false;
+            passTestStats.Text = ResponseText;
       NavigateToTypeTextView.Execute(null);
     }
   }
