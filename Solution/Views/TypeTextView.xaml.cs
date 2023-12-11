@@ -16,15 +16,35 @@ using System.Windows.Shapes;
 
 namespace Solution.Views
 {
-
     public class Word
     {
+
         public string Text { get; set; }
         public List<int> Indices { get; set; }
 
         public Word(string text, List<int> indices) {
             this.Text = text;
             this.Indices = indices;
+        }
+    }
+
+    class TextHelper
+    {
+        public static double MeasureTextWidth(string text, TextBlock textBox)
+        {
+            // Create a new FormattedText object with the same properties as the TextBox
+            FormattedText formattedText = new FormattedText(
+                text,
+                System.Globalization.CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                new Typeface(textBox.FontFamily, textBox.FontStyle, textBox.FontWeight, textBox.FontStretch),
+                textBox.FontSize,
+                Brushes.Black, // The brush doesn't affect the size
+                VisualTreeHelper.GetDpi(textBox).PixelsPerDip // This ensures the correct scaling for the device's DPI settings
+            );
+
+            // Return the width of the text
+            return formattedText.Width;
         }
     }
 
@@ -55,8 +75,17 @@ namespace Solution.Views
         {
             DynamicTextDisplay.Inlines.Clear();
 
+            string currentLine = "";
+            double lineLen = this.ActualWidth*0.75;
+
             foreach(var word in words)
             {
+                double nextLen = TextHelper.MeasureTextWidth(currentLine + word.Text, DynamicTextDisplay);
+                if (nextLen > lineLen)
+                {
+                    currentLine = "";
+                    DynamicTextDisplay.Inlines.Add("\n");
+                }
                 for (int i = 0; i < word.Text.Length; i++)
                 {
                     char character = word.Text[i];
@@ -73,6 +102,7 @@ namespace Solution.Views
                 }
                 // implement some kind of word wrapping here
                 DynamicTextDisplay.Inlines.Add(" ");
+                currentLine = currentLine + word.Text + " ";
             }
         }
 
