@@ -102,6 +102,17 @@ namespace Solution.ViewModels
             }
         }
 
+        private double _amountOfCorrectChars;
+        public double AmountOfCorrectChars {
+            get {
+                return _amountOfCorrectChars;
+            }
+            set {
+                _amountOfCorrectChars = value;
+                OnPropertyChanged(nameof(AmountOfCorrectChars));
+            }
+        }
+
         private double _amountOfTypedChars;
         public double AmountOfTypedChars {
             get {
