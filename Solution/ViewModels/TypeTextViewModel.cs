@@ -3,18 +3,8 @@ using Solution.Services;
 using Solution.Views;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using Solution.Helpers;
-using System.Windows;
 using System.Windows.Threading;
 
 namespace Solution.ViewModels
@@ -67,6 +57,83 @@ namespace Solution.ViewModels
     public DispatcherTimer timer;
     public Stopwatch stopWatch;
 
+    public double _amountOfCorrectChars;
+    public double AmountOfCorrectChars
+    {
+      get { return _amountOfCorrectChars; }
+      set
+      {
+        _amountOfCorrectChars = value;
+        OnPropertyChanged(nameof(AmountOfCorrectChars));
+      }
+    }
+
+    public double _amountOfTypedChars;
+    public double AmountOfTypedChars
+    {
+      get { return _amountOfTypedChars; }
+      set
+      {
+        _amountOfTypedChars = value;
+        OnPropertyChanged(nameof(AmountOfTypedChars));
+      }
+    }
+
+    public double _amountOfCorrectWords;
+    public double AmountOfCorrectWords
+    {
+      get { return _amountOfCorrectWords; }
+      set
+      {
+        _amountOfCorrectWords = value;
+        OnPropertyChanged(nameof(AmountOfCorrectWords));
+      }
+    }
+
+    public int _weight;
+    public int _score;
+    public int Score
+    {
+      get { return _score; }
+      set
+      {
+        _score = value;
+        OnPropertyChanged(nameof(Score));
+      }
+    }
+
+    public int _wpm;
+    public int Wpm
+    {
+      get { return _wpm; }
+      set
+      {
+        _wpm = value;
+        OnPropertyChanged(nameof(Wpm));
+        Console.WriteLine("WordsPerMinute changed in typing model: " + value);
+      }
+    }
+    public int _cpm;
+    public int Cpm
+    {
+      get { return _cpm; }
+      set
+      {
+        _cpm = value;
+        OnPropertyChanged(nameof(Cpm));
+      }
+    }
+    public int _accuracy;
+    public int Accuracy
+    {
+      get { return _accuracy; }
+      set
+      {
+        _accuracy = value;
+        OnPropertyChanged(nameof(Accuracy));
+      }
+    }
+
     //Slaat stopwatch value op en wordt gebruikt om te binden aan een label
     private string _elapsedTime = String.Empty;
     public string ElapsedTime {
@@ -88,8 +155,13 @@ namespace Solution.ViewModels
 
     public ICommand PressBackspace { get; private set; }
 
-    public TypeTextViewModel()
+    public TypeTextViewModel(INavigationService navigation,IDataService passTestStats)
     {
+      Navigation = navigation;
+      NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
+      
+      this.passTestStats = passTestStats;
+      _weight = 69;
       MyCommand = new RelayCommand(ExecuteMyCommand);
       PressChar = new CharacterEventCommand(ProcessChar);
       PressBackspace = new RelayCommand(DeleteCharacter);
@@ -104,6 +176,20 @@ namespace Solution.ViewModels
 
       ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
     }
+    
+    public INavigationService _Navigation;
+
+    public INavigationService Navigation
+    {
+      get => _Navigation;
+      set
+      {
+        _Navigation = value;
+        OnPropertyChanged();
+      }
+    }
+
+    public NavRelayCommand NavigateToTestResultsView { get; set; }
 
     private void updateText(List<Word> words)
     {
@@ -117,6 +203,10 @@ namespace Solution.ViewModels
     public List<string> TheText;
     public List<string> UserInput;
     public List<int> tempList;
+    public List<int> intList = new List<int> { };
+    public List<Word> myList = new List<Word> { };
+    private readonly IDataService passTestStats;
+
 
     private void ProcessChar(object parameter)
     {
@@ -148,14 +238,10 @@ namespace Solution.ViewModels
       updateInput();
     }
 
+
     private void updateInput()
     {
-      if (UserInput.Count >= 5) //wanneer de timer stopt
-      {
-        stopWatch.Stop();
-      }
-
-      List<Word> myList = new List<Word> { };
+      myList = new List<Word> { };
       for (int w = 0; w < TheText.Count; w++)
       {
         string word = TheText[w];
@@ -164,7 +250,7 @@ namespace Solution.ViewModels
         {
           typedWord = UserInput[w];
         }
-        List<int> intList = new List<int> { };
+        intList = new List<int> { };
 
         for (int i = 0; i < word.Length; i++)
         {
@@ -197,6 +283,15 @@ namespace Solution.ViewModels
         myList.Add(new Word(word, intList));
       }
       updateText(myList);
+      if ( UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
+                                               UserInput[UserInput.Count-1].Length == TheText[TheText.Count-1].Length &&
+                                               GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
+                                               GetLastChar.GetLastCharacter(TheText[TheText.Count - 1])))
+      {
+        StopTimer();
+        CalculateScore();
+        // text finished
+      }
     }
 
     private void ExecuteMyCommand()
@@ -216,7 +311,68 @@ namespace Solution.ViewModels
       }
     }
 
-    void timer_Tick(object sender, EventArgs e)
+    public void StopTimer()
+    {
+      stopWatch.Stop();
+    }
+
+    public void CalculateScore()
+    {
+      // nog ff in aparta method stoppen
+      string[] timeParts = ElapsedTime.Split(':');
+      int minutes = int.Parse(timeParts[0]);
+      int seconds = int.Parse(timeParts[1]);
+      int milliseconds = int.Parse(timeParts[2]);
+      double totalSeconds = minutes * 60 + seconds + milliseconds / 1000D;
+      // Bereken WPM
+
+      foreach (var VARIABLE in myList)
+      {
+        if (!(VARIABLE.Indices.Contains(1) || VARIABLE.Indices.Contains(2) || VARIABLE.Indices.Contains(3)))
+        {
+          _amountOfCorrectWords++;
+        }
+        foreach (var chars in VARIABLE.Indices)
+        {
+          if (chars == 0)
+          {
+            _amountOfCorrectChars++;
+            _amountOfTypedChars++;
+          }
+          if (chars == 1 || chars == 3)
+          {
+            _amountOfTypedChars++;
+          }
+        }
+      }
+
+      passTestStats.AmountOfCorrectChars = _amountOfCorrectChars;
+      passTestStats.AmountOfTypedChars = _amountOfTypedChars;
+      passTestStats.AmountOfCorrectWords = _amountOfCorrectWords;
+      passTestStats.ElapsedTime = ElapsedTime;
+
+      Wpm = Convert.ToInt32((_amountOfCorrectWords / totalSeconds) * 60); // WPM = (aantal woorden / tijd in minuten)
+      passTestStats.Wpm = Wpm;
+
+      Cpm = Convert.ToInt32((_amountOfTypedChars / totalSeconds) * 60);
+      passTestStats.Cpm = Cpm;
+
+
+      Accuracy = Convert.ToInt32(_amountOfCorrectChars / _amountOfTypedChars * 100);
+      passTestStats.Accuracy = Accuracy;
+
+      Score = _wpm * (1 - _weight) + _accuracy * _weight;
+      passTestStats.Score = Score;
+
+
+      Console.WriteLine($"Words per minute: {_wpm}");
+      Console.WriteLine($"Chars per minute: {_cpm}");
+      Console.WriteLine($"Accuracy({_amountOfCorrectChars}/{_amountOfTypedChars}): {_accuracy}%");
+      Console.WriteLine($"Score: {_score}"); 
+      NavigateToTestResultsView.Execute(null);
+    }
+
+    private void timer_Tick(object sender, EventArgs e)
     {
       //Als stopwatch runt
       if (stopWatch.IsRunning)
@@ -224,7 +380,7 @@ namespace Solution.ViewModels
         //Haalt time span op en format deze
         TimeSpan ts = stopWatch.Elapsed;
         ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
-          ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+          ts.Minutes, ts.Seconds, ts.Milliseconds / 1);
       }
     }
   }

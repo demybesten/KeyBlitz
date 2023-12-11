@@ -7,12 +7,12 @@ using System.Windows.Media.Effects;
 using Solution.Helpers;
 using Solution.Services;
 using Solution.Views;
+using Solution.ViewModels;
 
 namespace Solution.ViewModels;
 
 public class ScoreViewModel : BaseViewModel
 {
-
   public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt )
   {
     Navigation = navigation;

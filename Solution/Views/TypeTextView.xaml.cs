@@ -65,7 +65,7 @@ namespace Solution.Views
                     if (i < word.Indices.Count && word.Indices[i] >= 0 && word.Indices[i] < Colors.Count)
                     {
                         String hex = Colors[word.Indices[i]];
-                        Console.WriteLine(hex);
+                        // Console.WriteLine(hex);
                         color = new SolidColorBrush((Color)ColorConverter.ConvertFromString(hex));
                     }
 
