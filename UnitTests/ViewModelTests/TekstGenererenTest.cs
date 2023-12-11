@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
+using Solution.Services;
 using Solution.ViewModels;
 
 namespace UnitTests.ViewModelTests;
@@ -10,7 +12,8 @@ public class OnPropertyChangedTests
   public void OnPropertyChanged_ResponseText()
   {
     // Arrange
-    var viewModel = new NewTestViewModel();
+    var navigationMock = new Mock<INavigationService>();
+    var viewModel = new NewTestViewModel(navigationMock.Object);
     bool propertyChangedRaised = false;
 
     viewModel.PropertyChanged += (sender, args) => propertyChangedRaised = true;
@@ -26,7 +29,8 @@ public class OnPropertyChangedTests
   public void OnPropertyChanged_TextLength()
   {
     // Arrange
-    var viewModel = new NewTestViewModel();
+    var navigationMock = new Mock<INavigationService>();
+    var viewModel = new NewTestViewModel(navigationMock.Object);
     bool propertyChangedRaised = false;
 
     viewModel.PropertyChanged += (sender, args) => propertyChangedRaised = true;
@@ -42,7 +46,8 @@ public class OnPropertyChangedTests
   public void OnPropertyChanged_TextTypes()
   {
     // Arrange
-    var viewModel = new NewTestViewModel();
+    var navigationMock = new Mock<INavigationService>();
+    var viewModel = new NewTestViewModel(navigationMock.Object);
     bool propertyChangedRaised = false;
 
     viewModel.PropertyChanged += (sender, args) => propertyChangedRaised = true;
@@ -58,7 +63,8 @@ public class OnPropertyChangedTests
   public void OnPropertyChanged_ComplexityLevel()
   {
     // Arrange
-    var viewModel = new NewTestViewModel();
+    var navigationMock = new Mock<INavigationService>();
+    var viewModel = new NewTestViewModel(navigationMock.Object);
     bool propertyChangedRaised = false;
 
     viewModel.PropertyChanged += (sender, args) => propertyChangedRaised = true;
@@ -74,7 +80,8 @@ public class OnPropertyChangedTests
   public void OnPropertyChanged_Language()
   {
     // Arrange
-    var viewModel = new NewTestViewModel();
+    var navigationMock = new Mock<INavigationService>();
+    var viewModel = new NewTestViewModel(navigationMock.Object);
     bool propertyChangedRaised = false;
 
     viewModel.PropertyChanged += (sender, args) => propertyChangedRaised = true;
@@ -90,7 +97,8 @@ public class OnPropertyChangedTests
   public void OnPropertyChanged_TextSubject()
   {
     // Arrange
-    var viewModel = new NewTestViewModel();
+    var navigationMock = new Mock<INavigationService>();
+    var viewModel = new NewTestViewModel(navigationMock.Object);
     bool propertyChangedRaised = false;
 
     viewModel.PropertyChanged += (sender, args) => propertyChangedRaised = true;
@@ -110,7 +118,8 @@ public class SendPromptTests
   public async Task SendPrompt_SetsResponseText()
   {
     // Arrange
-    var viewModel = new NewTestViewModel();
+    var navigationMock = new Mock<INavigationService>();
+    var viewModel = new NewTestViewModel(navigationMock.Object);
 
     // Act
     await viewModel.SendPrompt();
@@ -123,7 +132,8 @@ public class SendPromptTests
   public async Task SendPrompt_EmptySubject_DefaultToRandom()
   {
     // Arrange
-    var viewModel = new NewTestViewModel();
+    var navigationMock = new Mock<INavigationService>();
+    var viewModel = new NewTestViewModel(navigationMock.Object);
     viewModel.TextSubject = "";
 
     // Act

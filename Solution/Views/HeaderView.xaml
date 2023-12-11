@@ -17,7 +17,7 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="3*" />
@@ -28,7 +28,7 @@
                            Height="65"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           Margin="15,16,0,0" />
+                           Margin="15,16,0,0"/>
                     <Button Grid.Column="1"
                             Style="{StaticResource GrayIsMouseOver}"
                             Content="play"
@@ -69,6 +69,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Margin="0,15,15,0"
+                            Command="{Binding NavigateToTestResultsViewCommand}"
                             >
                         <Button.Content>
                             <fa:ImageAwesome

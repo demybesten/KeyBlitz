@@ -39,6 +39,10 @@
             <DataTemplate DataType="{x:Type viewModels:TypeTextViewModel}">
                 <views:TypeTextView/>
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModels:TestResultsViewModel}">
+                <views:TestResultsView/>
+            </DataTemplate>
 
         </ResourceDictionary>
 

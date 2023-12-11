@@ -1,36 +1,46 @@
 ﻿<UserControl x:Class="Solution.Views.TypeTextView"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:cmd="http://www.galasoft.ch/mvvmlight"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solution.Views"
-        xmlns:viewmodels="clr-namespace:Solution.ViewModels"
-        d:DataContext="{d:DesignInstance Type=viewmodels:TypeTextViewModel}"
-        mc:Ignorable="d"
-        Background="Black"
-        HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch"
-        Focusable="True"
-        Loaded="UserControl_Loaded">
-    <UserControl.InputBindings>
-        <KeyBinding Key="Back" Command="{Binding PressBackspaceCommand}"/>
-    </UserControl.InputBindings>
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <cmd:EventToCommand Command="{Binding MyCommand}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#0B2438" Offset="0.0"/>
-                <GradientStop Color="#071826" Offset="1.0"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <TextBlock TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="DynamicTextDisplay" FontSize="46" FontFamily="Lucida Console" FontWeight="ExtraBold">
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Solution.Views"
+             xmlns:viewmodels="clr-namespace:Solution.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:TypeTextViewModel}"
+             mc:Ignorable="d"
+             Background="Black"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             Focusable="True"
+             Loaded="UserControl_Loaded">
+  <UserControl.InputBindings>
+    <KeyBinding Key="Back" Command="{Binding PressBackspaceCommand}" />
+  </UserControl.InputBindings>
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Loaded">
+      <cmd:EventToCommand Command="{Binding MyCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
+  <Grid>
+    <Grid.Background>
+      <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#0B2438" Offset="0.0" />
+        <GradientStop Color="#071826" Offset="1.0" />
+      </LinearGradientBrush>
+    </Grid.Background>
+    <Label 
+      Content="{Binding ElapsedTime}" 
+      Foreground="{StaticResource MainTextColor}" 
+      HorizontalAlignment="Center"
+      FontFamily="Lucida Console"
+      FontSize="26"
+      Margin="0,25,0,0"
+      />
 
-        </TextBlock>
-    </Grid>
+    <TextBlock TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+               x:Name="DynamicTextDisplay" FontSize="46" FontFamily="Lucida Console" FontWeight="ExtraBold">
+
+    </TextBlock>
+  </Grid>
 </UserControl>
