@@ -10,6 +10,6 @@ namespace Solution.Services
 {
     public interface ITextUpdater
     {
-        void updateText(List<Word> words);
+        void updateText(List<Word> words, bool resetWordWrap = false);
     }
 }

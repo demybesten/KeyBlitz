@@ -189,7 +189,7 @@ public class ScoreViewModel : BaseViewModel
     get { return _language; }
     set
     {
-      if (!ContainsNumber(value))
+      if (/*!ContainsNumber(value)*/ true)
       {
         ErrorMessage = "";
         _language = value;
@@ -210,7 +210,7 @@ public class ScoreViewModel : BaseViewModel
     get { return _textSubject; }
     set
     {
-      if (!ContainsNumber(value))
+      if (/*!ContainsNumber(value)*/ true)
       {
         ErrorMessage = "";
         _textSubject = value;
