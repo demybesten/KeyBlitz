@@ -4,7 +4,7 @@ public interface IDataService
 {
   double AmountOfCorrectChars { get; set; }
   double AmountOfTypedChars { get; set; }
-  double AmountOfCorrectWords { get; set; }
+  double AmountOfTypedWords { get; set; }
 
   int Score { get; set; }
 

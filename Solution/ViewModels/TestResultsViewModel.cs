@@ -10,7 +10,7 @@ using Solution.Views;
 namespace Solution.ViewModels
 {
     public class TestResultsViewModel : BaseViewModel
-    
+
     {
         private readonly IDataService _dataService;
       public TestResultsViewModel(INavigationService navigation,IDataService passTestStats)
@@ -18,9 +18,9 @@ namespace Solution.ViewModels
           Navigation = navigation;
           NavigateToScoreView = new NavRelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
           NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
-          
+
           _dataService = passTestStats;
-        
+
           // Handle the data change in ViewModelB
 
       }
@@ -31,7 +31,7 @@ namespace Solution.ViewModels
       public int Accuracy => _dataService.Accuracy;
       public double AmountOfCorrectChars => _dataService.AmountOfCorrectChars;
       public double AmountOfTypedChars => _dataService.AmountOfTypedChars;
-      public double AmountOfCorrectWords => _dataService.AmountOfCorrectWords;
+      public double AmountOfTypedWords => _dataService.AmountOfTypedWords;
       public INavigationService _Navigation;
 
       public INavigationService Navigation
@@ -45,7 +45,7 @@ namespace Solution.ViewModels
       }
       public NavRelayCommand NavigateToScoreView { get; set; }
       public NavRelayCommand NavigateToTypeTextView { get; set; }
-      
+
 
 
 

@@ -33,16 +33,16 @@ private double _amountOfCorrectChars;
         }
     }
 
-    private double _amountOfCorrectWords;
-    public double AmountOfCorrectWords
+    private double _amountOfTypedWords;
+    public double AmountOfTypedWords
     {
-        get { return _amountOfCorrectWords; }
+        get { return _amountOfTypedWords; }
         set
         {
-            if (_amountOfCorrectWords != value)
+            if (_amountOfTypedWords != value)
             {
-                _amountOfCorrectWords = value;
-                OnPropertyChanged(nameof(AmountOfCorrectWords));
+              _amountOfTypedWords = value;
+                OnPropertyChanged(nameof(AmountOfTypedWords));
             }
         }
     }
@@ -123,5 +123,5 @@ private double _amountOfCorrectChars;
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-  
+
 }

@@ -79,18 +79,18 @@ namespace Solution.ViewModels
             }
         }
 
-        public double _amountOfCorrectWords;
-        public double AmountOfCorrectWords
+        public double _amountOfTypedWords;
+        public double AmountOfTypedWords
         {
-            get { return _amountOfCorrectWords; }
+            get { return _amountOfTypedWords; }
             set
             {
-                _amountOfCorrectWords = value;
-                OnPropertyChanged(nameof(AmountOfCorrectWords));
+              _amountOfTypedWords = value;
+                OnPropertyChanged(nameof(AmountOfTypedWords));
             }
         }
 
-        public int _weight;
+        public double _weight;
         public int _score;
         public int Score
         {
@@ -159,9 +159,9 @@ namespace Solution.ViewModels
         {
             Navigation = navigation;
             NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
-      
+
             this.passTestStats = passTestStats;
-            _weight = 69;
+            _weight = 0.69;
             MyCommand = new RelayCommand(ExecuteMyCommand);
             PressChar = new CharacterEventCommand(ProcessChar);
             PressBackspace = new RelayCommand(DeleteCharacter);
@@ -176,7 +176,7 @@ namespace Solution.ViewModels
 
             ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
         }
-    
+
         public INavigationService _Navigation;
 
         public INavigationService Navigation
@@ -330,10 +330,6 @@ namespace Solution.ViewModels
 
             foreach (var VARIABLE in myList)
             {
-                if (!(VARIABLE.Indices.Contains(1) || VARIABLE.Indices.Contains(2) || VARIABLE.Indices.Contains(3)))
-                {
-                    _amountOfCorrectWords++;
-                }
                 foreach (var chars in VARIABLE.Indices)
                 {
                     if (chars == 0)
@@ -350,10 +346,10 @@ namespace Solution.ViewModels
 
             passTestStats.AmountOfCorrectChars = _amountOfCorrectChars;
             passTestStats.AmountOfTypedChars = _amountOfTypedChars;
-            passTestStats.AmountOfCorrectWords = _amountOfCorrectWords;
+            passTestStats.AmountOfTypedWords = UserInput.Count;
             passTestStats.ElapsedTime = ElapsedTime;
 
-            Wpm = Convert.ToInt32((_amountOfCorrectWords / totalSeconds) * 60); // WPM = (aantal woorden / tijd in minuten)
+            Wpm = Convert.ToInt32((UserInput.Count / totalSeconds) * 60); // WPM = (aantal woorden / tijd in minuten)
             passTestStats.Wpm = Wpm;
 
             Cpm = Convert.ToInt32((_amountOfTypedChars / totalSeconds) * 60);
@@ -363,16 +359,16 @@ namespace Solution.ViewModels
             Accuracy = Convert.ToInt32(_amountOfCorrectChars / _amountOfTypedChars * 100);
             passTestStats.Accuracy = Accuracy;
 
-            Score = _wpm * (1 - _weight) + _accuracy * _weight;
+            Score = Convert.ToInt32( _wpm * (1 - _weight) + _accuracy * _weight);
             passTestStats.Score = Score;
 
 
             Console.WriteLine($"Words per minute: {_wpm}");
             Console.WriteLine($"Chars per minute: {_cpm}");
             Console.WriteLine($"Accuracy({_amountOfCorrectChars}/{_amountOfTypedChars}): {_accuracy}%");
-            Console.WriteLine($"Score: {_score}"); 
+            Console.WriteLine($"Score: {_score}");
         }
-    
+
         public void ResetData()
         {
             myList.Clear();
@@ -381,13 +377,13 @@ namespace Solution.ViewModels
             UserInput = new List<string> { "" };
             AmountOfCorrectChars = default;
             AmountOfTypedChars = default;
-            AmountOfCorrectWords = default;
+            AmountOfTypedWords = default;
             Score = default;
             Wpm = default;
             Cpm = default;
             Accuracy = default;
             stopWatch.Reset();
-      
+
             TimeSpan ts = stopWatch.Elapsed;
             ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 1);
 
