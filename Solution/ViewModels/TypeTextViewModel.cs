@@ -235,61 +235,63 @@ namespace Solution.ViewModels
         }
 
 
-        private void updateInput()
+        private void updateInput(bool resetWordWrap = false)
         {
-            myList = new List<Word> { };
-            for (int w = 0; w < TheText.Count; w++)
+          myList = new List<Word> { };
+          for (int w = 0; w < TheText.Count; w++)
+          {
+            string word = TheText[w];
+            string typedWord = "";
+            if (w < UserInput.Count)
             {
-                string word = TheText[w];
-                string typedWord = "";
-                if (w < UserInput.Count)
-                {
-                    typedWord = UserInput[w];
-                }
-                intList = new List<int> { };
-
-                for (int i = 0; i < word.Length; i++)
-                {
-                    //char character = word[i];
-                    if (i < typedWord.Length)
-                    {
-                        if (typedWord[i].Equals(word[i]))
-                        {
-                            intList.Add(0);
-                        } else
-                        {
-                            intList.Add(1);
-                        }
-                    }
-                    else if (w < UserInput.Count - 1)
-                    {
-                        intList.Add(2);
-                    }
-                }
-
-                if (typedWord.Length > word.Length)
-                {
-                    for (int i = word.Length; i < typedWord.Length; i++)
-                    {
-                        intList.Add(3);
-                    }
-                    word = word + typedWord.Substring(word.Length, typedWord.Length - word.Length);
-                }
-
-                myList.Add(new Word(word, intList));
+              typedWord = UserInput[w];
             }
-            updateText(myList);
-            if ( UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
-                                                     UserInput[UserInput.Count-1].Length == TheText[TheText.Count-1].Length &&
-                                                     GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
-                                                     GetLastChar.GetLastCharacter(TheText[TheText.Count - 1])))
+            intList = new List<int> { };
+
+            for (int i = 0; i < word.Length; i++)
             {
-                StopTimer();
-                CalculateScore();
-                ResetData();
-                NavigateToTestResultsView.Execute(null);
-                // text finished
+              //char character = word[i];
+              if (i < typedWord.Length)
+              {
+                if (typedWord[i].Equals(word[i]))
+                {
+                  intList.Add(0);
+                } else
+                {
+                  intList.Add(1);
+                }
+              }
+              else if (w < UserInput.Count - 1)
+              {
+                intList.Add(2);
+              }
             }
+
+            if (typedWord.Length > word.Length)
+            {
+              for (int i = word.Length; i < typedWord.Length; i++)
+              {
+                intList.Add(3);
+              }
+              word = word + typedWord.Substring(word.Length, typedWord.Length - word.Length);
+            }
+
+            myList.Add(new Word(word, intList));
+          }
+          updateText(myList, resetWordWrap);
+          string lastWord = TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' });
+          System.Diagnostics.Debug.WriteLine(lastWord);
+          if ( UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
+                                                   UserInput[UserInput.Count-1].Length == TheText[TheText.Count-1].TrimEnd(new char[] { ' ', '\n', '\r' }).Length &&
+                                                   GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
+                                                   GetLastChar.GetLastCharacter(TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }))))
+          {
+            StopTimer();
+            CalculateScore();
+            ResetData();
+            NavigateToTestResultsView.Execute(null);
+            // text finished
+          }
         }
 
         private void ExecuteMyCommand()
