@@ -187,15 +187,23 @@ namespace Solution.ViewModels
 
         public NavRelayCommand NavigateToTestResultsView { get; set; }
 
-        private void updateText(List<Word> words)
+        private void updateText(List<Word> words, bool resetWordWrap = false)
         {
-            ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
-            if (_textUpdater != null)
-            {
-                _textUpdater.updateText(words);
-            }
-        }
+          if (passTestStats.Text != null && !passTestStats.Text.Equals(_textCache))
+          {
+            TheText = new List<string>(passTestStats.Text.Split(new char[] {' ', '\n'}, StringSplitOptions.RemoveEmptyEntries));
+            UserInput.Clear();
+            UserInput.Add("");
+            _textCache = passTestStats.Text;
+            updateInput(true);
+          }
 
+          ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
+          if (_textUpdater != null)
+          {
+            _textUpdater.updateText(words, resetWordWrap);
+          }
+        }
         public List<string> TheText;
         public List<string> UserInput;
         public List<int> tempList;
