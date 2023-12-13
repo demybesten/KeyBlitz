@@ -42,10 +42,5 @@
                x:Name="DynamicTextDisplay" FontSize="46" FontFamily="Lucida Console" FontWeight="ExtraBold">
 
     </TextBlock>
-    <!-- <Button  -->
-    <!--   Height="50" -->
-    <!--   Width="50" -->
-    <!--   Command="{Binding NavigateToTestResultsView}" -->
-    <!--         /> -->
   </Grid>
 </UserControl>

@@ -139,7 +139,7 @@
                                                        Margin="25,25,0,0"
                                                        FontWeight="Bold"/>
                                                 <Label Grid.Row="2"
-                                                       Content="{Binding AmountOfTypedWords}"
+                                                       Content="{Binding AmountOfCorrectWords}"
                                                        FontFamily="Lucida Console"
                                                        Foreground="{StaticResource MainTextColor}"
                                                        FontSize="28"
@@ -242,8 +242,7 @@
                             Background="{StaticResource PanelBackgroundColor1}"
                             FontFamily="Lucida Console"
                             Foreground="{StaticResource MainTextColor}"
-                            FontSize="15"
-                            Command="{Binding NavigateToTypeTextView}"/>
+                            FontSize="15"/>
                     <Button Grid.Column="1"
                             Style="{StaticResource RoundedCornersButton}"
                             Width="200"
