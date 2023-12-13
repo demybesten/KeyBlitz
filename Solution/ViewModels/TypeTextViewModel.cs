@@ -9,21 +9,6 @@ using System.Windows.Threading;
 
 namespace Solution.ViewModels
 {
-    /*public class FormattedTextLine
-    {
-        public ObservableCollection<Run> TextRuns { get; set; }
-
-        public FormattedTextLine()
-        {
-            TextRuns = new ObservableCollection<Run>();
-        }
-
-        public void AddRun(string text, SolidColorBrush color)
-        {
-            TextRuns.Add(new Run(text) { Foreground = color });
-        }
-    }*/
-
     public class CharacterEventCommand : ICommand
     {
         private readonly Action<object> _execute;
