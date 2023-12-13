@@ -16,5 +16,3 @@ public interface IDataService
 
   string ElapsedTime { get; set; }
 }
-  string Text {  get; set; }
-}
