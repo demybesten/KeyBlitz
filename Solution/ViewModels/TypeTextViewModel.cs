@@ -152,7 +152,6 @@ namespace Solution.ViewModels
           PressChar = new CharacterEventCommand(ProcessChar);
           PressBackspace = new RelayCommand(DeleteCharacter);
           tempList = new List<int> { };
-          //TheText = new List<string> { "Hello", "my", "beautiful", "world!" };
           TheText = new List<string> { "Text", "could", "not", "be", "loaded" };
           _textCache = "";
           UserInput = new List<string> { "" };
