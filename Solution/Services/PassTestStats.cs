@@ -116,6 +116,7 @@ private double _amountOfCorrectChars;
             }
         }
     }
+    public string? Text { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -123,7 +124,5 @@ private double _amountOfCorrectChars;
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-  public string ElapsedTime { get; set; }
 
-  public string? Text { get; set; }
 }

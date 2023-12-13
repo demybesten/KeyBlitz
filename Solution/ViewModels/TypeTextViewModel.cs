@@ -139,6 +139,7 @@ namespace Solution.ViewModels
         public ICommand PressChar { get; private set; }
 
         public ICommand PressBackspace { get; private set; }
+        private string _textCache;
 
         public TypeTextViewModel(INavigationService navigation,IDataService passTestStats)
         {

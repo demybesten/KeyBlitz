@@ -15,6 +15,5 @@ public interface IDataService
   int Accuracy { get; set; }
 
   string ElapsedTime { get; set; }
-}
   string Text {  get; set; }
 }
