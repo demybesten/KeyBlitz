@@ -142,24 +142,34 @@ namespace Solution.ViewModels
 
         public TypeTextViewModel(INavigationService navigation,IDataService passTestStats)
         {
-            Navigation = navigation;
-            NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
+          Navigation = navigation;
+          NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
 
-            this.passTestStats = passTestStats;
-            _weight = 0.69;
-            MyCommand = new RelayCommand(ExecuteMyCommand);
-            PressChar = new CharacterEventCommand(ProcessChar);
-            PressBackspace = new RelayCommand(DeleteCharacter);
-            tempList = new List<int> { };
-            TheText = new List<string> { "Hello", "my", "beautiful", "world!" };
-            UserInput = new List<string> { "" };
+          this.passTestStats = passTestStats;
+          _weight = 0.6;
+          MyCommand = new RelayCommand(ExecuteMyCommand);
+          PressChar = new CharacterEventCommand(ProcessChar);
+          PressBackspace = new RelayCommand(DeleteCharacter);
+          tempList = new List<int> { };
+          //TheText = new List<string> { "Hello", "my", "beautiful", "world!" };
+          TheText = new List<string> { "Text", "could", "not", "be", "loaded" };
+          _textCache = "";
+          UserInput = new List<string> { "" };
+          if (passTestStats.Text != null && !passTestStats.Equals(_textCache))
+          {
+            TheText = new List<string>(passTestStats.Text.Split(new char[] {' ', '\n'}, StringSplitOptions.RemoveEmptyEntries));
+            UserInput.Clear();
+            UserInput.Add("");
+            _textCache = passTestStats.Text;
+            updateInput(true);
+          }
 
-            stopWatch = new Stopwatch();
-            timer = new DispatcherTimer();
-            //live timer event
-            timer.Tick += timer_Tick;
+          stopWatch = new Stopwatch();
+          timer = new DispatcherTimer();
+          //live timer event
+          timer.Tick += timer_Tick;
 
-            ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
+          ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
         }
 
         public INavigationService _Navigation;
