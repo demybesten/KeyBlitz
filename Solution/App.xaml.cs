@@ -34,6 +34,7 @@ namespace Solution
             services.AddSingleton<ScoreViewModel>();
             services.AddSingleton<TypeTextViewModel>();
             services.AddSingleton<TestResultsViewModel>();
+            services.AddSingleton<LoginRegisterViewModel>();
             
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
                 viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
@@ -46,7 +47,7 @@ namespace Solution
         protected override void OnStartup(StartupEventArgs e)
         {
             INavigationService navigationService = _serviceProvider.GetRequiredService<INavigationService>();
-            navigationService.NavigateTo<ScoreViewModel>();
+            navigationService.NavigateTo<LoginRegisterViewModel>();
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
             base.OnStartup(e);

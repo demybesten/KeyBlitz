@@ -124,7 +124,6 @@ public class ScoreViewModel : BaseViewModel
   }
 
   private ObservableCollection<string> _complexityLevels = new ObservableCollection<string>();
-
   public ObservableCollection<string> ComplexityLevels
   {
     get { return _complexityLevels; }
