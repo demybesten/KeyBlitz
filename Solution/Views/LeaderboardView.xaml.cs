@@ -16,6 +16,8 @@ public partial class LeaderboardView : UserControl
 
     }
 
- 
+    private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
 
+    }
 }

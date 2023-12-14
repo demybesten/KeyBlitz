@@ -11,6 +11,8 @@ public class Persoon
 {
     public string Naam { get; set; }
     public int Score { get; set; }
+    public string Positie { get; set; }
+
 }
 public class LeaderboardViewModel : BaseViewModel
 {
@@ -25,6 +27,7 @@ public class LeaderboardViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
+
     private ObservableCollection<Persoon> _personen;
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -51,16 +54,16 @@ public class LeaderboardViewModel : BaseViewModel
         // Initialisatie van de personenlijst (voorbeeldgegevens)
         Personen = new ObservableCollection<Persoon>
         {
-            new Persoon { Naam = "Alice", Score = 90 },
-            new Persoon { Naam = "Bob", Score = 75 },
-            new Persoon { Naam = "Charlie", Score = 85 },
-            new Persoon { Naam = "David", Score = 95 },
-            new Persoon { Naam = "Eva", Score = 80 }
+            new Persoon { Naam = "Alice", Score = 90, Positie = "2"},
+            new Persoon { Naam = "Bob", Score = 75, Positie = "5" },
+            new Persoon { Naam = "Charlie", Score = 85, Positie = "3" },
+            new Persoon { Naam = "David", Score = 95, Positie = "1" },
+            new Persoon { Naam = "Eva", Score = 80, Positie = "4" }
         };
 
         // Uitvoeren van de LINQ-query
         var hoogScorendePersonen = from persoon in Personen
-                                   where persoon.Score > 80
+                                   where persoon.Score > 60
                                    orderby persoon.Score descending
                                    select persoon;
 
