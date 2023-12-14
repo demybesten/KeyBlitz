@@ -22,8 +22,6 @@
 
             <Grid.ColumnDefinitions>
 
-                <ColumnDefinition Width="383*"/>
-                <ColumnDefinition Width="457*"/>
 
             </Grid.ColumnDefinitions>
             
@@ -35,7 +33,7 @@
                     <ImageBrush ImageSource="/Views/Component.png"/>
                 </Label.Background> test
             </Label>
-
+          
             <Border CornerRadius="50 0 50 0" BorderBrush="White" BorderThickness="5" Grid.ColumnSpan="2">
                 <DataGrid HeadersVisibility="Column" ItemsSource="{Binding Personen}" Margin="15,15,15,15" BorderBrush="Transparent" BorderThickness="0" Background="#00000000" GridLinesVisibility="None" IsEnabled="False" IsSynchronizedWithCurrentItem="False" Padding="0,50,0,0"  FontWeight="Bold" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" HorizontalAlignment="Center" VerticalAlignment="Center">
 
@@ -67,7 +65,7 @@
                             <DataGridTextColumn.Header>
                                 <StackPanel Orientation="Horizontal"  Background="#FFFFFF" Margin="20 0 0 0">
                                     <TextBlock Foreground="#FFFFFF" Text="."/>
-                                    <Image Source="C:\Users\joery\source\repos\KeyBlitz\Solution\Resources\MaskGroup1.png" Width="50" Height="16" Margin="10,4,10,10" />
+                                    <Image Source="/Solution;component/Resources/MaskGroup1.png" Width="50" Height="16" Margin="10,4,10,10" />
                                     <TextBlock Foreground="#FFFFFF" Text="."/>
                                 </StackPanel>
                                 </DataGridTextColumn.Header>
@@ -136,7 +134,25 @@
 
 
 
+            <Grid Grid.Row="0" VerticalAlignment="Top" Margin="0,20,0,0" 
+>
+                <Grid.ColumnDefinitions >
 
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="0.36*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Column="1" Style="{StaticResource CustomComboBoxStyle}" 
+                HorizontalAlignment="Left"
+                          VerticalAlignment="Bottom"
+                Width="145"
+                Height="30"
+                FontFamily="Lucida Console"
+                Foreground="{StaticResource MainTextColor}"
+                FontSize="15"
+                ItemsSource="{Binding ChartFilters}"
+                Text="{Binding ChartFilter}"/>
+            </Grid>
         </Grid>
 
     </Border>

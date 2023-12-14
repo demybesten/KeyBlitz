@@ -51,6 +51,11 @@ public class LeaderboardViewModel : BaseViewModel
     }
     public LeaderboardViewModel()
     {
+        ChartFilters.Add("last week");
+        ChartFilters.Add("last month");
+        ChartFilters.Add("last year");
+        ChartFilters.Add("all time");
+
         // Initialisatie van de personenlijst (voorbeeldgegevens)
         Personen = new ObservableCollection<Persoon>
         {
@@ -73,5 +78,27 @@ public class LeaderboardViewModel : BaseViewModel
     protected virtual void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private ObservableCollection<string> _chartFilters = new ObservableCollection<string>();
+    public ObservableCollection<string> ChartFilters
+    {
+        get { return _chartFilters; }
+        set
+        {
+            _chartFilters = value;
+            OnPropertyChanged(nameof(ChartFilters));
+        }
+    }
+
+    private string _chartFilter = "all time";
+    public string ChartFilter
+    {
+        get { return _chartFilter; }
+        set
+        {
+            _chartFilter = value;
+            OnPropertyChanged(nameof(ChartFilter));
+        }
     }
 }
