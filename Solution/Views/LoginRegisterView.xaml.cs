@@ -15,6 +15,7 @@ public partial class LoginRegisterView : UserControl
         
         SignUpUsername.Text = "username";
         SignUpPassword.Text = "password";
+        SignUpConfirmPassword.Text = "confirm password";
 
         LoginUsername.GotFocus += RemoveText;
         LoginUsername.LostFocus += AddText;
@@ -25,8 +26,11 @@ public partial class LoginRegisterView : UserControl
         SignUpUsername.LostFocus += AddText;
         SignUpPassword.GotFocus += RemoveText;
         SignUpPassword.LostFocus += AddText;
+        SignUpConfirmPassword.GotFocus += RemoveText;
+        SignUpConfirmPassword.LostFocus += AddText;
         
         LoginGrid.Visibility = Visibility.Visible;
+        SignUpGrid.Visibility = Visibility.Collapsed;
     }
     
     public void RemoveText(object sender, EventArgs e)
@@ -49,12 +53,20 @@ public partial class LoginRegisterView : UserControl
             {
                 SignUpPassword.Text = "";
             }
+            if (sender == SignUpConfirmPassword)
+            {
+                SignUpConfirmPassword.Text = "";
+            }
         }
     }
 
     public void AddText(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(LoginUsername.Text) || string.IsNullOrWhiteSpace(LoginPassword.Text))
+        if (string.IsNullOrWhiteSpace(LoginUsername.Text) || 
+            string.IsNullOrWhiteSpace(LoginPassword.Text) ||
+            string.IsNullOrWhiteSpace(SignUpUsername.Text) ||
+            string.IsNullOrWhiteSpace(SignUpPassword.Text) ||
+            string.IsNullOrWhiteSpace(SignUpConfirmPassword.Text))
         {
             if (sender == LoginUsername)
             {
@@ -71,6 +83,10 @@ public partial class LoginRegisterView : UserControl
             if (sender == SignUpPassword)
             {
                 SignUpPassword.Text = "password";
+            }
+            if (sender == SignUpConfirmPassword)
+            {
+                SignUpConfirmPassword.Text = "confirm password";
             }
         }
     }
