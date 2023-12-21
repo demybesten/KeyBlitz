@@ -2,6 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Solution.Services;
 
 namespace Solution.Views;
 
@@ -89,6 +90,20 @@ public partial class LoginRegisterView : UserControl
                 SignUpConfirmPassword.Password = "confirm password";
             }
         }
+    }
+
+    private async void LoginActionButton(object sender, RoutedEventArgs e)
+    {
+        Console.WriteLine("click login");
+        ApiClient api = new ApiClient();
+        ApiResponse response = await api.Login(LoginUsername.Text, LoginPassword.Password);
+    }
+
+    private async void RegisterActionButton(object sender, RoutedEventArgs e)
+    {
+        Console.WriteLine("click register");
+        ApiClient api = new ApiClient();
+        ApiResponse response = await api.Register(SignUpUsername.Text, SignUpPassword.Password);
     }
 
     private void LoginButtonClick(object sender, RoutedEventArgs e)

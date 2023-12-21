@@ -168,7 +168,8 @@
                                         FontSize="15"
                                         Height="50"
                                         Width="300"
-                                        BorderBrush="Transparent"/>
+                                        BorderBrush="Transparent"
+                                        Click="LoginActionButton" />
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" x:Name="SignUpGrid">
@@ -318,7 +319,8 @@
                                         Height="50"
                                         Width="300"
                                         BorderBrush="Transparent"
-                                        Margin="0 -14 0 0"/>
+                                        Margin="0 -14 0 0"
+                                        Click="RegisterActionButton" />
                             </Grid>
                         </Grid>
                     </Grid>
