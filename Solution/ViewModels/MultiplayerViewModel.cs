@@ -287,10 +287,10 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
             var lobbyData = JsonConvert.DeserializeObject<LobbyUpdate>(lobbyUpdate);
 
             LobbyStatus = lobbyData.Status;
-            if (LobbyStatus == "generating")
+            if (LobbyStatus == "playing")
             {
-                stopWatch.Start();
-                timer.Start();
+                NavigateToMultiplayerResultsView.Execute(null);
+
             }
             foreach (var player in lobbyData.Players)
             {
