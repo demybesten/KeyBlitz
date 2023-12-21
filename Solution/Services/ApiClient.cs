@@ -234,7 +234,7 @@ namespace Solution.Services
     public class User
     {
         public int id { get; set; }
-        public int username { get; set; }
+        public string username { get; set; }
     }
 
     public class Score
