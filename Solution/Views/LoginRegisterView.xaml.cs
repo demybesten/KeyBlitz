@@ -11,31 +11,31 @@ public partial class LoginRegisterView : UserControl
     {
         InitializeComponent();
         LoginUsername.Text = "username";
-        LoginPassword.Text = "password";
-        
+        LoginPassword.Password = "password";
+
         SignUpUsername.Text = "username";
-        SignUpPassword.Text = "password";
-        SignUpConfirmPassword.Text = "confirm password";
+        SignUpPassword.Password = "password";
+        SignUpConfirmPassword.Password = "confirm password";
 
         LoginUsername.GotFocus += RemoveText;
         LoginUsername.LostFocus += AddText;
         LoginPassword.GotFocus += RemoveText;
         LoginPassword.LostFocus += AddText;
-        
+
         SignUpUsername.GotFocus += RemoveText;
         SignUpUsername.LostFocus += AddText;
         SignUpPassword.GotFocus += RemoveText;
         SignUpPassword.LostFocus += AddText;
         SignUpConfirmPassword.GotFocus += RemoveText;
         SignUpConfirmPassword.LostFocus += AddText;
-        
+
         LoginGrid.Visibility = Visibility.Visible;
         SignUpGrid.Visibility = Visibility.Collapsed;
     }
-    
+
     public void RemoveText(object sender, EventArgs e)
     {
-        if (LoginUsername.Text == "username" || LoginPassword.Text == "password") 
+        if (LoginUsername.Text == "username" || LoginPassword.Password == "password")
         {
             if (sender == LoginUsername)
             {
@@ -43,7 +43,7 @@ public partial class LoginRegisterView : UserControl
             }
             if (sender == LoginPassword)
             {
-                LoginPassword.Text = "";
+                LoginPassword.Password = "";
             }
             if (sender == SignUpUsername)
             {
@@ -51,22 +51,22 @@ public partial class LoginRegisterView : UserControl
             }
             if (sender == SignUpPassword)
             {
-                SignUpPassword.Text = "";
+                SignUpPassword.Password = "";
             }
             if (sender == SignUpConfirmPassword)
             {
-                SignUpConfirmPassword.Text = "";
+                SignUpConfirmPassword.Password = "";
             }
         }
     }
 
     public void AddText(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(LoginUsername.Text) || 
-            string.IsNullOrWhiteSpace(LoginPassword.Text) ||
+        if (string.IsNullOrWhiteSpace(LoginUsername.Text) ||
+            string.IsNullOrWhiteSpace(LoginPassword.Password) ||
             string.IsNullOrWhiteSpace(SignUpUsername.Text) ||
-            string.IsNullOrWhiteSpace(SignUpPassword.Text) ||
-            string.IsNullOrWhiteSpace(SignUpConfirmPassword.Text))
+            string.IsNullOrWhiteSpace(SignUpPassword.Password) ||
+            string.IsNullOrWhiteSpace(SignUpConfirmPassword.Password))
         {
             if (sender == LoginUsername)
             {
@@ -74,7 +74,7 @@ public partial class LoginRegisterView : UserControl
             }
             if (sender == LoginPassword)
             {
-                LoginPassword.Text = "password";
+                LoginPassword.Password = "password";
             }
             if (sender == SignUpUsername)
             {
@@ -82,11 +82,11 @@ public partial class LoginRegisterView : UserControl
             }
             if (sender == SignUpPassword)
             {
-                SignUpPassword.Text = "password";
+                SignUpPassword.Password = "password";
             }
             if (sender == SignUpConfirmPassword)
             {
-                SignUpConfirmPassword.Text = "confirm password";
+                SignUpConfirmPassword.Password = "confirm password";
             }
         }
     }
