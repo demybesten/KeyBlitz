@@ -94,29 +94,31 @@ namespace Solution.ViewModels
 
         private async void LoginActionButton_()
         {
-            Console.WriteLine("click login");
             ApiClient api = new ApiClient();
             ApiResponse response = await api.Login(LoginUsername, LoginPassword);
 
             if (response.Success)
             {
-                Console.WriteLine("Navigating away...");
                 Navigation.NavigateTo<ScoreViewModel>();
             }
-            Console.WriteLine("Staying for whatever reason....");
+            else
+            {
+                // Handle error
+            }
         }
 
         private async void RegisterActionButton_()
         {
-            Console.WriteLine("click register");
             ApiClient api = new ApiClient();
             ApiResponse response = await api.Register(SignUpUsername, SignUpPassword);
 
             if (response.Success)
             {
                 Navigation.NavigateTo<ScoreViewModel>();
-            }else {
-                
+            }
+            else
+            {
+                // Handle error
             }
         }
 
