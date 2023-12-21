@@ -20,10 +20,10 @@ namespace Solution
             {
                 DataContext = serviceProvider.GetRequiredService<MainViewModel>()
             });
-            
+
             services.AddSingleton<IDataService, PassTestStats>();
             services.AddSingleton<INavigationService, NavigationService>();
-            
+
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<ScoreViewModel>();
             services.AddSingleton<LeaderboardViewModel>();
@@ -35,7 +35,7 @@ namespace Solution
             services.AddSingleton<TypeTextViewModel>();
             services.AddSingleton<TestResultsViewModel>();
             services.AddSingleton<LoginRegisterViewModel>();
-            
+
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
                 viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
 
@@ -44,10 +44,21 @@ namespace Solution
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected async override void OnStartup(StartupEventArgs e)
         {
             INavigationService navigationService = _serviceProvider.GetRequiredService<INavigationService>();
-            navigationService.NavigateTo<LoginRegisterViewModel>();
+
+            // Check if we can fetch user info
+            ApiClient api = new ApiClient();
+            ApiResponse response = await api.GetUserInfo();
+
+            // No valid request, go to login
+            if (!response.Success)
+            {
+                navigationService.NavigateTo<LoginRegisterViewModel>();
+            }
+
+
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
             base.OnStartup(e);
