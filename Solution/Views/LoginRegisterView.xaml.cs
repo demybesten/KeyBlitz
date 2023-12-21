@@ -11,12 +11,6 @@ public partial class LoginRegisterView : UserControl
     public LoginRegisterView()
     {
         InitializeComponent();
-        LoginUsername.Text = "username";
-        LoginPassword.Password = "password";
-
-        SignUpUsername.Text = "username";
-        SignUpPassword.Password = "password";
-        SignUpConfirmPassword.Password = "confirm password";
 
         LoginUsername.GotFocus += RemoveText;
         LoginUsername.LostFocus += AddText;
@@ -36,7 +30,7 @@ public partial class LoginRegisterView : UserControl
 
     public void RemoveText(object sender, EventArgs e)
     {
-        if (LoginUsername.Text == "username" || LoginPassword.Password == "password")
+        if (LoginUsername.Text == "username" || LoginPassword.Text == "password")
         {
             if (sender == LoginUsername)
             {
@@ -44,7 +38,7 @@ public partial class LoginRegisterView : UserControl
             }
             if (sender == LoginPassword)
             {
-                LoginPassword.Password = "";
+                LoginPassword.Text = "";
             }
             if (sender == SignUpUsername)
             {
@@ -52,11 +46,11 @@ public partial class LoginRegisterView : UserControl
             }
             if (sender == SignUpPassword)
             {
-                SignUpPassword.Password = "";
+                SignUpPassword.Text = "";
             }
             if (sender == SignUpConfirmPassword)
             {
-                SignUpConfirmPassword.Password = "";
+                SignUpConfirmPassword.Text = "";
             }
         }
     }
@@ -64,10 +58,10 @@ public partial class LoginRegisterView : UserControl
     public void AddText(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(LoginUsername.Text) ||
-            string.IsNullOrWhiteSpace(LoginPassword.Password) ||
+            string.IsNullOrWhiteSpace(LoginPassword.Text) ||
             string.IsNullOrWhiteSpace(SignUpUsername.Text) ||
-            string.IsNullOrWhiteSpace(SignUpPassword.Password) ||
-            string.IsNullOrWhiteSpace(SignUpConfirmPassword.Password))
+            string.IsNullOrWhiteSpace(SignUpPassword.Text) ||
+            string.IsNullOrWhiteSpace(SignUpConfirmPassword.Text))
         {
             if (sender == LoginUsername)
             {
@@ -75,7 +69,7 @@ public partial class LoginRegisterView : UserControl
             }
             if (sender == LoginPassword)
             {
-                LoginPassword.Password = "password";
+                LoginPassword.Text = "password";
             }
             if (sender == SignUpUsername)
             {
@@ -83,27 +77,13 @@ public partial class LoginRegisterView : UserControl
             }
             if (sender == SignUpPassword)
             {
-                SignUpPassword.Password = "password";
+                SignUpPassword.Text = "password";
             }
             if (sender == SignUpConfirmPassword)
             {
-                SignUpConfirmPassword.Password = "confirm password";
+                SignUpConfirmPassword.Text = "confirm password";
             }
         }
-    }
-
-    private async void LoginActionButton(object sender, RoutedEventArgs e)
-    {
-        Console.WriteLine("click login");
-        ApiClient api = new ApiClient();
-        ApiResponse response = await api.Login(LoginUsername.Text, LoginPassword.Password);
-    }
-
-    private async void RegisterActionButton(object sender, RoutedEventArgs e)
-    {
-        Console.WriteLine("click register");
-        ApiClient api = new ApiClient();
-        ApiResponse response = await api.Register(SignUpUsername.Text, SignUpPassword.Password);
     }
 
     private void LoginButtonClick(object sender, RoutedEventArgs e)

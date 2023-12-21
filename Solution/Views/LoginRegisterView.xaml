@@ -107,6 +107,7 @@
                                                      TextAlignment="Left"
                                                      VerticalContentAlignment="Center"
                                                      MaxLength="16"
+                                                     Text="{Binding LoginUsername}"
                                                      CaretBrush="{StaticResource MainTextColor}"/>
                                         </Grid>
                                     </Border>
@@ -136,8 +137,9 @@
                                                              Margin="10"
                                                              Height="25"
                                                              Width="25"/>
-                                            <PasswordBox Grid.Column="1"
+                                            <TextBox Grid.Column="1"
                                                      x:Name="LoginPassword"
+                                                     Text="{Binding SignUpConfirmPassword}"
                                                      Height="30"
                                                      Background="Transparent"
                                                      BorderBrush="Transparent"
@@ -169,7 +171,7 @@
                                         Height="50"
                                         Width="300"
                                         BorderBrush="Transparent"
-                                        Click="LoginActionButton" />
+                                        Command="{Binding LoginActionButton}" />
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" x:Name="SignUpGrid">
@@ -215,6 +217,7 @@
                                                      FontSize="20"
                                                      Foreground="{StaticResource SecondaryTextColor}"
                                                      TextAlignment="Left"
+                                                     Text="{Binding SignUpUsername}"
                                                      VerticalContentAlignment="Center"
                                                      MaxLength="16"
                                                      CaretBrush="{StaticResource MainTextColor}"/>
@@ -246,7 +249,8 @@
                                                              Margin="10"
                                                              Height="25"
                                                              Width="25"/>
-                                            <PasswordBox Grid.Column="1"
+                                            <TextBox  
+                                                     Grid.Column="1"
                                                      x:Name="SignUpPassword"
                                                      Height="30"
                                                      Background="Transparent"
@@ -254,6 +258,7 @@
                                                      BorderThickness="0"
                                                      FontFamily="Lucida Console"
                                                      FontSize="20"
+                                                     Text="{Binding SignUpPassword}"
                                                      Foreground="{StaticResource SecondaryTextColor}"
                                                      VerticalContentAlignment="Center"
                                                      MaxLength="16"
@@ -286,13 +291,15 @@
                                                              Margin="10"
                                                              Height="25"
                                                              Width="25"/>
-                                            <PasswordBox Grid.Column="1"
+                                            <TextBox 
+                                                     Grid.Column="1"
                                                      x:Name="SignUpConfirmPassword"
                                                      Height="30"
                                                      Background="Transparent"
                                                      BorderBrush="Transparent"
                                                      BorderThickness="0"
                                                      FontFamily="Lucida Console"
+                                                     Text="{Binding SignUpConfirmPassword}"
                                                      FontSize="20"
                                                      Foreground="{StaticResource SecondaryTextColor}"
                                                      VerticalContentAlignment="Center"
@@ -320,7 +327,7 @@
                                         Width="300"
                                         BorderBrush="Transparent"
                                         Margin="0 -14 0 0"
-                                        Click="RegisterActionButton" />
+                                        Command="{Binding RegisterActionButton}" />
                             </Grid>
                         </Grid>
                     </Grid>
