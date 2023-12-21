@@ -70,7 +70,20 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
         }
     }
     private ObservableCollection<Player> _players;
+    private string _lobbystatus;
 
+    public string LobbyStatus
+    {
+        get { return _lobbystatus; }
+        set
+        {
+            if (_lobbystatus != value)
+            {
+                _lobbystatus = value;
+                OnPropertyChanged(nameof(LobbyStatus));
+            }
+        }
+    }
     public ObservableCollection<Player> Players
     {
         get { return _players; }
@@ -281,7 +294,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
             // Deserialize JSON naar een object dat overeenkomt met het lobby-updateformaat
             var lobbyData = JsonConvert.DeserializeObject<LobbyUpdate>(lobbyUpdate);
 
-            
+            LobbyStatus = lobbyData.Status;
             foreach (var player in lobbyData.Players)
             {
 
@@ -313,7 +326,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
         public Player[] Players { get; set; } // Gebruik een array in plaats van een List<Player>
 
         [JsonProperty("timestamp")]
-        public int Timestamp { get; set; }
+        public BigInteger Timestamp { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }
