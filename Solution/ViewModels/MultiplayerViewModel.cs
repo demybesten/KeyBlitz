@@ -118,8 +118,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
         timer = new DispatcherTimer();
         timer.Tick += timer_Tick;
         Status = "Start";
-/*        PlayerCount();
-*/       
+       
     
         
 
@@ -141,18 +140,11 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
    
     // Andere logica voor het toevoegen/verwijderen van spelers kan hier worden toegevoegd
     // ...
-  /*  public void PlayerCount()
-    {
-        if (Players.Count > 3)
-        {
-            Status = "Start";
-            Application.Current.Dispatcher.Invoke(() => StartTimer());
-        }
-    }*/
+  
 
     private void StartTimer()
     {
-        if (Status == "Start")
+        if (Status == "waiting")
         {
             stopWatch.Start();
             timer.Start();
@@ -251,7 +243,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
             await _webSocket.SendAsync(new ArraySegment<byte>(authTokenResponseBytes), WebSocketMessageType.Text, true, CancellationToken.None);
 
             // Show message box indicating successful connection
-            MessageBox.Show("Connected and authenticated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            //MessageBox.Show("Connected and authenticated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex)
         {
@@ -295,6 +287,11 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
             var lobbyData = JsonConvert.DeserializeObject<LobbyUpdate>(lobbyUpdate);
 
             LobbyStatus = lobbyData.Status;
+            if (LobbyStatus == "generating")
+            {
+                stopWatch.Start();
+                timer.Start();
+            }
             foreach (var player in lobbyData.Players)
             {
 
