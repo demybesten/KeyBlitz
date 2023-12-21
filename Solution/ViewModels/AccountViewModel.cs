@@ -33,6 +33,7 @@ public class AccountViewModel : BaseViewModel
     {
         ApiClient api = new ApiClient();
 
+
         await api.Register("admin622", "password");
         await api.Login("admin", "password");
         // ApiResponse response = await api.GetUserInfo();

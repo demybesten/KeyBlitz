@@ -233,21 +233,22 @@ namespace Solution.Services
 
     public class User
     {
-        public int Id { get; set; }
-        public int Username { get; set; }
+        public int id { get; set; }
+        public int username { get; set; }
     }
 
     public class Score
     {
-        public int Id { get; }
-        public int UserId { get; }
-        public User? User { get; }
-        public int MultiplayerId { get; }
-        public int Accuracy { get; }
-        public int Cpm { get; }
-        public int Wpm { get; }
-        public int OriginalScore { get; }
-        public DateTime Date { get; }
+        public int id { get; set; }
+        public int user_id { get; set; }
+        public User? user { get; set; }
+        public int multiplayerId { get; set; }
+        public int accuracy { get; set; }
+        public int cpm { get; set; }
+        public int wpm { get; set; }
+        public int original_score { get; set; }
+        public int score { get; set; }
+        public DateTime date { get; set; }
     }
 
     public class ApiResponse
