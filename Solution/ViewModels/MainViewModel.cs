@@ -22,6 +22,8 @@ namespace Solution.ViewModels
         public NavRelayCommand NavigateToScoreViewCommand { get; set; }
         public NavRelayCommand NavigateToAccountViewCommand { get; set; }
         public NavRelayCommand NavigateToTestResultsViewCommand { get; set; }
+        public NavRelayCommand NavigateToMultiplayerResultsViewModelCommand { get; set; }
+
 
         public MainViewModel(INavigationService navService)
         {
@@ -31,6 +33,8 @@ namespace Solution.ViewModels
             NavigateToScoreViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<ScoreViewModel>(); }, o => true);
             NavigateToAccountViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<AccountViewModel>(); }, o => true);
             NavigateToTestResultsViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
+            NavigateToMultiplayerResultsViewModelCommand = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerResultsViewModel>(); }, o => true);
+
         }
     }
 }
