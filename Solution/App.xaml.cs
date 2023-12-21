@@ -20,10 +20,11 @@ namespace Solution
             {
                 DataContext = serviceProvider.GetRequiredService<MainViewModel>()
             });
-            
+
             services.AddSingleton<IDataService, PassTestStats>();
             services.AddSingleton<INavigationService, NavigationService>();
-            
+            services.AddSingleton<ApiClient>();
+
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<ScoreViewModel>();
             services.AddSingleton<LeaderboardViewModel>();
@@ -34,7 +35,7 @@ namespace Solution
             services.AddSingleton<ScoreViewModel>();
             services.AddSingleton<TypeTextViewModel>();
             services.AddSingleton<TestResultsViewModel>();
-            
+
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
                 viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
 
