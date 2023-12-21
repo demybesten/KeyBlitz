@@ -20,9 +20,11 @@ namespace Solution.ViewModels
         public NavRelayCommand NavigateToNewTestView { get; set; }
         public ICommand LoginActionButton { get; private set; }
         public ICommand RegisterActionButton { get; private set; }
+        private readonly ApiClient apiClient;
 
-        public LoginRegisterViewModel(INavigationService navigation)
+        public LoginRegisterViewModel(INavigationService navigation, ApiClient client)
         {
+            apiClient = client;
             Navigation = navigation;
             PropertyChanged += OnPropertyChanged;
 
@@ -102,8 +104,7 @@ namespace Solution.ViewModels
 
         private async void LoginActionButton_()
         {
-            ApiClient api = new ApiClient();
-            ApiResponse response = await api.Login(LoginUsername, LoginPassword);
+            ApiResponse response = await apiClient.Login(LoginUsername, LoginPassword);
 
             if (response.Success)
             {
@@ -124,8 +125,7 @@ namespace Solution.ViewModels
                 return;
             }
 
-            ApiClient api = new ApiClient();
-            ApiResponse response = await api.Register(SignUpUsername, SignUpPassword);
+            ApiResponse response = await apiClient.Register(SignUpUsername, SignUpPassword);
 
             if (response.Success)
             {
