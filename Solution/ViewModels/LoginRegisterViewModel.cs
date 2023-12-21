@@ -14,11 +14,7 @@ namespace Solution.ViewModels
         public INavigationService Navigation
         {
             get => _Navigation;
-            set
-            {
-                _Navigation = value;
-                OnPropertyChanged();
-            }
+            set { _Navigation = value; OnPropertyChanged(); }
         }
 
         public NavRelayCommand NavigateToNewTestView { get; set; }
