@@ -15,9 +15,12 @@ public class ScoreViewModel : BaseViewModel
 {
 
   private readonly IDataService passTestStats;
+  private readonly ApiClient ApiClient;
 
-  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats)
+  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient api)
   {
+    ApiClient = api;
+
     this.passTestStats = passTestStats;
     Navigation = navigation;
     NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);

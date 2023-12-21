@@ -140,9 +140,11 @@ namespace Solution.ViewModels
 
         public ICommand PressBackspace { get; private set; }
         private string _textCache;
+        private readonly ApiClient ApiClient;
 
-        public TypeTextViewModel(INavigationService navigation,IDataService passTestStats)
+        public TypeTextViewModel(INavigationService navigation,IDataService passTestStats, ApiClient api)
         {
+          ApiClient = api;
           Navigation = navigation;
           NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
 
@@ -295,6 +297,7 @@ namespace Solution.ViewModels
           {
             StopTimer();
             CalculateScore();
+            ApiClient.SaveScore(Accuracy, Cpm, Wpm, Score);
             ResetData();
             NavigateToTestResultsView.Execute(null);
             // text finished
