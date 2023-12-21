@@ -21,6 +21,8 @@ namespace Solution
                 DataContext = serviceProvider.GetRequiredService<MainViewModel>()
             });
             
+            services.AddSingleton<ApiClient>();
+            
             services.AddSingleton<IDataService, PassTestStats>();
             services.AddSingleton<INavigationService, NavigationService>();
             

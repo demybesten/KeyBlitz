@@ -17,13 +17,16 @@ namespace Solution.ViewModels;
 
 public class ScoreViewModel : BaseViewModel
 {
-
+  private readonly ApiClient apiClient;
   private readonly IDataService passTestStats;
   public SeriesCollection ChartSeries { get; set; }
   public string DateTimeFormatter { get; set; }
+
+  private List<Score> ScoreList;
   
-  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats)
+  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
   {
+    apiClient = client;
     this.passTestStats = passTestStats;
     Navigation = navigation;
     NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
@@ -49,28 +52,30 @@ public class ScoreViewModel : BaseViewModel
     ChartFilters.Add("last month");
     ChartFilters.Add("last year");
     ChartFilters.Add("all time");
+    
+    ApiResponse response = GetPlayerScores(apiClient).Result;
+    ScoreList = response.ScoreList;
 
     ChartSeries = new SeriesCollection
     {
       new LineSeries
       {
         PointGeometrySize = 15,
-        Values = new ChartValues<ObservablePoint>
-        {
-          // Sample data points (replace with your own data)
-          new ObservablePoint(1, 10),
-          new ObservablePoint(2, 234),
-          new ObservablePoint(3, 67),
-          new ObservablePoint(4, 546),
-          new ObservablePoint(5, 123),
-          new ObservablePoint(6, 353),
-          new ObservablePoint(7, 23),
-          new ObservablePoint(8, 89),
-          new ObservablePoint(9, 323),
-          new ObservablePoint(10, 146),
-        }
+        Values = new ChartValues<ObservablePoint>() // Initialize with an empty list
       }
     };
+
+// Retrieve the LineSeries added to ChartSeries (assuming you have only one series)
+    LineSeries lineSeries = (LineSeries)ChartSeries[0];
+
+// Populate the Values property of LineSeries with ObservablePoint objects
+    for (int i = 0; i < ScoreList.Count; i++)
+    {
+      double yValue = ScoreList[i].OriginalScore; // Replace with the actual property names in ScoreList
+
+      // Create ObservablePoint objects with i as the X value and add them to the Values collection
+      lineSeries.Values.Add(new ObservablePoint(i, yValue));
+    }
     
     var dates = new List<DateTime>
     {
@@ -90,6 +95,11 @@ public class ScoreViewModel : BaseViewModel
     DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
 
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+  }
+
+  private async Task<ApiResponse> GetPlayerScores(ApiClient client)
+  {
+    return await client.GetPlayerScores();
   }
 
   private SendPrompt _sendPrompt;
