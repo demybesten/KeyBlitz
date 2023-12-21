@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 using Solution.Helpers;
 using Solution.Services;
 using Solution.Views;
@@ -15,7 +19,9 @@ public class ScoreViewModel : BaseViewModel
 {
 
   private readonly IDataService passTestStats;
-
+  public SeriesCollection ChartSeries { get; set; }
+  public string DateTimeFormatter { get; set; }
+  
   public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats)
   {
     this.passTestStats = passTestStats;
@@ -39,6 +45,49 @@ public class ScoreViewModel : BaseViewModel
     Languages.Add("dutch");
     Languages.Add("german");
     Languages.Add("french");
+    ChartFilters.Add("last week");
+    ChartFilters.Add("last month");
+    ChartFilters.Add("last year");
+    ChartFilters.Add("all time");
+
+    ChartSeries = new SeriesCollection
+    {
+      new LineSeries
+      {
+        PointGeometrySize = 15,
+        Values = new ChartValues<ObservablePoint>
+        {
+          // Sample data points (replace with your own data)
+          new ObservablePoint(1, 10),
+          new ObservablePoint(2, 234),
+          new ObservablePoint(3, 67),
+          new ObservablePoint(4, 546),
+          new ObservablePoint(5, 123),
+          new ObservablePoint(6, 353),
+          new ObservablePoint(7, 23),
+          new ObservablePoint(8, 89),
+          new ObservablePoint(9, 323),
+          new ObservablePoint(10, 146),
+        }
+      }
+    };
+    
+    var dates = new List<DateTime>
+    {
+      new DateTime(2023, 6, 12),
+      new DateTime(2023, 6, 13),
+      new DateTime(2023, 6, 14),
+      new DateTime(2023, 6, 15),
+      new DateTime(2023, 6, 16),
+      new DateTime(2023, 6, 17),
+      new DateTime(2023, 6, 18),
+      new DateTime(2023, 6, 19),
+      new DateTime(2023, 6, 20),
+      new DateTime(2023, 6, 21),
+    };
+
+    // Converting dates to strings for axis labels
+    DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
 
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
   }
@@ -336,6 +385,45 @@ public class ScoreViewModel : BaseViewModel
   }
 
   public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
+
+    public ICommand ShowPopupCommand { get; }
+    private void ShowPopup()
+    {
+      IsPopupVisible = true;
+    }
+
+    private List<string> _dateLabels;
+    public List<string> DateLabels
+    {
+      get => _dateLabels;
+      set
+      {
+        _dateLabels = value;
+        OnPropertyChanged(nameof(DateLabels));
+      }
+    }
+    
+    private ObservableCollection<string> _chartFilters = new ObservableCollection<string>();
+    public ObservableCollection<string> ChartFilters
+    {
+      get { return _chartFilters; }
+      set
+      {
+        _chartFilters = value;
+        OnPropertyChanged(nameof(ChartFilters));
+      }
+    }
+    
+    private string _chartFilter = "all time";
+    public string ChartFilter
+    {
+      get { return _chartFilter; }
+      set
+      {
+        _chartFilter = value;
+        OnPropertyChanged(nameof(ChartFilter));
+      }
+    }
 
   public ICommand ShowPopupCommand { get; }
   private void ShowPopup()
