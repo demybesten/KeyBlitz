@@ -57,6 +57,10 @@ namespace Solution
             {
                 navigationService.NavigateTo<LoginRegisterViewModel>();
             }
+            else
+            {
+                navigationService.NavigateTo<ScoreViewModel>();
+            }
 
 
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
