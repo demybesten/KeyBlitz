@@ -22,7 +22,7 @@ public class ScoreViewModel : BaseViewModel
   public SeriesCollection ChartSeries { get; set; }
   public string DateTimeFormatter { get; set; }
 
-  private List<Score> ScoreList;
+  private List<Score> ScoreList = new List<Score>();
   
   public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
   {
@@ -52,30 +52,9 @@ public class ScoreViewModel : BaseViewModel
     ChartFilters.Add("last month");
     ChartFilters.Add("last year");
     ChartFilters.Add("all time");
+
     
-    ApiResponse response = GetPlayerScores(apiClient).Result;
-    ScoreList = response.ScoreList;
-
-    ChartSeries = new SeriesCollection
-    {
-      new LineSeries
-      {
-        PointGeometrySize = 15,
-        Values = new ChartValues<ObservablePoint>() // Initialize with an empty list
-      }
-    };
-
-// Retrieve the LineSeries added to ChartSeries (assuming you have only one series)
-    LineSeries lineSeries = (LineSeries)ChartSeries[0];
-
-// Populate the Values property of LineSeries with ObservablePoint objects
-    for (int i = 0; i < ScoreList.Count; i++)
-    {
-      double yValue = ScoreList[i].OriginalScore; // Replace with the actual property names in ScoreList
-
-      // Create ObservablePoint objects with i as the X value and add them to the Values collection
-      lineSeries.Values.Add(new ObservablePoint(i, yValue));
-    }
+    
     
     var dates = new List<DateTime>
     {
@@ -96,10 +75,42 @@ public class ScoreViewModel : BaseViewModel
 
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
   }
-
-  private async Task<ApiResponse> GetPlayerScores(ApiClient client)
+  
+  public async Task InitializeAsync1()
   {
-    return await client.GetPlayerScores();
+    await GetPlayerScores();
+  }
+
+  private async Task<List<Score>> GetPlayerScores()
+  {
+    var response = await apiClient.GetPlayerScores();
+    ScoreList = response.ScoreList;
+    Console.WriteLine(ScoreList.Count);
+    
+    ChartSeries = new SeriesCollection
+    {
+      new LineSeries
+      {
+        PointGeometrySize = 15,
+        Values = new ChartValues<ObservablePoint>() // Initialize with an empty list
+      }
+    };
+    
+    LineSeries lineSeries = (LineSeries)ChartSeries[0];
+    
+    // for (int i = 1; i < ScoreList.Count; i++)
+    // {
+    //   double yValue = ScoreList[i].Wpm;
+    //   Console.WriteLine(yValue);
+    //   lineSeries.Values.Add(new ObservablePoint(i, yValue));
+    // }
+
+    foreach (var VARIABLE in ScoreList)
+    {
+      Console.WriteLine(VARIABLE.Wpm);
+    }
+    
+    return ScoreList;
   }
 
   private SendPrompt _sendPrompt;

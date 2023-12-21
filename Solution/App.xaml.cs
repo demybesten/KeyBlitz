@@ -45,9 +45,14 @@ namespace Solution
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
+            ApiClient apiClient = new ApiClient();
+            IDataService passTestStats = new PassTestStats();
+            SendPrompt sendPrompt = new SendPrompt();
             INavigationService navigationService = _serviceProvider.GetRequiredService<INavigationService>();
+            ScoreViewModel viewModel = new ScoreViewModel(navigationService, sendPrompt, passTestStats, apiClient);
+            await viewModel.InitializeAsync1();
             navigationService.NavigateTo<ScoreViewModel>();
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
