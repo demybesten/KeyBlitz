@@ -1,7 +1,5 @@
-using System;
 using Solution.Helpers;
 using Solution.Services;
-using System.Security;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -13,7 +11,6 @@ namespace Solution.ViewModels
     public class LoginRegisterViewModel : BaseViewModel, INotifyPropertyChanged
     {
         public INavigationService _Navigation;
-
         public INavigationService Navigation
         {
             get => _Navigation;
@@ -41,28 +38,14 @@ namespace Solution.ViewModels
         public string MessageBlockSignIn
         {
             get { return _MessageBlockSignIn; }
-            set
-            {
-                if (_MessageBlockSignIn != value)
-                {
-                    _MessageBlockSignIn = value;
-                    OnPropertyChanged(nameof(MessageBlockSignIn));
-                }
-            }
+            set { SetProperty(ref _MessageBlockSignIn, value); }
         }
 
         private string _MessageBlockSignUp = "";
         public string MessageBlockSignUp
         {
             get { return _MessageBlockSignUp; }
-            set
-            {
-                if (_MessageBlockSignUp != value)
-                {
-                    _MessageBlockSignUp = value;
-                    OnPropertyChanged(nameof(MessageBlockSignUp));
-                }
-            }
+            set { SetProperty(ref _MessageBlockSignUp, value); }
         }
 
         private string _loginUsername = "username";
@@ -101,6 +84,7 @@ namespace Solution.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -155,41 +139,6 @@ namespace Solution.ViewModels
             {
                 // Handle error
                 MessageBlockSignUp = response.Message;
-            }
-        }
-
-
-        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(LoginUsername))
-            {
-                // Do something with LoginUsername whenever it changes
-                // For example, you can access it here:
-                // var text = LoginUsername;
-            }
-            else if (e.PropertyName == nameof(SignUpUsername))
-            {
-                // Do something with SignUpUsername whenever it changes
-                // For example, you can access it here:
-                // var text = SignUpUsername;
-            }
-            else if (e.PropertyName == nameof(LoginPassword))
-            {
-                // Do something with LoginPassword whenever it changes
-                // For example, you can access it here:
-                // var secureString = LoginPassword;
-            }
-            else if (e.PropertyName == nameof(SignUpPassword))
-            {
-                // Do something with SignUpPassword whenever it changes
-                // For example, you can access it here:
-                // var secureString = SignUpPassword;
-            }
-            else if (e.PropertyName == nameof(SignUpConfirmPassword))
-            {
-                // Do something with SignUpConfirmPassword whenever it changes
-                // For example, you can access it here:
-                // var secureString = SignUpConfirmPassword;
             }
         }
     }
