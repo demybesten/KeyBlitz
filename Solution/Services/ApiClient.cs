@@ -131,6 +131,14 @@ namespace Solution.Services
                 // Data
                 try
                 {
+                    result.Success = document.RootElement.GetProperty("success").GetBoolean();
+                    result.Message = document.RootElement.GetProperty("message").GetString();
+
+                    if (!result.Success)
+                    {
+                        return result;
+                    }
+
                     string? data = document.RootElement.GetProperty("data").GetRawText();
                     if (data == null)
                     {
@@ -255,6 +263,7 @@ namespace Solution.Services
     {
         public bool Success { get; set; } = false;
         public bool TokenRegistered { get; set; } = false;
+        public string Message { get; set; }
         public User? User { get; set; }
         public Score? Score { get; set; }
         public List<Score>? ScoreList { get; set; }
