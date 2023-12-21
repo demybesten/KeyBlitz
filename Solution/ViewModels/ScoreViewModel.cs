@@ -32,6 +32,7 @@ public class ScoreViewModel : BaseViewModel
 
     _sendPrompt = sendPrompt;
     ShowPopupCommand = new RelayCommand(ShowPopup);
+    HidePopupCommand = new RelayCommand(HidePopup);
 
     _textLength = 20;
     ComplexityLevels.Add("basic");
@@ -281,145 +282,153 @@ public class ScoreViewModel : BaseViewModel
     if (ResponseText != "" && ResponseText != null)
     {
       ShowLoading = false;
-            passTestStats.Text = ResponseText;
+      HidePopup();
+      passTestStats.Text = ResponseText;
       NavigateToTypeTextView.Execute(null);
     }
   }
 
-    public NavRelayCommand NavigateToNewTestView { get; set; }
-    public NavRelayCommand NavigateToMultiplayerView { get; set; }
+  public NavRelayCommand NavigateToNewTestView { get; set; }
+  public NavRelayCommand NavigateToMultiplayerView { get; set; }
 
-    private int _averageRPM = 126;
-    public int AverageRPM
+  private int _averageRPM = 126;
+  public int AverageRPM
+  {
+    get { return _averageRPM; }
+    set
     {
-        get { return _averageRPM; }
-        set
-        {
-            _averageRPM = value;
-            OnPropertyChanged(nameof(AverageRPM));
-        }
+      _averageRPM = value;
+      OnPropertyChanged(nameof(AverageRPM));
     }
+  }
 
-    private int _averageCPM = 618;
-    public int AverageCPM
+  private int _averageCPM = 618;
+  public int AverageCPM
+  {
+    get { return _averageCPM; }
+    set
     {
-        get { return _averageCPM; }
-        set
-        {
-            _averageCPM = value;
-            OnPropertyChanged(nameof(AverageCPM));
-        }
+      _averageCPM = value;
+      OnPropertyChanged(nameof(AverageCPM));
     }
+  }
 
-    private int _averageAccuracy = 95;
-    public int AverageAccuracy
+  private int _averageAccuracy = 95;
+  public int AverageAccuracy
+  {
+    get { return _averageAccuracy; }
+    set
     {
-        get { return _averageAccuracy; }
-        set
-        {
-            _averageAccuracy = value;
-            OnPropertyChanged(nameof(AverageAccuracy));
-        }
+      _averageAccuracy = value;
+      OnPropertyChanged(nameof(AverageAccuracy));
     }
+  }
 
-    private int _wordsTyped = 54932;
-    public int WordsTyped
+  private int _wordsTyped = 54932;
+  public int WordsTyped
+  {
+    get { return _wordsTyped; }
+    set
     {
-        get { return _wordsTyped; }
-        set
-        {
-            _wordsTyped = value;
-            OnPropertyChanged(nameof(WordsTyped));
-        }
+      _wordsTyped = value;
+      OnPropertyChanged(nameof(WordsTyped));
     }
+  }
 
-    private int _testsTaken = 419;
-    public int TestsTaken
+  private int _testsTaken = 419;
+  public int TestsTaken
+  {
+    get { return _testsTaken; }
+    set
     {
-        get { return _testsTaken; }
-        set
-        {
-            _testsTaken = value;
-            OnPropertyChanged(nameof(TestsTaken));
-        }
+      _testsTaken = value;
+      OnPropertyChanged(nameof(TestsTaken));
     }
+  }
 
-    private int _mpGamesPlayed = 53;
-    public int MpGamesPlayed
+  private int _mpGamesPlayed = 53;
+  public int MpGamesPlayed
+  {
+    get { return _mpGamesPlayed; }
+    set
     {
-        get { return _mpGamesPlayed; }
-        set
-        {
-            _mpGamesPlayed = value;
-            OnPropertyChanged(nameof(MpGamesPlayed));
-        }
+      _mpGamesPlayed = value;
+      OnPropertyChanged(nameof(MpGamesPlayed));
     }
+  }
 
-    private int _mpGamesWon = 15;
-    public int MpGamesWon
+  private int _mpGamesWon = 15;
+  public int MpGamesWon
+  {
+    get { return _mpGamesWon; }
+    set
     {
-        get { return _mpGamesWon; }
-        set
-        {
-            _mpGamesWon = value;
-            OnPropertyChanged(nameof(MpGamesWon));
-        }
+      _mpGamesWon = value;
+      OnPropertyChanged(nameof(MpGamesWon));
     }
+  }
 
-    private bool _isPopupVisible;
+  private bool _isPopupVisible;
 
-    public bool IsPopupVisible
+  public bool IsPopupVisible
+  {
+    get { return _isPopupVisible; }
+    set
     {
-      get { return _isPopupVisible; }
-      set
+      if (_isPopupVisible != value)
       {
-        if (_isPopupVisible != value)
-        {
-          _isPopupVisible = value;
-          OnPropertyChanged(nameof(IsPopupVisible));
-          OnPropertyChanged(nameof(BlurEffect));
-        }
+        _isPopupVisible = value;
+        OnPropertyChanged(nameof(IsPopupVisible));
+        OnPropertyChanged(nameof(BlurEffect));
       }
     }
+  }
 
-    public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
+  public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
 
-    public ICommand ShowPopupCommand { get; }
-    private void ShowPopup()
-    {
-      IsPopupVisible = true;
-    }
 
-    private List<string> _dateLabels;
-    public List<string> DateLabels
+  public ICommand HidePopupCommand { get; }
+  private void HidePopup()
+  {
+    IsPopupVisible = false;
+  }
+
+  public ICommand ShowPopupCommand { get; }
+  private void ShowPopup()
+  {
+    IsPopupVisible = true;
+  }
+
+  private List<string> _dateLabels;
+  public List<string> DateLabels
+  {
+    get => _dateLabels;
+    set
     {
-      get => _dateLabels;
-      set
-      {
-        _dateLabels = value;
-        OnPropertyChanged(nameof(DateLabels));
-      }
+      _dateLabels = value;
+      OnPropertyChanged(nameof(DateLabels));
     }
-    
-    private ObservableCollection<string> _chartFilters = new ObservableCollection<string>();
-    public ObservableCollection<string> ChartFilters
+  }
+
+  private ObservableCollection<string> _chartFilters = new ObservableCollection<string>();
+  public ObservableCollection<string> ChartFilters
+  {
+    get { return _chartFilters; }
+    set
     {
-      get { return _chartFilters; }
-      set
-      {
-        _chartFilters = value;
-        OnPropertyChanged(nameof(ChartFilters));
-      }
+      _chartFilters = value;
+      OnPropertyChanged(nameof(ChartFilters));
     }
-    
-    private string _chartFilter = "all time";
-    public string ChartFilter
+  }
+
+  private string _chartFilter = "all time";
+  public string ChartFilter
+  {
+    get { return _chartFilter; }
+    set
     {
-      get { return _chartFilter; }
-      set
-      {
-        _chartFilter = value;
-        OnPropertyChanged(nameof(ChartFilter));
-      }
+      _chartFilter = value;
+      OnPropertyChanged(nameof(ChartFilter));
     }
+  }
 }
