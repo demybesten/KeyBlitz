@@ -18,15 +18,15 @@
 
     <Border CornerRadius="25" BorderBrush="Transparent">
         <Grid>
-            <fa5:SvgAwesome 
-                Icon="Solid_Spinner" 
-                Spin="True" 
+            <fa5:SvgAwesome
+                Icon="Solid_Spinner"
+                Spin="True"
                 Height="50"
                 Width="50"
                 Margin="0,15,0,0"
                 Foreground="{StaticResource MainTextColor}"
-                VerticalAlignment="Top" 
-                HorizontalAlignment="Center" 
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
                 Visibility="{Binding ShowLoading,
                 Converter={StaticResource BoolToVisibilityConverter}}"/>
             <Label
@@ -163,7 +163,8 @@
                     Background="{StaticResource PanelBackgroundColor1}"
                     FontSize="15" Height="30"
                     Width="155"
-                    BorderBrush="Transparent"/>
+                    BorderBrush="Transparent"
+                    Command="{Binding HidePopupCommand}"/>
             <Button Style="{StaticResource RoundedCornersButton}"
                     Content="start"
                     HorizontalAlignment="Left"
@@ -176,12 +177,12 @@
                     Height="30"
                     Width="155"
                     BorderBrush="Transparent">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SendPromptCommand}" />
-                        <!-- <i:InvokeCommandAction Command="{Binding NavigateToTypeTextView}" /> -->
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                  <i:InvokeCommandAction Command="{Binding SendPromptCommand}" />
+                  <!-- <i:InvokeCommandAction Command="{Binding HidePopupCommand}" /> -->
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
             </Button>
             <Label
                 Content="{Binding ErrorMessage}"
