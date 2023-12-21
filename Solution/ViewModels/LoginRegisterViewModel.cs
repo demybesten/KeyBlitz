@@ -138,6 +138,12 @@ namespace Solution.ViewModels
 
         private async void RegisterActionButton_()
         {
+            if (SignUpPassword != SignUpConfirmPassword)
+            {
+                MessageBlockSignUp = "the passwords are not equal";
+                return;
+            }
+
             ApiClient api = new ApiClient();
             ApiResponse response = await api.Register(SignUpUsername, SignUpPassword);
 
