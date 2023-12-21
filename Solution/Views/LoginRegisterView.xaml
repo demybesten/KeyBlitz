@@ -154,6 +154,31 @@
                                     </Border>
                                 </Grid>
                             </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="0.5*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                        <TextBlock 
+                                            Text="{Binding MessageBlockSignIn}" 
+                                            Background="Transparent"
+                                            FontFamily="Lucida Console"
+                                            FontSize="20"
+                                            Foreground="{StaticResource SecondaryTextColor}" 
+                                            TextWrapping="Wrap"
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Bottom"/>
+                                    </Border>
+                                </Grid>
+                            </Grid>
                             <Grid Grid.Row="4">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.25*"/>
@@ -306,6 +331,31 @@
                                                      MaxLength="16"
                                                      CaretBrush="{StaticResource MainTextColor}"/>
                                         </Grid>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="0.5*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                        <TextBlock 
+                                            Text="{Binding MessageBlockSignUp}" 
+                                            Background="Transparent"
+                                            FontFamily="Lucida Console"
+                                            FontSize="20"
+                                            Foreground="{StaticResource SecondaryTextColor}" 
+                                            TextWrapping="Wrap"
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Bottom"/>
                                     </Border>
                                 </Grid>
                             </Grid>

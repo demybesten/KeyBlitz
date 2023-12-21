@@ -37,6 +37,34 @@ namespace Solution.ViewModels
             RegisterActionButton = new RelayCommand(RegisterActionButton_);
         }
 
+        private string _MessageBlockSignIn = "";
+        public string MessageBlockSignIn
+        {
+            get { return _MessageBlockSignIn; }
+            set
+            {
+                if (_MessageBlockSignIn != value)
+                {
+                    _MessageBlockSignIn = value;
+                    OnPropertyChanged(nameof(MessageBlockSignIn));
+                }
+            }
+        }
+
+        private string _MessageBlockSignUp = "";
+        public string MessageBlockSignUp
+        {
+            get { return _MessageBlockSignUp; }
+            set
+            {
+                if (_MessageBlockSignUp != value)
+                {
+                    _MessageBlockSignUp = value;
+                    OnPropertyChanged(nameof(MessageBlockSignUp));
+                }
+            }
+        }
+
         private string _loginUsername = "username";
         public string LoginUsername
         {
@@ -104,6 +132,7 @@ namespace Solution.ViewModels
             else
             {
                 // Handle error
+                MessageBlockSignIn = response.Message;
             }
         }
 
@@ -119,6 +148,7 @@ namespace Solution.ViewModels
             else
             {
                 // Handle error
+                MessageBlockSignUp = response.Message;
             }
         }
 
