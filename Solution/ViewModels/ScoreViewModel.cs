@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 using Solution.Helpers;
 using Solution.Services;
 using Solution.Views;
@@ -13,11 +17,16 @@ namespace Solution.ViewModels;
 
 public class ScoreViewModel : BaseViewModel
 {
-
+  private readonly ApiClient apiClient;
   private readonly IDataService passTestStats;
+  public SeriesCollection ChartSeries { get; set; }
+  public string DateTimeFormatter { get; set; }
 
-  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats)
+  private List<Score> ScoreList = new List<Score>();
+  
+  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
   {
+    apiClient = client;
     this.passTestStats = passTestStats;
     Navigation = navigation;
     NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
@@ -39,8 +48,69 @@ public class ScoreViewModel : BaseViewModel
     Languages.Add("dutch");
     Languages.Add("german");
     Languages.Add("french");
+    ChartFilters.Add("last week");
+    ChartFilters.Add("last month");
+    ChartFilters.Add("last year");
+    ChartFilters.Add("all time");
+
+    
+    
+    
+    var dates = new List<DateTime>
+    {
+      new DateTime(2023, 6, 12),
+      new DateTime(2023, 6, 13),
+      new DateTime(2023, 6, 14),
+      new DateTime(2023, 6, 15),
+      new DateTime(2023, 6, 16),
+      new DateTime(2023, 6, 17),
+      new DateTime(2023, 6, 18),
+      new DateTime(2023, 6, 19),
+      new DateTime(2023, 6, 20),
+      new DateTime(2023, 6, 21),
+    };
+
+    // Converting dates to strings for axis labels
+    DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
 
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+  }
+  
+  public async Task InitializeAsync1()
+  {
+    await GetPlayerScores();
+  }
+
+  private async Task<List<Score>> GetPlayerScores()
+  {
+    var response = await apiClient.GetPlayerScores();
+    ScoreList = response.ScoreList;
+    Console.WriteLine(ScoreList.Count);
+    
+    ChartSeries = new SeriesCollection
+    {
+      new LineSeries
+      {
+        PointGeometrySize = 15,
+        Values = new ChartValues<ObservablePoint>() // Initialize with an empty list
+      }
+    };
+    
+    LineSeries lineSeries = (LineSeries)ChartSeries[0];
+    
+    // for (int i = 1; i < ScoreList.Count; i++)
+    // {
+    //   double yValue = ScoreList[i].Wpm;
+    //   Console.WriteLine(yValue);
+    //   lineSeries.Values.Add(new ObservablePoint(i, yValue));
+    // }
+
+    foreach (var VARIABLE in ScoreList)
+    {
+      Console.WriteLine(VARIABLE.Wpm);
+    }
+    
+    return ScoreList;
   }
 
   private SendPrompt _sendPrompt;
@@ -337,14 +407,49 @@ public class ScoreViewModel : BaseViewModel
 
   public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
 
+
+  public ICommand HidePopupCommand { get; }
+  private void HidePopup()
+  {
+    IsPopupVisible = false;
+  }
+
   public ICommand ShowPopupCommand { get; }
   private void ShowPopup()
   {
     IsPopupVisible = true;
   }
-  public ICommand HidePopupCommand { get; }
-  private void HidePopup()
+
+  private List<string> _dateLabels;
+  public List<string> DateLabels
   {
-    IsPopupVisible = false;
+    get => _dateLabels;
+    set
+    {
+      _dateLabels = value;
+      OnPropertyChanged(nameof(DateLabels));
+    }
+  }
+
+  private ObservableCollection<string> _chartFilters = new ObservableCollection<string>();
+  public ObservableCollection<string> ChartFilters
+  {
+    get { return _chartFilters; }
+    set
+    {
+      _chartFilters = value;
+      OnPropertyChanged(nameof(ChartFilters));
+    }
+  }
+
+  private string _chartFilter = "all time";
+  public string ChartFilter
+  {
+    get { return _chartFilter; }
+    set
+    {
+      _chartFilter = value;
+      OnPropertyChanged(nameof(ChartFilter));
+    }
   }
 }
