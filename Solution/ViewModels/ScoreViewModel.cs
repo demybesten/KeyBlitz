@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,16 +16,22 @@ public class ScoreViewModel : BaseViewModel
 {
 
   private readonly IDataService passTestStats;
-
-  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats)
+  private readonly ApiClient apiClient;
+  private List<Score> ScoreList;
+  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
   {
+    apiClient = client;
     this.passTestStats = passTestStats;
     Navigation = navigation;
+
+    ScoreList = new List<Score>();
+    
     NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
     NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
     NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
     _sendPrompt = sendPrompt;
+    LoadScoresCommand = new RelayCommand(calculateScores);
     ShowPopupCommand = new RelayCommand(ShowPopup);
     HidePopupCommand = new RelayCommand(HidePopup);
 
@@ -42,6 +49,7 @@ public class ScoreViewModel : BaseViewModel
 
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
   }
+  public ICommand LoadScoresCommand { get; }
 
   private SendPrompt _sendPrompt;
 
@@ -56,7 +64,8 @@ public class ScoreViewModel : BaseViewModel
       OnPropertyChanged();
     }
   }
-
+  public NavRelayCommand NavigateToNewTestView { get; set; }
+  public NavRelayCommand NavigateToMultiplayerView { get; set; }
   public NavRelayCommand NavigateToTypeTextView { get; set; }
 
   private string _apiKey;
@@ -238,21 +247,18 @@ public class ScoreViewModel : BaseViewModel
     }
   }
 
-  public NavRelayCommand NavigateToNewTestView { get; set; }
-  public NavRelayCommand NavigateToMultiplayerView { get; set; }
-
-  private int _averageRPM = 126;
-  public int AverageRPM
+  private int _averageWPM;
+  public int AverageWPM
   {
-    get { return _averageRPM; }
+    get { return _averageWPM; }
     set
     {
-      _averageRPM = value;
-      OnPropertyChanged(nameof(AverageRPM));
+      _averageWPM = value;
+      OnPropertyChanged(nameof(AverageWPM));
     }
   }
 
-  private int _averageCPM = 618;
+  private int _averageCPM;
   public int AverageCPM
   {
     get { return _averageCPM; }
@@ -263,7 +269,7 @@ public class ScoreViewModel : BaseViewModel
     }
   }
 
-  private int _averageAccuracy = 95;
+  private int _averageAccuracy;
   public int AverageAccuracy
   {
     get { return _averageAccuracy; }
@@ -274,7 +280,7 @@ public class ScoreViewModel : BaseViewModel
     }
   }
 
-  private int _wordsTyped = 54932;
+  private int _wordsTyped;
   public int WordsTyped
   {
     get { return _wordsTyped; }
@@ -285,7 +291,7 @@ public class ScoreViewModel : BaseViewModel
     }
   }
 
-  private int _testsTaken = 419;
+  private int _testsTaken;
   public int TestsTaken
   {
     get { return _testsTaken; }
@@ -296,7 +302,7 @@ public class ScoreViewModel : BaseViewModel
     }
   }
 
-  private int _mpGamesPlayed = 53;
+  private int _mpGamesPlayed;
   public int MpGamesPlayed
   {
     get { return _mpGamesPlayed; }
@@ -307,7 +313,7 @@ public class ScoreViewModel : BaseViewModel
     }
   }
 
-  private int _mpGamesWon = 15;
+  private int _mpGamesWon;
   public int MpGamesWon
   {
     get { return _mpGamesWon; }
@@ -316,6 +322,42 @@ public class ScoreViewModel : BaseViewModel
       _mpGamesWon = value;
       OnPropertyChanged(nameof(MpGamesWon));
     }
+  }
+  
+  
+  private int mpGamesPlayed;
+  private int mpGamesWon;
+  private int totalCpm;
+  private int totalWpm;
+  private int totalAccuracy;
+  
+  public async void calculateScores()
+  {
+    var response = await apiClient.GetPlayerScores();
+    ScoreList = response.ScoreList;
+    
+    foreach (var score in ScoreList)
+    {
+      totalCpm += score.cpm;
+      totalWpm += score.wpm;
+      totalAccuracy += score.accuracy;
+      if (score.multiplayerId != 0)
+      {
+        mpGamesPlayed++;
+      }
+    }
+
+    AverageAccuracy = totalAccuracy / ScoreList.Count;
+    AverageCPM = totalCpm / ScoreList.Count;
+    AverageWPM = totalWpm / ScoreList.Count;
+    MpGamesPlayed = mpGamesPlayed;
+    TestsTaken = ScoreList.Count;
+
+    mpGamesPlayed = 0;
+    mpGamesPlayed = 0;
+    totalCpm = 0;
+    totalWpm = 0;
+    totalAccuracy = 0;
   }
 
   private bool _isPopupVisible;

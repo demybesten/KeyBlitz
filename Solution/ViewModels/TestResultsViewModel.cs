@@ -20,9 +20,6 @@ namespace Solution.ViewModels
           NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
           _dataService = passTestStats;
-
-          // Handle the data change in ViewModelB
-
       }
       public int Wpm => _dataService.Wpm;
       public int Cpm => _dataService.Cpm;

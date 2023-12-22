@@ -51,7 +51,7 @@
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
-                    Content="{Binding AverageRPM}"
+                    Content="{Binding AverageWPM}"
                     FontFamily="Lucida Console"
                     Foreground="{StaticResource MainTextColor}"
                     FontSize="20"
@@ -87,7 +87,7 @@
                 <Label
                     Grid.Row="3"
                     Grid.Column="0"
-                    Content="{Binding AverageAccuracy}"
+                    Content="{Binding AverageAccuracy, Mode=OneWay}"
                     FontFamily="Lucida Console"
                     Foreground="{StaticResource MainTextColor}"
                     FontSize="20"
@@ -189,6 +189,19 @@
                         Content="multiplayer"
                         Margin="20,0,0,0"
                         Command="{Binding NavigateToMultiplayerView}" />
+                <Button Style="{StaticResource RoundedCornersButton}"
+                        Grid.Row="5"
+                        Grid.Column="3"
+                        IsEnabled="{Binding IsPopupVisible, Converter= {StaticResource BoolToOppositeConverter}}"
+                        Width="200"
+                        FontFamily="Lucida Console"
+                        Foreground="{StaticResource MainTextColor}"
+                        Background="{StaticResource PanelBackgroundColor1}"
+                        FontSize="15"
+                        Content="Load data"
+                        Margin="20,0,0,0"
+                        Command="{Binding LoadScoresCommand}" />
+                
             </Grid>
             <Rectangle Fill="#80000000"
                        Visibility="{Binding IsPopupVisible, Converter={StaticResource BoolToVisibilityConverter }}" />
