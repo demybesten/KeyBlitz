@@ -11,9 +11,6 @@ public partial class LeaderboardView : UserControl
     public LeaderboardView()
     {
         InitializeComponent();
-        ViewModel = new LeaderboardViewModel();
-        DataContext = ViewModel;
-
     }
 
     private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
