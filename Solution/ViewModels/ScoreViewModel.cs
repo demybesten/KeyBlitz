@@ -22,8 +22,9 @@ public class ScoreViewModel : BaseViewModel
   public SeriesCollection ChartSeries { get; set; }
   public string DateTimeFormatter { get; set; }
 
-  private List<Score> ScoreList = new List<Score>();
+  private List<Score> ScoreList;
   private List<Score> ScoreListTemp = new List<Score>();
+  private bool _isDataLoaded = false;
   
   public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
   {
@@ -37,6 +38,8 @@ public class ScoreViewModel : BaseViewModel
     _sendPrompt = sendPrompt;
     ShowPopupCommand = new RelayCommand(ShowPopup);
     HidePopupCommand = new RelayCommand(HidePopup);
+
+    // LoadDataCommand = new RelayCommand(GetPlayerScores);
 
     _textLength = 20;
     ComplexityLevels.Add("basic");
@@ -54,68 +57,126 @@ public class ScoreViewModel : BaseViewModel
     ChartFilters.Add("last year");
     ChartFilters.Add("all time");
     
-    SetupChart(ScoreListTemp);
+    ScoreList = new List<Score>();
+    InitializeAsync();
+    
+    // Chart setup within the constructor
+    ChartSeries = new SeriesCollection();
+
+    LineSeries lineSeries = new LineSeries
+    {
+      PointGeometrySize = 15,
+      Values = new ChartValues<ObservablePoint>()
+    };
+
+    for (int i = 0; i < 10; i++)
+    {
+      // double yValue = Convert.ToDouble(ScoreList[i].score);
+      double yValue = i + 1;
+      lineSeries.Values.Add(new ObservablePoint(i, yValue));
+
+      Console.WriteLine($"X: {i}, Y: {yValue}");
+    }
+
+    ChartSeries.Add(lineSeries); // Add the LineSeries to the ChartSeries
     
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
   }
   
-  private void SetupChart(List<Score> scoreList)
-  {
-    Console.WriteLine(scoreList.Count);
-    ChartSeries = new SeriesCollection
-    {
-      new LineSeries
-      {
-        PointGeometrySize = 15,
-        Values = new ChartValues<ObservablePoint>()
-      }
-    };
-    
-    LineSeries lineSeries = (LineSeries)ChartSeries[0];
-
-    if (scoreList != null)
-    {
-      // Console.WriteLine(ScoreList.Count);
-      for (int i = 0; i < scoreList.Count; i++)
-      {
-        double yValue = Convert.ToDouble(scoreList[i].score);
-        lineSeries.Values.Add(new ObservablePoint(i+1, yValue));
-      }
-      
-      var dates = new List<DateTime>
-      {
-        new DateTime(2023, 6, 12),
-        new DateTime(2023, 6, 13),
-        new DateTime(2023, 6, 14),
-        new DateTime(2023, 6, 15),
-        new DateTime(2023, 6, 16),
-        new DateTime(2023, 6, 17),
-        new DateTime(2023, 6, 18),
-        new DateTime(2023, 6, 19),
-        new DateTime(2023, 6, 20),
-        new DateTime(2023, 6, 21),
-      };
-      
-      // Converting dates to strings for axis labels
-      DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
-    }
-  }
-  
-  public async Task InitializeAsync1()
-  {
-    await GetPlayerScores();
-  }
-
-  private async Task<List<Score>> GetPlayerScores()
+  private async Task InitializeAsync()
   {
     var response = await apiClient.GetPlayerScores();
     ScoreList = response.ScoreList;
-    // Console.WriteLine(ScoreList.Count);
-
-    ScoreListTemp = ScoreList;
-    
-    return ScoreList;
   }
+  
+  // private async void InitializeAsync()
+  // {
+  //   await GetPlayerScores();
+  //   Console.WriteLine(ScoreList.Count);
+  //   
+  //   ChartSeries = new SeriesCollection();
+  //
+  //   LineSeries lineSeries = new LineSeries
+  //   {
+  //     PointGeometrySize = 15,
+  //     Values = new ChartValues<ObservablePoint>()
+  //   };
+  //   
+  //   for (int i = 0; i < ScoreList.Count; i++)
+  //   {
+  //     // double yValue = i + 1;
+  //     double yValue = Convert.ToDouble(ScoreList[i].score);
+  //     // Console.WriteLine(yValue);
+  //     lineSeries.Values.Add(new ObservablePoint(i, yValue));
+  //     // Console.WriteLine(lineSeries.Values[i]);
+  //     LiveCharts.Defaults.ObservablePoint point = new LiveCharts.Defaults.ObservablePoint(i, yValue); // Replace with your actual ObservablePoint instance
+  //   
+  //     Console.WriteLine($"X: {point.X}, Y: {point.Y}");
+  //   }
+  //   ChartSeries.Add(lineSeries);
+  // }
+  //
+  // private void SetupChart()
+  // {
+  //   Console.WriteLine(ScoreList.Count);
+  //   ChartSeries = new SeriesCollection();
+  //
+  //   LineSeries lineSeries = new LineSeries
+  //   {
+  //     PointGeometrySize = 15,
+  //     Values = new ChartValues<ObservablePoint>()
+  //     {
+  //       new ObservablePoint(0, 10),
+  //       new ObservablePoint(1, 10),
+  //       new ObservablePoint(2, 10),
+  //       new ObservablePoint(3, 10),
+  //       new ObservablePoint(4, 10),
+  //     }
+  //   };
+  //   
+  //   // for (int i = 0; i < ScoreList.Count; i++)
+  //   // {
+  //   //   double yValue = Convert.ToDouble(ScoreList[i].score);
+    //   // Console.WriteLine(yValue);
+    //   lineSeries.Values.Add(new ObservablePoint(i, yValue));
+    //   // Console.WriteLine(lineSeries.Values[i]);
+    //   LiveCharts.Defaults.ObservablePoint point = new LiveCharts.Defaults.ObservablePoint(i, yValue); // Replace with your actual ObservablePoint instance
+    //
+    //   Console.WriteLine($"X: {point.X}, Y: {point.Y}");
+    // }
+  //
+  //   
+  //   
+  //   var dates = new List<DateTime>
+  //   {
+  //     new DateTime(2023, 6, 12),
+  //     new DateTime(2023, 6, 13),
+  //     new DateTime(2023, 6, 14),
+  //     new DateTime(2023, 6, 15),
+  //     new DateTime(2023, 6, 16),
+  //     new DateTime(2023, 6, 17),
+  //     new DateTime(2023, 6, 18),
+  //     new DateTime(2023, 6, 19),
+  //     new DateTime(2023, 6, 20),
+  //     new DateTime(2023, 6, 21),
+  //   };
+  //   
+  //   // Converting dates to strings for axis labels
+  //   DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
+  // }
+  //
+  // // public async Task InitializeAsync1()
+  // // {
+  // //   await GetPlayerScores();
+  // // }
+  //
+  // private async Task GetPlayerScores()
+  // {
+  //   var response = await apiClient.GetPlayerScores();
+  //   ScoreList = response.ScoreList;
+  //   
+  //   Console.WriteLine(ScoreList.Count);
+  // }
 
   private SendPrompt _sendPrompt;
 
@@ -423,6 +484,9 @@ public class ScoreViewModel : BaseViewModel
   {
     IsPopupVisible = true;
   }
+  
+  public ICommand LoadDataCommand { get; }
+  
 
   private List<string> _dateLabels;
   public List<string> DateLabels
