@@ -29,6 +29,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     
     private string _status;
 
+    private ScoreViewModel _scoreViewModel;
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -98,14 +99,15 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     }
     public MultiplayerViewModel(INavigationService navigation, IDataService passTestStats)
     {
-
-        _webSocket = new ClientWebSocket();
+        passTestStats.Multiplayer = true;
+      _webSocket = new ClientWebSocket();
         Connect();
         Navigation = navigation;
-        NavigateToMultiplayerResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerResultsViewModel>(); }, o => true);
+        NavigateToTypeTextViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
         // Initialiseer de lijst van spelers
-      
+
+        _scoreViewModel = new ScoreViewModel(navigation, new SendPrompt(), passTestStats);
 
         stopWatch = new Stopwatch();
         stopWatch.Start();
@@ -123,6 +125,10 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
         
 
     }
+    public MultiplayerViewModel(IDataService passTestStats)
+    {
+        passTestStats.Multiplayer = true;
+    }
     public class Player
     {
         [JsonProperty("playerId")]
@@ -135,7 +141,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     }
     public ICommand ConnectCommand { get; }
 
-    public NavRelayCommand NavigateToMultiplayerResultsView { get; set; }
+    public NavRelayCommand NavigateToTypeTextViewCommand { get; set; }
 
    
     // Andere logica voor het toevoegen/verwijderen van spelers kan hier worden toegevoegd
@@ -144,15 +150,14 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
 
     private void StartTimer()
     {
-        if (Status == "waiting")
-        {
+       
             stopWatch.Start();
             timer.Start();
-        }
+        
     }
 
 
-    private void timer_Tick(object sender, EventArgs e)
+    public async void timer_Tick(object sender, EventArgs e)
     {
         // Als stopwatch loopt
         if (stopWatch.IsRunning)
@@ -167,7 +172,9 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
                 stopWatch.Stop();
                 timer.Stop();
                 ElapsedTime = "00";
-                NavigateToMultiplayerResultsView.Execute(null);
+                MessageBox.Show("test");   
+                await _scoreViewModel.SendPrompt();
+
 
             }
             else
@@ -277,7 +284,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     }
 }
 
-    private void ProcessLobbyUpdate(string lobbyUpdate)
+    private async void ProcessLobbyUpdate(string lobbyUpdate)
     {
         try
         {
@@ -287,9 +294,11 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
             var lobbyData = JsonConvert.DeserializeObject<LobbyUpdate>(lobbyUpdate);
 
             LobbyStatus = lobbyData.Status;
+            StartTimer();
             if (LobbyStatus == "playing")
             {
-                NavigateToMultiplayerResultsView.Execute(null);
+                MessageBox.Show("test");
+                await _scoreViewModel.SendPrompt();
 
             }
             foreach (var player in lobbyData.Players)
@@ -333,7 +342,54 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     }
 
 
+    public async Task SendFinishMessage(int timeTaken, double accuracy)
+    {
+        try
+        {
+            // Construct the finish message
+            _webSocket = new ClientWebSocket();
 
+            // ... (other code)
+
+            // Construct the finish message
+            var finishMessage = new
+            {
+                type = "finish",
+                data = new
+                {
+                    time = 123, // Replace with the actual time value (int)
+                    accuracy = 50.0 // Replace with the actual accuracy value (double)
+                }
+            };
+            Uri serverUri = new Uri("ws://161.97.129.111:6969");
+
+            await _webSocket.ConnectAsync(serverUri, CancellationToken.None);
+
+            // Convert the finish message to JSON
+            string jsonFinishMessage = JsonConvert.SerializeObject(finishMessage);
+
+            // Convert the JSON string to bytes
+            byte[] finishMessageBytes = Encoding.UTF8.GetBytes(jsonFinishMessage);
+
+            // Check if _webSocket is not null before attempting to use it
+            if (_webSocket != null)
+            {
+                // Send the finish message to the server
+                await _webSocket.SendAsync(new ArraySegment<byte>(finishMessageBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+            else
+            {
+                // Handle the case where _webSocket is null
+                MessageBox.Show("_webSocket is null");
+            }
+            MessageBox.Show("gelukt");
+        }
+        catch (Exception ex)
+        {
+            // Handle errors here
+            MessageBox.Show($"Error sending finish message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
 
 
     protected virtual void OnPropertyChanged(string propertyName)

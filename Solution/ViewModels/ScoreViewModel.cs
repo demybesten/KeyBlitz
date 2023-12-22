@@ -42,8 +42,8 @@ public class ScoreViewModel : BaseViewModel
 
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
   }
-
-  private SendPrompt _sendPrompt;
+   
+    private SendPrompt _sendPrompt;
 
   public INavigationService _Navigation;
 
@@ -229,8 +229,9 @@ public class ScoreViewModel : BaseViewModel
   {
     ShowLoading = true;
     Console.WriteLine("Generating....");
-    ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
-    if (ResponseText != "" && ResponseText != null)
+    //ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
+        ResponseText = await _sendPrompt.GeneratePrompt("scheeps", "story", 20, "basic", "Dutch");
+        if (ResponseText != "" && ResponseText != null)
     {
       ShowLoading = false;
       HidePopup();

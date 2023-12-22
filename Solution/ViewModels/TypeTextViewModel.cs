@@ -4,6 +4,7 @@ using Solution.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -38,6 +39,7 @@ namespace Solution.ViewModels
 
     public class TypeTextViewModel : BaseViewModel
     {
+        private MultiplayerViewModel _multiplayerViewModel;
 
         public DispatcherTimer timer;
         public Stopwatch stopWatch;
@@ -70,7 +72,7 @@ namespace Solution.ViewModels
             get { return _amountOfTypedWords; }
             set
             {
-              _amountOfTypedWords = value;
+                _amountOfTypedWords = value;
                 OnPropertyChanged(nameof(AmountOfTypedWords));
             }
         }
@@ -121,11 +123,14 @@ namespace Solution.ViewModels
 
         //Slaat stopwatch value op en wordt gebruikt om te binden aan een label
         private string _elapsedTime = String.Empty;
-        public string ElapsedTime {
-            get {
+        public string ElapsedTime
+        {
+            get
+            {
                 return _elapsedTime;
             }
-            set {
+            set
+            {
                 _elapsedTime = value;
                 OnPropertyChanged(nameof(ElapsedTime));
             }
@@ -137,39 +142,42 @@ namespace Solution.ViewModels
         public ICommand MyCommand { get; private set; }
 
         public ICommand PressChar { get; private set; }
+        public NavRelayCommand NavigateToMultiplayerResultsView { get; set; }
 
         public ICommand PressBackspace { get; private set; }
         private string _textCache;
 
-        public TypeTextViewModel(INavigationService navigation,IDataService passTestStats)
+        public TypeTextViewModel(INavigationService navigation, IDataService passTestStats)
         {
-          Navigation = navigation;
-          NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
+            Navigation = navigation;
+            NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
+            NavigateToMultiplayerResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerResultsViewModel>(); }, o => true);
 
-          this.passTestStats = passTestStats;
-          _weight = 0.6;
-          MyCommand = new RelayCommand(ExecuteMyCommand);
-          PressChar = new CharacterEventCommand(ProcessChar);
-          PressBackspace = new RelayCommand(DeleteCharacter);
-          tempList = new List<int> { };
-          TheText = new List<string> { "Text", "could", "not", "be", "loaded" };
-          _textCache = "";
-          UserInput = new List<string> { "" };
-          if (passTestStats.Text != null && !passTestStats.Equals(_textCache))
-          {
-            TheText = new List<string>(passTestStats.Text.Split(new char[] {' ', '\n'}, StringSplitOptions.RemoveEmptyEntries));
-            UserInput.Clear();
-            UserInput.Add("");
-            _textCache = passTestStats.Text;
-            updateInput(true);
-          }
+            this.passTestStats = passTestStats;
+            _weight = 0.6;
+            MyCommand = new RelayCommand(ExecuteMyCommand);
+            PressChar = new CharacterEventCommand(ProcessChar);
+            PressBackspace = new RelayCommand(DeleteCharacter);
+            tempList = new List<int> { };
+            TheText = new List<string> { "Text", "could", "not", "be", "loaded" };
+            _textCache = "";
+            UserInput = new List<string> { "" };
+            if (passTestStats.Text != null && !passTestStats.Equals(_textCache))
+            {
+                TheText = new List<string>(passTestStats.Text.Split(new char[] { ' ', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+                UserInput.Clear();
+                UserInput.Add("");
+                _textCache = passTestStats.Text;
+                updateInput(true);
+            }
+            _multiplayerViewModel = new MultiplayerViewModel(passTestStats);
 
-          stopWatch = new Stopwatch();
-          timer = new DispatcherTimer();
-          //live timer event
-          timer.Tick += timer_Tick;
+            stopWatch = new Stopwatch();
+            timer = new DispatcherTimer();
+            //live timer event
+            timer.Tick += timer_Tick;
 
-          ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
+            ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
         }
 
         public INavigationService _Navigation;
@@ -188,20 +196,20 @@ namespace Solution.ViewModels
 
         private void updateText(List<Word> words, bool resetWordWrap = false)
         {
-          if (passTestStats.Text != null && !passTestStats.Text.Equals(_textCache))
-          {
-            TheText = new List<string>(passTestStats.Text.Split(new char[] {' ', '\n'}, StringSplitOptions.RemoveEmptyEntries));
-            UserInput.Clear();
-            UserInput.Add("");
-            _textCache = passTestStats.Text;
-            updateInput(true);
-          }
+            if (passTestStats.Text != null && !passTestStats.Text.Equals(_textCache))
+            {
+                TheText = new List<string>(passTestStats.Text.Split(new char[] { ' ', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+                UserInput.Clear();
+                UserInput.Add("");
+                _textCache = passTestStats.Text;
+                updateInput(true);
+            }
 
-          ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
-          if (_textUpdater != null)
-          {
-            _textUpdater.updateText(words, resetWordWrap);
-          }
+            ITextUpdater? _textUpdater = ServiceLocator.GetTextUpdater();
+            if (_textUpdater != null)
+            {
+                _textUpdater.updateText(words, resetWordWrap);
+            }
         }
         public List<string> TheText;
         public List<string> UserInput;
@@ -234,7 +242,8 @@ namespace Solution.ViewModels
             if (text == " ")
             {
                 UserInput.Add("");
-            } else if (text?.Length == 1)
+            }
+            else if (text?.Length == 1)
             {
                 UserInput[UserInput.Count - 1] = UserInput[UserInput.Count - 1] + text;
             }
@@ -242,63 +251,73 @@ namespace Solution.ViewModels
         }
 
 
-        private void updateInput(bool resetWordWrap = false)
+        private async void updateInput(bool resetWordWrap = false)
         {
-          myList = new List<Word> { };
-          for (int w = 0; w < TheText.Count; w++)
-          {
-            string word = TheText[w];
-            string typedWord = "";
-            if (w < UserInput.Count)
+            myList = new List<Word> { };
+            for (int w = 0; w < TheText.Count; w++)
             {
-              typedWord = UserInput[w];
-            }
-            intList = new List<int> { };
-
-            for (int i = 0; i < word.Length; i++)
-            {
-              //char character = word[i];
-              if (i < typedWord.Length)
-              {
-                if (typedWord[i].Equals(word[i]))
+                string word = TheText[w];
+                string typedWord = "";
+                if (w < UserInput.Count)
                 {
-                  intList.Add(0);
-                } else
-                {
-                  intList.Add(1);
+                    typedWord = UserInput[w];
                 }
-              }
-              else if (w < UserInput.Count - 1)
-              {
-                intList.Add(2);
-              }
-            }
+                intList = new List<int> { };
 
-            if (typedWord.Length > word.Length)
+                for (int i = 0; i < word.Length; i++)
+                {
+                    //char character = word[i];
+                    if (i < typedWord.Length)
+                    {
+                        if (typedWord[i].Equals(word[i]))
+                        {
+                            intList.Add(0);
+                        }
+                        else
+                        {
+                            intList.Add(1);
+                        }
+                    }
+                    else if (w < UserInput.Count - 1)
+                    {
+                        intList.Add(2);
+                    }
+                }
+
+                if (typedWord.Length > word.Length)
+                {
+                    for (int i = word.Length; i < typedWord.Length; i++)
+                    {
+                        intList.Add(3);
+                    }
+                    word = word + typedWord.Substring(word.Length, typedWord.Length - word.Length);
+                }
+
+                myList.Add(new Word(word, intList));
+            }
+            updateText(myList, resetWordWrap);
+            string lastWord = TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' });
+            System.Diagnostics.Debug.WriteLine(lastWord);
+            if (UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
+                                                     UserInput[UserInput.Count - 1].Length == TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }).Length &&
+                                                     GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
+                                                     GetLastChar.GetLastCharacter(TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }))))
             {
-              for (int i = word.Length; i < typedWord.Length; i++)
-              {
-                intList.Add(3);
-              }
-              word = word + typedWord.Substring(word.Length, typedWord.Length - word.Length);
-            }
+                StopTimer();
+                CalculateScore();
+                ResetData();
+                if (passTestStats.Multiplayer == true)
+                {
+                    await _multiplayerViewModel.SendFinishMessage(50, 50);
+                    NavigateToMultiplayerResultsView.Execute(null);
 
-            myList.Add(new Word(word, intList));
-          }
-          updateText(myList, resetWordWrap);
-          string lastWord = TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' });
-          System.Diagnostics.Debug.WriteLine(lastWord);
-          if ( UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
-                                                   UserInput[UserInput.Count-1].Length == TheText[TheText.Count-1].TrimEnd(new char[] { ' ', '\n', '\r' }).Length &&
-                                                   GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
-                                                   GetLastChar.GetLastCharacter(TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }))))
-          {
-            StopTimer();
-            CalculateScore();
-            ResetData();
-            NavigateToTestResultsView.Execute(null);
-            // text finished
-          }
+                }
+                else
+                {
+                    NavigateToTestResultsView.Execute(null);
+                }
+                // text finished
+            }
         }
 
         private void ExecuteMyCommand()
@@ -309,10 +328,13 @@ namespace Solution.ViewModels
 
         public void DeleteCharacter()
         {
-            if (UserInput[UserInput.Count-1].Length > 0) {
-                UserInput[UserInput.Count-1] = UserInput[UserInput.Count-1].Substring(0, UserInput[UserInput.Count - 1].Length - 1);
+            if (UserInput[UserInput.Count - 1].Length > 0)
+            {
+                UserInput[UserInput.Count - 1] = UserInput[UserInput.Count - 1].Substring(0, UserInput[UserInput.Count - 1].Length - 1);
                 updateInput();
-            } else if (UserInput.Count > 1) {
+            }
+            else if (UserInput.Count > 1)
+            {
                 UserInput.RemoveAt(UserInput.Count - 1);
                 updateInput();
             }
@@ -364,7 +386,7 @@ namespace Solution.ViewModels
             Accuracy = Convert.ToInt32(_amountOfCorrectChars / _amountOfTypedChars * 100);
             passTestStats.Accuracy = Accuracy;
 
-            Score = Convert.ToInt32( _wpm * (1 - _weight) + _accuracy * _weight);
+            Score = Convert.ToInt32(_wpm * (1 - _weight) + _accuracy * _weight);
             passTestStats.Score = Score;
 
 
