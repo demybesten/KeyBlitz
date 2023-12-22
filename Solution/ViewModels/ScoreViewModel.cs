@@ -23,6 +23,7 @@ public class ScoreViewModel : BaseViewModel
   public string DateTimeFormatter { get; set; }
 
   private List<Score> ScoreList = new List<Score>();
+  private List<Score> ScoreListTemp = new List<Score>();
   
   public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
   {
@@ -52,28 +53,52 @@ public class ScoreViewModel : BaseViewModel
     ChartFilters.Add("last month");
     ChartFilters.Add("last year");
     ChartFilters.Add("all time");
-
     
+    SetupChart(ScoreListTemp);
     
-    
-    var dates = new List<DateTime>
-    {
-      new DateTime(2023, 6, 12),
-      new DateTime(2023, 6, 13),
-      new DateTime(2023, 6, 14),
-      new DateTime(2023, 6, 15),
-      new DateTime(2023, 6, 16),
-      new DateTime(2023, 6, 17),
-      new DateTime(2023, 6, 18),
-      new DateTime(2023, 6, 19),
-      new DateTime(2023, 6, 20),
-      new DateTime(2023, 6, 21),
-    };
-
-    // Converting dates to strings for axis labels
-    DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
-
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+  }
+  
+  private void SetupChart(List<Score> scoreList)
+  {
+    Console.WriteLine(scoreList.Count);
+    ChartSeries = new SeriesCollection
+    {
+      new LineSeries
+      {
+        PointGeometrySize = 15,
+        Values = new ChartValues<ObservablePoint>()
+      }
+    };
+    
+    LineSeries lineSeries = (LineSeries)ChartSeries[0];
+
+    if (scoreList != null)
+    {
+      // Console.WriteLine(ScoreList.Count);
+      for (int i = 0; i < scoreList.Count; i++)
+      {
+        double yValue = Convert.ToDouble(scoreList[i].score);
+        lineSeries.Values.Add(new ObservablePoint(i+1, yValue));
+      }
+      
+      var dates = new List<DateTime>
+      {
+        new DateTime(2023, 6, 12),
+        new DateTime(2023, 6, 13),
+        new DateTime(2023, 6, 14),
+        new DateTime(2023, 6, 15),
+        new DateTime(2023, 6, 16),
+        new DateTime(2023, 6, 17),
+        new DateTime(2023, 6, 18),
+        new DateTime(2023, 6, 19),
+        new DateTime(2023, 6, 20),
+        new DateTime(2023, 6, 21),
+      };
+      
+      // Converting dates to strings for axis labels
+      DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
+    }
   }
   
   public async Task InitializeAsync1()
@@ -85,30 +110,9 @@ public class ScoreViewModel : BaseViewModel
   {
     var response = await apiClient.GetPlayerScores();
     ScoreList = response.ScoreList;
-    Console.WriteLine(ScoreList.Count);
-    
-    ChartSeries = new SeriesCollection
-    {
-      new LineSeries
-      {
-        PointGeometrySize = 15,
-        Values = new ChartValues<ObservablePoint>() // Initialize with an empty list
-      }
-    };
-    
-    LineSeries lineSeries = (LineSeries)ChartSeries[0];
-    
-    // for (int i = 1; i < ScoreList.Count; i++)
-    // {
-    //   double yValue = ScoreList[i].Wpm;
-    //   Console.WriteLine(yValue);
-    //   lineSeries.Values.Add(new ObservablePoint(i, yValue));
-    // }
+    // Console.WriteLine(ScoreList.Count);
 
-    foreach (var VARIABLE in ScoreList)
-    {
-      Console.WriteLine(VARIABLE.Wpm);
-    }
+    ScoreListTemp = ScoreList;
     
     return ScoreList;
   }
