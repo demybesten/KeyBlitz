@@ -10,7 +10,7 @@ public class Persoon
 {
     public int Naam { get; set; }
     public int Score { get; set; }
-    public string Positie { get; set; }
+    public int Positie { get; set; }
 
 }
 public class LeaderboardViewModel : BaseViewModel
@@ -46,35 +46,18 @@ public class LeaderboardViewModel : BaseViewModel
         var response = await apiClient.GetLeaderboard(FilterToTimePeriod());
         Leaderboard = response.ScoreList;
         Console.WriteLine(Leaderboard[0].score);
-        
-        if (Personen.Count == 0)
-        {
-            Personen.Add(new Persoon { Naam = Leaderboard[0].user_id, Score = Leaderboard[0].score, Positie = "1"});
-            Personen.Add(new Persoon { Naam = Leaderboard[1].user_id, Score = Leaderboard[1].score, Positie = "2" });
-            Personen.Add(new Persoon { Naam = Leaderboard[2].user_id, Score = Leaderboard[2].score, Positie = "3" });
-            Personen.Add(new Persoon { Naam = Leaderboard[3].user_id, Score = Leaderboard[3].score, Positie = "4" });
-            Personen.Add(new Persoon { Naam = Leaderboard[4].user_id, Score = Leaderboard[4].score, Positie = "5" });
-        }
-        else
+
+        if (Personen.Count != 0)
         {
             Personen.Clear();
-            Personen.Add(new Persoon { Naam = Leaderboard[0].user_id, Score = Leaderboard[0].score, Positie = "1"});
-            Personen.Add(new Persoon { Naam = Leaderboard[1].user_id, Score = Leaderboard[1].score, Positie = "2" });
-            Personen.Add(new Persoon { Naam = Leaderboard[2].user_id, Score = Leaderboard[2].score, Positie = "3" });
-            Personen.Add(new Persoon { Naam = Leaderboard[3].user_id, Score = Leaderboard[3].score, Positie = "4" });
-            Personen.Add(new Persoon { Naam = Leaderboard[4].user_id, Score = Leaderboard[4].score, Positie = "5" });
         }
-    }
-    
-    private ObservableCollection<Persoon> _scores;
-    public ObservableCollection<Persoon> Scores
-    {
-        get { return _scores; }
-        set
+        for (int i = 0; i < 5; i++)
         {
-            _scores = value;
-            OnPropertyChanged(nameof(Scores));
+            Console.WriteLine(i);
+            Personen.Add(new Persoon { Naam = Leaderboard[i].user_id, Score = Leaderboard[i].score, Positie = i+1});
         }
+        
+
     }
     
     public INavigationService _Navigation;
@@ -90,8 +73,7 @@ public class LeaderboardViewModel : BaseViewModel
     }
 
     private ObservableCollection<Persoon> _personen;
-
-    public event PropertyChangedEventHandler PropertyChanged;
+    
 
     public ObservableCollection<Persoon> Personen
     {
@@ -103,11 +85,6 @@ public class LeaderboardViewModel : BaseViewModel
         }
     }
     public NavRelayCommand NavigateToNewTestView { get; set; }
-    
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 
     private ObservableCollection<string> _chartFilters = new ObservableCollection<string>();
     public ObservableCollection<string> ChartFilters
