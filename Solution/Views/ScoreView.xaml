@@ -95,24 +95,6 @@
                     Margin="20,20,0,0" />
                 <Label
                     Grid.Row="4"
-                    Grid.Column="0"
-                    Content="words typed"
-                    FontFamily="Lucida Console"
-                    Foreground="{StaticResource SecondaryTextColor}"
-                    FontSize="15"
-                    HorizontalAlignment="Left"
-                    Margin="20,0,0,0" />
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Content="{Binding WordsTyped}"
-                    FontFamily="Lucida Console"
-                    Foreground="{StaticResource MainTextColor}"
-                    FontSize="20"
-                    HorizontalAlignment="Left"
-                    Margin="20,20,0,0" />
-                <Label
-                    Grid.Row="4"
                     Grid.Column="1"
                     Content="tests taken"
                     FontFamily="Lucida Console"
@@ -189,18 +171,6 @@
                         Content="multiplayer"
                         Margin="20,0,0,0"
                         Command="{Binding NavigateToMultiplayerView}" />
-                <Button Style="{StaticResource RoundedCornersButton}"
-                        Grid.Row="5"
-                        Grid.Column="3"
-                        IsEnabled="{Binding IsPopupVisible, Converter= {StaticResource BoolToOppositeConverter}}"
-                        Width="200"
-                        FontFamily="Lucida Console"
-                        Foreground="{StaticResource MainTextColor}"
-                        Background="{StaticResource PanelBackgroundColor1}"
-                        FontSize="15"
-                        Content="Load data"
-                        Margin="20,0,0,0"
-                        Command="{Binding LoadScoresCommand}" />
                 
             </Grid>
             <Rectangle Fill="#80000000"
