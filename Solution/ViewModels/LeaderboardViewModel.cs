@@ -3,19 +3,63 @@ using Solution.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace Solution.ViewModels;
 public class Persoon
 {
-    public string Naam { get; set; }
+    public int Naam { get; set; }
     public int Score { get; set; }
-    public string Positie { get; set; }
+    public int Positie { get; set; }
 
 }
 public class LeaderboardViewModel : BaseViewModel
 {
+    private readonly ApiClient apiClient;
+    private List<Score> leaderboardScores;
+    public LeaderboardViewModel(INavigationService navigation,ApiClient client)
+    {
+        ChartFilters.Add("last week");
+        ChartFilters.Add("last month");
+        ChartFilters.Add("last year");
+        ChartFilters.Add("all time");
+
+        Personen = new ObservableCollection<Persoon>();
+        Leaderboard = new List<Score>();
+        
+        
+        apiClient = client;
+        Navigation = navigation;
+        NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
+        InitializeAsync();
+    }
+
+    public List<Score> Leaderboard;
+    
+    private async void InitializeAsync()
+    {
+        await SetLeaderboard();
+    }
+
+    private async Task SetLeaderboard()
+    {
+        var response = await apiClient.GetLeaderboard(FilterToTimePeriod());
+        Leaderboard = response.ScoreList;
+        Console.WriteLine(Leaderboard[0].score);
+
+        if (Personen.Count != 0)
+        {
+            Personen.Clear();
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine(i);
+            Personen.Add(new Persoon { Naam = Leaderboard[i].user_id, Score = Leaderboard[i].score, Positie = i+1});
+        }
+        
+
+    }
+    
     public INavigationService _Navigation;
 
     public INavigationService Navigation
@@ -29,8 +73,7 @@ public class LeaderboardViewModel : BaseViewModel
     }
 
     private ObservableCollection<Persoon> _personen;
-
-    public event PropertyChangedEventHandler PropertyChanged;
+    
 
     public ObservableCollection<Persoon> Personen
     {
@@ -42,43 +85,6 @@ public class LeaderboardViewModel : BaseViewModel
         }
     }
     public NavRelayCommand NavigateToNewTestView { get; set; }
-
-    public LeaderboardViewModel(INavigationService navigation)
-    {
-        Navigation = navigation;
-        NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
-
-    }
-    public LeaderboardViewModel()
-    {
-        ChartFilters.Add("last week");
-        ChartFilters.Add("last month");
-        ChartFilters.Add("last year");
-        ChartFilters.Add("all time");
-
-        // Initialisatie van de personenlijst (voorbeeldgegevens)
-        Personen = new ObservableCollection<Persoon>
-        {
-            new Persoon { Naam = "Alice", Score = 90, Positie = "2"},
-            new Persoon { Naam = "Bob", Score = 75, Positie = "5" },
-            new Persoon { Naam = "Charlie", Score = 85, Positie = "3" },
-            new Persoon { Naam = "David", Score = 95, Positie = "1" },
-            new Persoon { Naam = "Eva", Score = 80, Positie = "4" }
-        };
-
-        // Uitvoeren van de LINQ-query
-        var hoogScorendePersonen = from persoon in Personen
-                                   where persoon.Score > 60
-                                   orderby persoon.Score descending
-                                   select persoon;
-
-        Personen = new ObservableCollection<Persoon>(hoogScorendePersonen);
-    }
-
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 
     private ObservableCollection<string> _chartFilters = new ObservableCollection<string>();
     public ObservableCollection<string> ChartFilters
@@ -99,6 +105,32 @@ public class LeaderboardViewModel : BaseViewModel
         {
             _chartFilter = value;
             OnPropertyChanged(nameof(ChartFilter));
+            InitializeAsync();
         }
+    }
+
+    private LeaderboardTimeperiod FilterToTimePeriod()
+    {
+        if (ChartFilter == "last week")
+        {
+            return LeaderboardTimeperiod.Week;
+        }
+
+        if (ChartFilter == "last month")
+        {
+            return LeaderboardTimeperiod.Month;
+        }
+
+        if (ChartFilter == "last year")
+        {
+            return LeaderboardTimeperiod.Year;
+        }
+
+        if (ChartFilter == "all time")
+        {
+            return LeaderboardTimeperiod.AllTime;
+        }
+
+        return 0;
     }
 }
