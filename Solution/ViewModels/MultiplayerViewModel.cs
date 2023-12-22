@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Numerics;
 using static Solution.ViewModels.MultiplayerViewModel;
+using System.Linq;
 
 namespace Solution.ViewModels;
 
@@ -114,19 +115,21 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     }
     private void OnLobbyUpdateReceived(object sender, LobbyUpdateEventArgs e)
     {
-        // Verwerk de lobby-updategegevens hier en werk de weergave bij
         var lobbyData = e.LobbyUpdate;
-
-        // Update de Players-collectie in het MultiplayerViewModel
 
         foreach (var player in lobbyData.Players)
         {
-            UpdatedPlayers.Add(new Player { Name = player.Name });
-            MessageBox.Show(player.Name);
+            // Controleer of de speler al in de collectie aanwezig is
+            if (!UpdatedPlayers.Any(p => p.Name == player.Name))
+            {
+                UpdatedPlayers.Add(new Player { Name = player.Name });
+                MessageBox.Show(player.Name);
+            }
         }
 
         Players = UpdatedPlayers;
     }
+
     private WebserverService _webserverservice;
     
     public class Player
