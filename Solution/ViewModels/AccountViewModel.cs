@@ -35,12 +35,12 @@ public class AccountViewModel : BaseViewModel
 
         // ApiResponse response = await api.Register("admin622", "password");
         // ApiResponse response = await api.Login("admin", "password");
-        // ApiResponse response = await api.GetUserInfo();
+        ApiResponse response = await api.GetUserInfo();
         // ApiResponse response = await api.GetText("story", "pirate english", "69", "dancing cupcakes", "medium");
-        ApiResponse response = await api.SaveScore(69, 42, 69);
+        // ApiResponse response = await api.SaveScore(69, 42, 69);
         // ApiResponse response = await api.GetPlayerScores();
         // ApiResponse response = await api.GetLeaderboard(LeaderboardTimeperiod.Week);
 
-        Console.WriteLine(response.Score.cpm);
+        // Console.WriteLine(response.Score.cpm);
     }
 }
