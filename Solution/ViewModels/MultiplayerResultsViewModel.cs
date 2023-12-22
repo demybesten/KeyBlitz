@@ -43,18 +43,7 @@ namespace Solution.ViewModels;
             }
         }
     }
-    public ObservableCollection<Player> Players
-    {
-        get { return _players; }
-        set
-        {
-            if (_players != value)
-            {
-                _players = value;
-                OnPropertyChanged(nameof(Players));
-            }
-        }
-    }
+   
     private ObservableCollection<string> _playerNames;
 
     public ObservableCollection<string> PlayerNames
@@ -76,65 +65,15 @@ namespace Solution.ViewModels;
     {
         Uri serverUri = new Uri("ws://161.97.129.111:6969");
 
-        await _webSocket.ConnectAsync(serverUri, CancellationToken.None);
     }
 
 
-    private async void ProcessLobbyUpdate(string lobbyUpdate)
-    {
-        try
-        {
-            // Voeg logging toe om de ontvangen update te controleren
-
-            // Deserialize JSON naar een object dat overeenkomt met het lobby-updateformaat
-            var lobbyData = JsonConvert.DeserializeObject<LobbyUpdate>(lobbyUpdate);
-
-            LobbyStatus = lobbyData.Status;
-            StartTimer();
-            if (LobbyStatus == "playing")
-            {
-                MessageBox.Show("test");
-                await _scoreViewModel.SendPrompt();
-
-            }
-            foreach (var player in lobbyData.Players)
-            {
-
-                Players = new ObservableCollection<Player>(lobbyData.Players);
-
-            }
-            // Voer verdere logica uit op basis van lobby-updategegevens
-            // LobbyData is een instantie van LobbyUpdate
-
-        }
-        catch (Exception ex)
-        {
-            // Handel fouten bij het verwerken van lobby-updategegevens af
-            MessageBox.Show($"Error processing lobby update: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
+    
 
 
 
 
 
-    // Definieer een klasse om lobby-updategegevens te vertegenwoordigen
-    public class LobbyUpdate
-    {
-        [JsonProperty("type")]
-        public string Type { get; set; }
-
-        [JsonProperty("players")]
-        public Player[] Players { get; set; } // Gebruik een array in plaats van een List<Player>
-
-        [JsonProperty("timestamp")]
-        public BigInteger Timestamp { get; set; }
-
-        [JsonProperty("status")]
-        public string Status { get; set; }
-
-        [JsonProperty("text")]
-        public string Text { get; set; }
-    }
+  
 }
 

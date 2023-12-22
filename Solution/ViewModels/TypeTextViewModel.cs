@@ -39,7 +39,7 @@ namespace Solution.ViewModels
 
     public class TypeTextViewModel : BaseViewModel
     {
-        private MultiplayerViewModel _multiplayerViewModel;
+        private WebserverService _multiplayerViewModel;
 
         public DispatcherTimer timer;
         public Stopwatch stopWatch;
@@ -170,7 +170,7 @@ namespace Solution.ViewModels
                 _textCache = passTestStats.Text;
                 updateInput(true);
             }
-            _multiplayerViewModel = new MultiplayerViewModel(passTestStats);
+            _multiplayerViewModel = new WebserverService(passTestStats);
 
             stopWatch = new Stopwatch();
             timer = new DispatcherTimer();

@@ -24,6 +24,7 @@ namespace Solution.Views
             }
         }
 
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
