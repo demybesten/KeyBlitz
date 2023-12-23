@@ -45,7 +45,6 @@ public class LeaderboardViewModel : BaseViewModel
     {
         var response = await apiClient.GetLeaderboard(FilterToTimePeriod());
         Leaderboard = response.ScoreList;
-        Console.WriteLine(Leaderboard[0].score);
 
         if (Personen.Count != 0)
         {

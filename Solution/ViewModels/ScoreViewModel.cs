@@ -50,7 +50,7 @@ public class ScoreViewModel : BaseViewModel
         Languages.Add("german");
         Languages.Add("french");
         
-        InitializeAsync();
+        InitializeAsync(); // runs calculatescores for ui binding
         SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
     }
 
@@ -324,7 +324,7 @@ public class ScoreViewModel : BaseViewModel
     private int totalCpm;
     private int totalWpm;
     private int totalAccuracy;
-    public async void  InitializeAsync()
+    public async void  InitializeAsync() // runs calculate in constructor
     {
         await calculateScores();
     }
@@ -335,10 +335,10 @@ public class ScoreViewModel : BaseViewModel
     
 
 
-        Application.Current.Dispatcher.Invoke(() =>
+        Application.Current.Dispatcher.Invoke(() => // updates ui values
         {
             
-            foreach (var score in ScoreList)
+            foreach (var score in ScoreList) // calculate totals
             {
                 totalCpm += score.cpm;
                 totalWpm += score.wpm;
@@ -348,13 +348,14 @@ public class ScoreViewModel : BaseViewModel
                     mpGamesPlayed++;
                 }
             }
-            
+            //calculate averages
             AverageAccuracy = totalAccuracy / ScoreList.Count;
             AverageCPM = totalCpm / ScoreList.Count;
             AverageWPM = totalWpm / ScoreList.Count;
             MpGamesPlayed = mpGamesPlayed;
             TestsTaken = ScoreList.Count;
         });
+        //reset total values
         mpGamesPlayed = 0;
         mpGamesPlayed = 0;
         totalCpm = 0;
@@ -362,7 +363,7 @@ public class ScoreViewModel : BaseViewModel
         totalAccuracy = 0;
     }
     
-    private async void UpdateData(object state)
+    private async void UpdateData(object state) // timer update function
     {
         InitializeAsync();
     }
