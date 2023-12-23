@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
 using Solution.Helpers;
@@ -16,8 +18,12 @@ public class ScoreViewModel : BaseViewModel
     private readonly IDataService passTestStats;
     private readonly ApiClient apiClient;
     private List<Score> ScoreList;
+    private readonly Timer _updateTimer;
     public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
     {
+        
+        _updateTimer = new Timer(UpdateData, null, TimeSpan.Zero, TimeSpan.FromSeconds(15)); // Update every 15 seconds VERANDEREN NAAR LANGERE TIJD?
+        
         apiClient = client;
         this.passTestStats = passTestStats;
         Navigation = navigation;
@@ -47,7 +53,6 @@ public class ScoreViewModel : BaseViewModel
         InitializeAsync();
         SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
     }
-    public ICommand LoadScoresCommand { get; }
 
     private SendPrompt _sendPrompt;
 
@@ -234,7 +239,6 @@ public class ScoreViewModel : BaseViewModel
     public async Task SendPrompt()
     {
         ShowLoading = true;
-        Console.WriteLine("Generating....");
         ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
         if (ResponseText != "" && ResponseText != null)
         {
@@ -253,6 +257,7 @@ public class ScoreViewModel : BaseViewModel
         {
             _averageWPM = value;
             OnPropertyChanged(nameof(AverageWPM));
+
         }
     }
 
@@ -264,6 +269,7 @@ public class ScoreViewModel : BaseViewModel
         {
             _averageCPM = value;
             OnPropertyChanged(nameof(AverageCPM));
+
         }
     }
 
@@ -278,17 +284,6 @@ public class ScoreViewModel : BaseViewModel
         }
     }
 
-    private int _wordsTyped;
-    public int WordsTyped
-    {
-        get { return _wordsTyped; }
-        set
-        {
-            _wordsTyped = value;
-            OnPropertyChanged(nameof(WordsTyped));
-        }
-    }
-
     private int _testsTaken;
     public int TestsTaken
     {
@@ -297,6 +292,7 @@ public class ScoreViewModel : BaseViewModel
         {
             _testsTaken = value;
             OnPropertyChanged(nameof(TestsTaken));
+
         }
     }
 
@@ -337,28 +333,38 @@ public class ScoreViewModel : BaseViewModel
         var response = await apiClient.GetPlayerScores();
         ScoreList = response.ScoreList;
     
-        foreach (var score in ScoreList)
+
+
+        Application.Current.Dispatcher.Invoke(() =>
         {
-            totalCpm += score.cpm;
-            totalWpm += score.wpm;
-            totalAccuracy += score.accuracy;
-            if (score.multiplayerId != 0)
+            
+            foreach (var score in ScoreList)
             {
-                mpGamesPlayed++;
+                totalCpm += score.cpm;
+                totalWpm += score.wpm;
+                totalAccuracy += score.accuracy;
+                if (score.multiplayerId != 0)
+                {
+                    mpGamesPlayed++;
+                }
             }
-        }
-
-        AverageAccuracy = totalAccuracy / ScoreList.Count;
-        AverageCPM = totalCpm / ScoreList.Count;
-        AverageWPM = totalWpm / ScoreList.Count;
-        MpGamesPlayed = mpGamesPlayed;
-        TestsTaken = ScoreList.Count;
-
+            
+            AverageAccuracy = totalAccuracy / ScoreList.Count;
+            AverageCPM = totalCpm / ScoreList.Count;
+            AverageWPM = totalWpm / ScoreList.Count;
+            MpGamesPlayed = mpGamesPlayed;
+            TestsTaken = ScoreList.Count;
+        });
         mpGamesPlayed = 0;
         mpGamesPlayed = 0;
         totalCpm = 0;
         totalWpm = 0;
         totalAccuracy = 0;
+    }
+    
+    private async void UpdateData(object state)
+    {
+        InitializeAsync();
     }
 
     private bool _isPopupVisible;

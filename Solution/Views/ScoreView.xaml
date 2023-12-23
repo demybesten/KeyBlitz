@@ -87,7 +87,7 @@
                 <Label
                     Grid.Row="3"
                     Grid.Column="0"
-                    Content="{Binding AverageAccuracy, Mode=OneWay}"
+                    Content="{Binding AverageAccuracy}"
                     FontFamily="Lucida Console"
                     Foreground="{StaticResource MainTextColor}"
                     FontSize="20"
