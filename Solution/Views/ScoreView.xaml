@@ -51,7 +51,7 @@
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
-                    Content="{Binding AverageRPM}"
+                    Content="{Binding AverageWPM}"
                     FontFamily="Lucida Console"
                     Foreground="{StaticResource MainTextColor}"
                     FontSize="20"
@@ -88,24 +88,6 @@
                     Grid.Row="3"
                     Grid.Column="0"
                     Content="{Binding AverageAccuracy}"
-                    FontFamily="Lucida Console"
-                    Foreground="{StaticResource MainTextColor}"
-                    FontSize="20"
-                    HorizontalAlignment="Left"
-                    Margin="20,20,0,0" />
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Content="words typed"
-                    FontFamily="Lucida Console"
-                    Foreground="{StaticResource SecondaryTextColor}"
-                    FontSize="15"
-                    HorizontalAlignment="Left"
-                    Margin="20,0,0,0" />
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Content="{Binding WordsTyped}"
                     FontFamily="Lucida Console"
                     Foreground="{StaticResource MainTextColor}"
                     FontSize="20"
@@ -189,6 +171,7 @@
                         Content="multiplayer"
                         Margin="20,0,0,0"
                         Command="{Binding NavigateToMultiplayerView}" />
+                
             </Grid>
             <Rectangle Fill="#80000000"
                        Visibility="{Binding IsPopupVisible, Converter={StaticResource BoolToVisibilityConverter }}" />
