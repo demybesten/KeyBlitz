@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Solution.Views"
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
              d:DataContext="{d:DesignInstance Type=viewModels:LeaderboardViewModel}"
 
              mc:Ignorable="d"
@@ -31,7 +32,7 @@
                 </Label.Effect>
                 <Label.Background>
                     <ImageBrush ImageSource="/Views/Component.png"/>
-                </Label.Background> test
+                </Label.Background>
             </Label>
           
             <Border CornerRadius="50 0 50 0" BorderBrush="White" BorderThickness="5" Grid.ColumnSpan="2">
@@ -65,7 +66,13 @@
                             <DataGridTextColumn.Header>
                                 <StackPanel Orientation="Horizontal"  Background="#FFFFFF" Margin="20 0 0 0">
                                     <TextBlock Foreground="#FFFFFF" Text="."/>
-                                    <Image Source="/Solution;component/Resources/MaskGroup1.png" Width="50" Height="16" Margin="10,4,10,10" />
+                                    <!-- <Image Source="/Solution;component/Resources/MaskGroup1.png" Width="50" Height="16"  /> -->
+                                    <fa5:ImageAwesome
+                                        Icon="Solid_Medal"
+                                        Width="50" 
+                                        Height="26"
+                                        Margin="10,4,10,4">
+                                    </fa5:ImageAwesome>
                                     <TextBlock Foreground="#FFFFFF" Text="."/>
                                 </StackPanel>
                                 </DataGridTextColumn.Header>
@@ -85,7 +92,7 @@
                   
                             <DataGridTextColumn.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Foreground="#091F30" Background="#ffffff" Padding="5 8 5 8" Width="377" Text="Naam" FontWeight="Bold" Margin="20,10,10,10"/>
+                                    <TextBlock Foreground="#091F30" Background="#ffffff" Padding="5 8 5 8" Width="377" Text="User ID" FontWeight="Bold" Margin="20,10,10,10"/>
                                 </StackPanel>
                             </DataGridTextColumn.Header>
                             
