@@ -52,7 +52,7 @@ public class LeaderboardViewModel : BaseViewModel
         }
         for (int i = 0; i < 5; i++)
         {
-            Console.WriteLine(i);
+            // Console.WriteLine(i);
             Personen.Add(new Persoon { Naam = Leaderboard[i].user_id, Score = Leaderboard[i].score, Positie = i+1});
         }
         
