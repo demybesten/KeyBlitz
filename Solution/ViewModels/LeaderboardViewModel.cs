@@ -36,12 +36,12 @@ public class LeaderboardViewModel : BaseViewModel
 
     public List<Score> Leaderboard;
     
-    private async void InitializeAsync()
+    public async void InitializeAsync()
     {
         await SetLeaderboard();
     }
 
-    private async Task SetLeaderboard()
+    public async Task SetLeaderboard()
     {
         var response = await apiClient.GetLeaderboard(FilterToTimePeriod());
         Leaderboard = response.ScoreList;
@@ -108,7 +108,7 @@ public class LeaderboardViewModel : BaseViewModel
         }
     }
 
-    private LeaderboardTimeperiod FilterToTimePeriod()
+    public LeaderboardTimeperiod FilterToTimePeriod()
     {
         if (ChartFilter == "last week")
         {

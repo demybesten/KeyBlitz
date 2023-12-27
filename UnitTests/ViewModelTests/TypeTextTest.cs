@@ -13,14 +13,18 @@ namespace UnitTests.ViewModelTests
     private TypeTextViewModel viewModel;
     private Mock<INavigationService> navigationMock;
     private Mock<IDataService> passTestStatsMock;
+    private Mock<ApiClient> mockApiClient;
+
 
     [SetUp]
     public void SetUp()
     {
       navigationMock = new Mock<INavigationService>();
       passTestStatsMock = new Mock<IDataService>();
+      mockApiClient = new Mock<ApiClient>();
 
-      viewModel = new TypeTextViewModel(navigationMock.Object, passTestStatsMock.Object);
+
+      viewModel = new TypeTextViewModel(navigationMock.Object, passTestStatsMock.Object,mockApiClient.Object);
     }
 
     [Test]
