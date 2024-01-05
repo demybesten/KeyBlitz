@@ -21,10 +21,7 @@ public class ScoreViewModel : BaseViewModel
   private readonly ApiClient apiClient;
   private readonly IDataService passTestStats;
   public SeriesCollection ChartSeries { get; set; }
-  public string DateTimeFormatter { get; set; }
-
   private List<Score> ScoreList { get; set; }
-  private List<Score> ScoreListTemp { get; set; }
   private bool _isDataLoaded = false;
   
   public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
@@ -39,8 +36,6 @@ public class ScoreViewModel : BaseViewModel
     _sendPrompt = sendPrompt;
     ShowPopupCommand = new RelayCommand(ShowPopup);
     HidePopupCommand = new RelayCommand(HidePopup);
-
-    // LoadDataCommand = new RelayCommand(GetPlayerScores);
 
     _textLength = 20;
     ComplexityLevels.Add("basic");
@@ -61,12 +56,12 @@ public class ScoreViewModel : BaseViewModel
     Task.Run(async () =>
     {
       ScoreList = await GetPlayerScores();
-      Console.WriteLine(ScoreList.Count); // Confirm ScoreList count
+      Console.WriteLine(ScoreList.Count);
 
       Application.Current.Dispatcher.Invoke(() =>
       {
         var dates = new List<DateTime> { };
-        // Initialize ChartSeries
+        
         ChartSeries = new SeriesCollection();
 
         LineSeries lineSeries = new LineSeries
@@ -98,7 +93,6 @@ public class ScoreViewModel : BaseViewModel
   private async Task<List<Score>> GetPlayerScores()
   {
     var response = await apiClient.GetPlayerScores();
-    // ScoreList = response.ScoreList;
     return response.ScoreList;
   }
 
