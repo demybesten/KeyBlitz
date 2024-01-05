@@ -95,38 +95,6 @@ public class ScoreViewModel : BaseViewModel
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
   }
   
-  // private async void InitializeViewModelAsync()
-  // {
-  //   // Populate ScoreList asynchronously
-  //   ScoreList = await GetPlayerScores();
-  //
-  //   Console.WriteLine(ScoreList.Count); // Confirm ScoreList count
-  //
-  //   ChartSeries = new SeriesCollection();
-  //
-  //   LineSeries lineSeries = new LineSeries
-  //   {
-  //     PointGeometrySize = 15,
-  //     Values = new ChartValues<ObservablePoint>()
-  //   };
-  //
-  //   for (int i = 0; i < ScoreList.Count; i++)
-  //   {
-  //     double yValue = i + 1;
-  //     lineSeries.Values.Add(new ObservablePoint(i, yValue));
-  //     Console.WriteLine($"X: {i}, Y: {yValue}");
-  //   }
-  //
-  //   ChartSeries.Add(lineSeries); // Add the LineSeries to the ChartSeries
-  //
-  //   SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
-  // }
-  
-  // public async Task InitializeAsync1()
-  // {
-  //   await GetPlayerScores();
-  // }
-  //
   private async Task<List<Score>> GetPlayerScores()
   {
     var response = await apiClient.GetPlayerScores();
@@ -170,8 +138,7 @@ public class ScoreViewModel : BaseViewModel
       OnPropertyChanged(nameof(ErrorMessage));
     }
   }
-
-
+  
   string closestString = null;
 
   private string _responseText;
