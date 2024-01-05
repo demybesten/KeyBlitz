@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Solution.Views"
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewModels:MultiplayerViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewModels:MultiplayerResultsViewModel}"
 
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -16,30 +16,82 @@
                 <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0" />
             </LinearGradientBrush>
         </Border.Background>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Foreground="{StaticResource MainTextColor}" Grid.Column="0" Content="MultiplayerResults"></Label>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label FontSize="20" x:Name="statusLabel" Width="300" HorizontalContentAlignment="Center" BorderBrush="White" BorderThickness="0 0 0 1"  Margin="0 0 0 15" VerticalAlignment="Top" Foreground="{StaticResource MainTextColor}" Grid.Column="0" Grid.Row="0">
+                <Label.Style>
+                    <Style TargetType="Label">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Players.Count}" Value="4">
+                                <Setter Property="Content" Value="Start"/>
+                                <Setter Property="Foreground" Value="Red"/>
+                                <Setter Property="Padding" Value="0 0 0 15"/>
+
+                        
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Players.Count}" Value="3">
+                                <Setter Property="Content" Value="Waiting for more players..."/>
+                                <Setter Property="Foreground" Value="{StaticResource MainTextColor}" />
+                                <Setter Property="Padding" Value="0 0 0 15"/>
+
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+
+
+
+            <Label HorizontalAlignment="Center" Margin="5,5,5,5" Foreground="White">
+                <TextBlock Text="{Binding LobbyStatus}" />
+            </Label>
             <Border BorderBrush="White" BorderThickness="1" CornerRadius="15" Background="#091F30" Padding="10 10 10 10" Margin="0 0 0 70" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">
-                <!-- In MultiplayerResultsView.xaml -->
-                <ItemsControl ItemsSource="{Binding PlayerNames}" HorizontalContentAlignment="Center">
+                <ItemsControl ItemsSource="{Binding UpdatedPlayers}" HorizontalContentAlignment="Center">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="White" BorderThickness="1" CornerRadius="15" Background="#091F30" Padding="10" Margin="0 10 0 10">
-                                <TextBlock FontSize="18" Foreground="#ffffff" Text="{Binding}" Grid.Column="1" Grid.Row="1"/>
+                                <TextBlock FontSize="18" Foreground="#ffffff" Text="{Binding Name}" />
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
 
-
             </Border>
-        </Grid>
+            <Label Grid.Column="0" Grid.Row="3"
+Content="{Binding ElapsedTime}" 
+Foreground="{StaticResource MainTextColor}" 
+HorizontalAlignment="Center"
+FontFamily="Lucida Console"
+FontSize="26"
+Margin="0,70,0,0"
+/>
+            <ItemsControl ItemsSource="{Binding Players}" HorizontalContentAlignment="Center">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="White" BorderThickness="1" CornerRadius="15" Background="#091F30" Padding="10" Margin="0 10 0 10">
+                            <TextBlock FontSize="18" Foreground="#ffffff" Text="{Binding Accuracy}" />
+                            
+                        </Border>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Border BorderBrush="White" BorderThickness="1" Margin="0 0 0 0" CornerRadius="5" Background="#091F30"  Grid.Column="0" Grid.Row="4">
+                <Button Content="Start Lobby Updates" Command="{Binding StartLobbyUpdatesCommand}" />
+
+        </Border>
+                </Grid>
     </Border>
 </UserControl>

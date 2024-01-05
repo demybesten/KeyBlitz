@@ -170,8 +170,8 @@ public class ScoreViewModel : BaseViewModel
       OnPropertyChanged(nameof(ComplexityLevel));
     }
   }
-
-  private ObservableCollection<string> _languages = new ObservableCollection<string>();
+   
+    private ObservableCollection<string> _languages = new ObservableCollection<string>();
 
   public ObservableCollection<string> Languages
   {

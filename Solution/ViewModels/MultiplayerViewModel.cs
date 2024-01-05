@@ -27,7 +27,8 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     private WebserverService _webserverService;
     public DispatcherTimer timer;
     public Stopwatch stopWatch;
-    
+    private readonly IDataService passTestStats;
+
     private string _status;
 
     private ScoreViewModel _scoreViewModel;
@@ -86,11 +87,19 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
         }
     }
 
-    public MultiplayerViewModel(INavigationService navigation, WebserverService _webserverservice, IDataService passTestStats)
+    public MultiplayerViewModel(INavigationService navigation, WebserverService _webserverservice, IDataService passTestStats, SendPrompt sendPrompt)
     {
-        Starten(_webserverservice);
-        _webserverservice.LobbyUpdateReceived += OnLobbyUpdateReceived;
+        this.passTestStats = passTestStats;
+        NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
+        _sendPrompt = sendPrompt;
+        _ = WebserverService.Instance.Connect();
+           WebserverService.Instance.LobbyUpdateReceived += OnLobbyUpdateReceived;
+        //_webserverservice.Connect();
+        //_webserverservice.LobbyUpdateReceived += OnLobbyUpdateReceived;
+
+        NavigateToMultiplayerResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerResultsViewModel>(); }, o => true);
+ 
         passTestStats.Multiplayer = true;
         _webserverService = _webserverservice;
         Navigation = navigation;
@@ -98,8 +107,10 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
 
         // Initialiseer de lijst van spelers
         _scoreViewModel = new ScoreViewModel(navigation, new SendPrompt(), passTestStats);
+        _ = SendPrompt();
 
         stopWatch = new Stopwatch();
+
         stopWatch.Start();
         stopWatch.Stop();  // Stop meteen om de initiële waarde in te stellen
 
@@ -113,17 +124,42 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
 
         // Verplaats de starten-functie hier naartoe
     }
+    private SendPrompt _sendPrompt;
+    private string _responseText;
+    private string[] ResponseTextArray;
+    public NavRelayCommand NavigateToTypeTextView { get; set; }
+
+    public string ResponseText
+    {
+        get { return _responseText; }
+        set
+        {
+            if (_responseText != value)
+            {
+                _responseText = value;
+                OnPropertyChanged(nameof(ResponseText));
+            }
+        }
+    }
+    public async Task SendPrompt()
+    {
+        //ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
+        ResponseText = await _sendPrompt.GeneratePrompt("scheeps", "story", 20, "basic", "Dutch");
+        if (ResponseText != "" && ResponseText != null)
+        {
+            passTestStats.Text = ResponseText;
+            NavigateToTypeTextView.Execute(null);
+        }
+    }
     private void OnLobbyUpdateReceived(object sender, LobbyUpdateEventArgs e)
     {
         var lobbyData = e.LobbyUpdate;
-
         foreach (var player in lobbyData.Players)
         {
             // Controleer of de speler al in de collectie aanwezig is
             if (!UpdatedPlayers.Any(p => p.Name == player.Name))
             {
                 UpdatedPlayers.Add(new Player { Name = player.Name });
-                MessageBox.Show(player.Name);
             }
         }
 
@@ -132,20 +168,12 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
 
     private WebserverService _webserverservice;
     
-    public class Player
-    {
-        [JsonProperty("playerId")]
-        public int PlayerId { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        // Voeg andere eigenschappen van de speler toe indien nodig
-    }
+ 
     public ICommand ConnectCommand { get; }
 
     public NavRelayCommand NavigateToTypeTextViewCommand { get; set; }
     public ObservableCollection<Player> Players { get; private set; }
+    public NavRelayCommand NavigateToMultiplayerResultsView { get; }
 
 
     // Andere logica voor het toevoegen/verwijderen van spelers kan hier worden toegevoegd
@@ -160,18 +188,8 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
         
     }
 
-private async void Starten(WebserverService server)
-{
-    try
-    {
-        // Roep de methode aan en wacht op voltooiing
-        await server.Connect();
-    }
-    catch (Exception ex)
-    {
 
-    }
-}
+
 
 
 
@@ -190,8 +208,7 @@ private async void Starten(WebserverService server)
                 stopWatch.Stop();
                 timer.Stop();
                 ElapsedTime = "00";
-                MessageBox.Show("test");   
-               
+                MessageBox.Show("test");
 
 
             }

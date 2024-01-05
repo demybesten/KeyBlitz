@@ -39,7 +39,7 @@ namespace Solution.ViewModels
 
     public class TypeTextViewModel : BaseViewModel
     {
-        private WebserverService _multiplayerViewModel;
+        private WebserverService _webserverService;
 
         public DispatcherTimer timer;
         public Stopwatch stopWatch;
@@ -170,7 +170,6 @@ namespace Solution.ViewModels
                 _textCache = passTestStats.Text;
                 updateInput(true);
             }
-            _multiplayerViewModel = new WebserverService(passTestStats);
 
             stopWatch = new Stopwatch();
             timer = new DispatcherTimer();
@@ -216,6 +215,7 @@ namespace Solution.ViewModels
         public List<int> tempList;
         public List<int> intList = new List<int> { };
         public List<Word> myList = new List<Word> { };
+        private ScoreViewModel scoreViewModel;
         private readonly IDataService passTestStats;
 
 
@@ -308,7 +308,9 @@ namespace Solution.ViewModels
                 ResetData();
                 if (passTestStats.Multiplayer == true)
                 {
-                    await _multiplayerViewModel.SendFinishMessage(50, 50);
+
+                    WebserverService.Instance.SendFinishMessage();
+                    
                     NavigateToMultiplayerResultsView.Execute(null);
 
                 }
