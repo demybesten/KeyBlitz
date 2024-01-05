@@ -128,6 +128,19 @@ private double _amountOfCorrectChars;
             }
         }
     }
+    private string _status;
+    public string status
+    {
+        get { return _status; }
+        set
+        {
+            if (_status != value)
+            {
+                _status = value;
+                OnPropertyChanged(nameof(status));
+            }
+        }
+    }
     public string? Text { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using static Solution.Services.WebserverService;
 using static Solution.ViewModels.MultiplayerViewModel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Solution.Services
 {
@@ -71,6 +72,8 @@ namespace Solution.Services
             }
         }
         private ObservableCollection<Player> _players;
+        private IDataService passTestStats;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<Player> Players
@@ -96,7 +99,7 @@ namespace Solution.Services
                 await _webSocket.ConnectAsync(serverUri, CancellationToken.None);
                 await SendAuthenticationRequest();
                 await LobbyUpdates();
-                MessageBox.Show("connectie gemaakt");
+                //MessageBox.Show("connectie gemaakt");
             }
             catch (Exception ex)
             {
@@ -181,7 +184,8 @@ namespace Solution.Services
                 LobbyStatus = lobbyData.Status;
                 if (LobbyStatus == "playing")
                 {
-                    MessageBox.Show("test");
+
+                    //MessageBox.Show("test");
                 }
 
                 OnLobbyUpdateReceived(lobbyData);
@@ -217,7 +221,7 @@ namespace Solution.Services
         }
 
 
-        public async void SendFinishMessage()
+        public async void SendFinishMessage(int tijd, int accrucy)
         {
             try
             {
@@ -226,8 +230,8 @@ namespace Solution.Services
                     type = "finish",
                     data = new
                     {
-                        time = 50,      
-                        accuracy = 99 
+                        time = tijd,      
+                        accuracy = accrucy
                     }
                 };
 
@@ -241,11 +245,11 @@ namespace Solution.Services
                 {
                     await _webSocket.SendAsync(new ArraySegment<byte>(finishMessageBytes), WebSocketMessageType.Text, true, CancellationToken.None);
 
-                    MessageBox.Show("Finish message sent successfully");
+                    //MessageBox.Show("Finish message sent successfully");
                 }
                 else
                 {
-                    MessageBox.Show("WebSocket is not in the open state. Cannot send finish message.");
+                    //MessageBox.Show("WebSocket is not in the open state. Cannot send finish message.");
                 }
             }
             catch (Exception ex)
@@ -253,6 +257,25 @@ namespace Solution.Services
                 MessageBox.Show($"Error sending finish message: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        public async Task LeaveLobby()
+        {
+            try
+            {
+             
+                if (_webSocket.State == WebSocketState.Open)
+                {
+                    await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Leaving lobby", CancellationToken.None);
+                    MessageBox.Show("lobby verlaten");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error leaving lobby: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+       
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

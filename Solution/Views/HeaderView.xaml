@@ -61,7 +61,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Margin="0,15,0,0"
-                            Command="{Binding NavigateToMultiplayerResultsViewModelCommand}"/>
+                            Command="{Binding NavigateToAccountViewCommand}" Click="Button_Click"/>
                     <Button Grid.Column="4"
                             Style="{StaticResource GrayIsMouseOver}"
                             Background="Transparent"

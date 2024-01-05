@@ -18,4 +18,7 @@ public interface IDataService
   string Text {  get; set; }
 
    bool Multiplayer {  get; set; }
+
+    string status { get; set; }
+
 }

@@ -20,6 +20,8 @@ namespace Solution.ViewModels
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
+        private readonly IDataService _dataService;
+        public int Accuracy => _dataService.Accuracy;
 
         public CharacterEventCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
@@ -309,7 +311,7 @@ namespace Solution.ViewModels
                 if (passTestStats.Multiplayer == true)
                 {
 
-                    WebserverService.Instance.SendFinishMessage();
+                    WebserverService.Instance.SendFinishMessage(50, Accuracy);
                     
                     NavigateToMultiplayerResultsView.Execute(null);
 
