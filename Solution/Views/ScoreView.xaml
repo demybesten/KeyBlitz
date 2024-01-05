@@ -46,12 +46,6 @@
                               ItemsSource="{Binding ChartFilters}"
                               Text="{Binding ChartFilter}"/>
                 </Grid>
-                <Grid>
-                    <Button
-                        Width="100"
-                        Height="50"
-                        />
-                </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.6*"/>
