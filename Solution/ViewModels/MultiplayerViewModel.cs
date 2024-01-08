@@ -61,7 +61,6 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
             }
         }
     }
-    //Slaat stopwatch value op en wordt gebruikt om te binden aan een label
     private string _elapsedTime = String.Empty;
     public string ElapsedTime
     {
@@ -91,39 +90,31 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     {
         this.passTestStats = passTestStats;
         NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
-
         _sendPrompt = sendPrompt;
         _ = WebserverService.Instance.Connect();
-           WebserverService.Instance.LobbyUpdateReceived += OnLobbyUpdateReceived;
+        WebserverService.Instance.LobbyUpdateReceived += OnLobbyUpdateReceived;
         //_webserverservice.Connect();
         //_webserverservice.LobbyUpdateReceived += OnLobbyUpdateReceived;
 
         NavigateToMultiplayerResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerResultsViewModel>(); }, o => true);
- 
+
         passTestStats.Multiplayer = true;
         _webserverService = _webserverservice;
         Navigation = navigation;
         NavigateToTypeTextViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
-        // Initialiseer de lijst van spelers
         _scoreViewModel = new ScoreViewModel(navigation, new SendPrompt(), passTestStats);
-        _ = SendPrompt();
+
 
         stopWatch = new Stopwatch();
-
-        stopWatch.Start();
-        stopWatch.Stop();  // Stop meteen om de initiële waarde in te stellen
-
-        // De resterende tijd zal in eerste instantie 10 seconden zijn
-        stopWatch.Reset();
-        stopWatch.Start();
-
         timer = new DispatcherTimer();
-        timer.Tick += timer_Tick;
-        Status = "Start";
 
-        // Verplaats de starten-functie hier naartoe
+        timer.Tick += timer_Tick;
+
+
     }
+    private bool isTimerStarted = false;
+
     private SendPrompt _sendPrompt;
     private string _responseText;
     private string[] ResponseTextArray;
@@ -144,7 +135,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     public async Task SendPrompt()
     {
         //ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
-        ResponseText = await _sendPrompt.GeneratePrompt("scheeps", "story", 20, "basic", "Dutch");
+        ResponseText = await _sendPrompt.GeneratePrompt("Project groep 1 van OOSD Semester van Windesheim", "story", 20, "basic", "Dutch");
         if (ResponseText != "" && ResponseText != null)
         {
             passTestStats.Text = ResponseText;
@@ -164,66 +155,52 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
         }
 
         Players = UpdatedPlayers;
+        if (UpdatedPlayers.Count >= 2 && !isTimerStarted)
+        {
+            StartTimer();
+            isTimerStarted = true;
+        }
     }
 
     private WebserverService _webserverservice;
-    
- 
+
+
     public ICommand ConnectCommand { get; }
 
     public NavRelayCommand NavigateToTypeTextViewCommand { get; set; }
     public ObservableCollection<Player> Players { get; private set; }
     public NavRelayCommand NavigateToMultiplayerResultsView { get; }
 
-
-    // Andere logica voor het toevoegen/verwijderen van spelers kan hier worden toegevoegd
-    // ...
-
-
     private void StartTimer()
     {
-       
-            stopWatch.Start();
-            timer.Start();
-        
+        stopWatch.Start();
+        timer.Start();
     }
-
-
-
 
 
 
     public async void timer_Tick(object sender, EventArgs e)
     {
-        // Als stopwatch loopt
         if (stopWatch.IsRunning)
         {
-            // Haal TimeSpan op en bereken de resterende tijd
             TimeSpan elapsedTime = stopWatch.Elapsed;
             TimeSpan remainingTime = TimeSpan.FromSeconds(10) - elapsedTime;
 
-            // Als de resterende tijd kleiner is dan of gelijk is aan 0, stop de timer
             if (remainingTime <= TimeSpan.Zero)
             {
                 stopWatch.Stop();
                 timer.Stop();
                 ElapsedTime = "00";
-                MessageBox.Show("test");
-
+                //MessageBox.Show("test");
+                _ = SendPrompt();
 
             }
             else
             {
-                // Formatteer de resterende tijd om alleen seconden weer te geven
                 ElapsedTime = String.Format("{0:00}", remainingTime.Seconds);
             }
         }
     }
-
-
-
-   
-
 
     protected virtual void OnPropertyChanged(string propertyName)
     {
