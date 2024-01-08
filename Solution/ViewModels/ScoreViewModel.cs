@@ -57,40 +57,6 @@ public class ScoreViewModel : BaseViewModel
     ChartFilters.Add("last year");
     ChartFilters.Add("all time");
 
-    Task.Run(async () =>
-    {
-      ScoreList = await GetPlayerScores();
-      Console.WriteLine(ScoreList.Count);
-
-      Application.Current.Dispatcher.Invoke(() =>
-      {
-        var dates = new List<DateTime> { };
-
-        ChartSeries = new SeriesCollection();
-
-        LineSeries lineSeries = new LineSeries
-        {
-          PointGeometrySize = 15,
-          Values = new ChartValues<ObservablePoint>()
-        };
-
-        for (int i = 0; i < ScoreList.Count; i++)
-        {
-          double yValue = Convert.ToDouble(ScoreList[i].score);
-          lineSeries.Values.Add(new ObservablePoint(i, yValue));
-          Console.WriteLine($"X: {i}, Y: {yValue}");
-          dates.Add(ScoreList[i].date);
-          Console.WriteLine(dates[i]);
-        }
-
-        ChartSeries.Add(lineSeries);
-        DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
-
-        // Zorgt ervoor dat de UI van de applicatie wordt aangepast
-        OnPropertyChanged(nameof(ChartSeries));
-        OnPropertyChanged(nameof(DateLabels));
-      });
-    });
     InitializeAsync(); // runs calculatescores for ui binding
 
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
@@ -101,44 +67,6 @@ public class ScoreViewModel : BaseViewModel
     var response = await apiClient.GetPlayerScores();
     return response.ScoreList;
   }
-
-
-
-//     private readonly IDataService passTestStats;
-//     private readonly ApiClient apiClient;
-//     private List<Score> ScoreList;
-//     public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
-//     {
-
-
-//         apiClient = client;
-//         this.passTestStats = passTestStats;
-//         Navigation = navigation;
-
-//         ScoreList = new List<Score>();
-
-//         NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
-//         NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
-//         NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
-
-//         _sendPrompt = sendPrompt;
-//         ShowPopupCommand = new RelayCommand(ShowPopup);
-//         HidePopupCommand = new RelayCommand(HidePopup);
-
-//         _textLength = 20;
-//         ComplexityLevels.Add("basic");
-//         ComplexityLevels.Add("average");
-//         ComplexityLevels.Add("advanced");
-//         TextTypes.Add("story");
-//         TextTypes.Add("sentences");
-//         TextTypes.Add("words");
-//         Languages.Add("english");
-//         Languages.Add("dutch");
-//         Languages.Add("german");
-//         Languages.Add("french");
-
-//         SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
-//     }
 
     private SendPrompt _sendPrompt;
 
@@ -415,6 +343,41 @@ public class ScoreViewModel : BaseViewModel
     public async void  InitializeAsync() // runs calculate in constructor
     {
         await calculateScores();
+
+        Task.Run(async () =>
+        {
+          ScoreList = await GetPlayerScores();
+          Console.WriteLine(ScoreList.Count);
+
+          Application.Current.Dispatcher.Invoke(() =>
+          {
+            var dates = new List<DateTime> { };
+
+            ChartSeries = new SeriesCollection();
+
+            LineSeries lineSeries = new LineSeries
+            {
+              PointGeometrySize = 15,
+              Values = new ChartValues<ObservablePoint>()
+            };
+
+            for (int i = 0; i < ScoreList.Count; i++)
+            {
+              double yValue = Convert.ToDouble(ScoreList[i].score);
+              lineSeries.Values.Add(new ObservablePoint(i, yValue));
+              Console.WriteLine($"X: {i}, Y: {yValue}");
+              dates.Add(ScoreList[i].date);
+              Console.WriteLine(dates[i]);
+            }
+
+            ChartSeries.Add(lineSeries);
+            DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
+
+            // Zorgt ervoor dat de UI van de applicatie wordt aangepast
+            OnPropertyChanged(nameof(ChartSeries));
+            OnPropertyChanged(nameof(DateLabels));
+          });
+        });
     }
     public async Task calculateScores()
     {
