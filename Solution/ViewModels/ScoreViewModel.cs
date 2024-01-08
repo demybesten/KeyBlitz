@@ -22,9 +22,14 @@ public class ScoreViewModel : BaseViewModel
   public SeriesCollection ChartSeries { get; set; }
   private List<Score> ScoreList { get; set; }
   private bool _isDataLoaded = false;
-  
+  private readonly Timer _updateTimer;
+
+
   public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
   {
+    _updateTimer = new Timer(UpdateData, null, TimeSpan.Zero, TimeSpan.FromSeconds(15)); // Update every 15 seconds VERANDEREN NAAR LANGERE TIJD?
+
+
     apiClient = client;
     this.passTestStats = passTestStats;
     Navigation = navigation;
@@ -51,7 +56,7 @@ public class ScoreViewModel : BaseViewModel
     ChartFilters.Add("last month");
     ChartFilters.Add("last year");
     ChartFilters.Add("all time");
-    
+
     Task.Run(async () =>
     {
       ScoreList = await GetPlayerScores();
@@ -60,7 +65,7 @@ public class ScoreViewModel : BaseViewModel
       Application.Current.Dispatcher.Invoke(() =>
       {
         var dates = new List<DateTime> { };
-        
+
         ChartSeries = new SeriesCollection();
 
         LineSeries lineSeries = new LineSeries
@@ -77,41 +82,41 @@ public class ScoreViewModel : BaseViewModel
           dates.Add(ScoreList[i].date);
           Console.WriteLine(dates[i]);
         }
-        
-        ChartSeries.Add(lineSeries); 
+
+        ChartSeries.Add(lineSeries);
         DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
-        
+
         // Zorgt ervoor dat de UI van de applicatie wordt aangepast
         OnPropertyChanged(nameof(ChartSeries));
         OnPropertyChanged(nameof(DateLabels));
       });
     });
+    InitializeAsync(); // runs calculatescores for ui binding
+
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
   }
-  
+
   private async Task<List<Score>> GetPlayerScores()
   {
     var response = await apiClient.GetPlayerScores();
     return response.ScoreList;
   }
 
-  
+
 
 //     private readonly IDataService passTestStats;
 //     private readonly ApiClient apiClient;
 //     private List<Score> ScoreList;
-//     private readonly Timer _updateTimer;
 //     public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
 //     {
-        
-//         _updateTimer = new Timer(UpdateData, null, TimeSpan.Zero, TimeSpan.FromSeconds(15)); // Update every 15 seconds VERANDEREN NAAR LANGERE TIJD?
-        
+
+
 //         apiClient = client;
 //         this.passTestStats = passTestStats;
 //         Navigation = navigation;
 
 //         ScoreList = new List<Score>();
-    
+
 //         NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
 //         NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
 //         NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
@@ -131,8 +136,7 @@ public class ScoreViewModel : BaseViewModel
 //         Languages.Add("dutch");
 //         Languages.Add("german");
 //         Languages.Add("french");
-        
-//         InitializeAsync(); // runs calculatescores for ui binding
+
 //         SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
 //     }
 
@@ -140,7 +144,7 @@ public class ScoreViewModel : BaseViewModel
 
     public INavigationService _Navigation;
 
-  public RelayCommand SendPromptCommand { get; set; }
+  // public RelayCommand SendPromptCommand { get; set; }
 
     public INavigationService Navigation
     {
@@ -175,8 +179,8 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(ErrorMessage));
         }
     }
-  }
-  
+
+
   string closestString = null;
 
     private string _responseText;
@@ -401,8 +405,8 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(MpGamesWon));
         }
     }
-  
-  
+
+
     private int mpGamesPlayed;
     private int mpGamesWon;
     private int totalCpm;
@@ -416,12 +420,12 @@ public class ScoreViewModel : BaseViewModel
     {
         var response = await apiClient.GetPlayerScores();
         ScoreList = response.ScoreList;
-    
+
 
 
         Application.Current.Dispatcher.Invoke(() => // updates ui values
         {
-            
+
             foreach (var score in ScoreList) // calculate totals
             {
                 totalCpm += score.cpm;
@@ -446,7 +450,7 @@ public class ScoreViewModel : BaseViewModel
         totalWpm = 0;
         totalAccuracy = 0;
     }
-    
+
     private async void UpdateData(object state) // timer update function
     {
         InitializeAsync();
@@ -468,38 +472,26 @@ public class ScoreViewModel : BaseViewModel
         }
     }
 
-    public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
+  //   public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
+  //
+  public ICommand ShowPopupCommand { get; }
 
-    public ICommand ShowPopupCommand { get; }
-    private void ShowPopup()
-    {
-        IsPopupVisible = true;
-    }
-    public ICommand HidePopupCommand { get; }
-    private void HidePopup()
-    {
-        IsPopupVisible = false;
-    }
+  public ICommand HidePopupCommand { get; }
 
-  }
 
   public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
 
-
-  public ICommand HidePopupCommand { get; }
   private void HidePopup()
   {
     IsPopupVisible = false;
   }
-
-  public ICommand ShowPopupCommand { get; }
   private void ShowPopup()
   {
     IsPopupVisible = true;
   }
-  
+  //
   public ICommand LoadDataCommand { get; }
-  
+
 
   private List<string> _dateLabels;
   public List<string> DateLabels
@@ -533,7 +525,5 @@ public class ScoreViewModel : BaseViewModel
       OnPropertyChanged(nameof(ChartFilter));
     }
   }
-}
-
 }
 
