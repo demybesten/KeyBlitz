@@ -5,162 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Solution.Views"
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
-             xmlns:fa5="http://schemas.fontawesome.com/icons/"
              d:DataContext="{d:DesignInstance Type=viewModels:LeaderboardViewModel}"
 
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="850">
-
-    <Border>
-
-        <Border.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0" />
-                <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0" />
-            </LinearGradientBrush>
-        </Border.Background>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-
-            <Grid.ColumnDefinitions>
-
-
-            </Grid.ColumnDefinitions>
-            
-            <Label Margin="274,-480,272,35" Width="293" Height="115.43" Grid.ColumnSpan="2" Panel.ZIndex="999" >
-                <Label.Effect>
-                    <DropShadowEffect/>
-                </Label.Effect>
-                <Label.Background>
-                    <ImageBrush ImageSource="/Views/Component.png"/>
-                </Label.Background>
-            </Label>
-          
-            <Border CornerRadius="50 0 50 0" BorderBrush="White" BorderThickness="5" Grid.ColumnSpan="2">
-                <DataGrid HeadersVisibility="Column" ItemsSource="{Binding Personen}" Margin="15,15,15,15" BorderBrush="Transparent" BorderThickness="0" Background="#00000000" GridLinesVisibility="None" IsEnabled="False" IsSynchronizedWithCurrentItem="False" Padding="0,50,0,0"  FontWeight="Bold" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="#091F30" />
-                            <Setter Property="Foreground" Value="White" />
-                            
-                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow">
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="Foreground" Value="white" />
-                            <Setter Property="BorderBrush" Value="Transparent" />
-                            <Setter Property="BorderThickness" Value="3" />
-                            <Setter Property="Padding" Value="5" />
-                            <Setter Property="Margin" Value="5" />
-
-                        </Style>
-
-                    </DataGrid.RowStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn  IsReadOnly="True" Width="100" CanUserSort="False" Binding="{Binding Positie}">
-
-                            <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal"  Background="#FFFFFF" Margin="20 0 0 0">
-                                    <TextBlock Foreground="#FFFFFF" Text="."/>
-                                    <!-- <Image Source="/Solution;component/Resources/MaskGroup1.png" Width="50" Height="16"  /> -->
-                                    <fa5:ImageAwesome
-                                        Icon="Solid_Medal"
-                                        Width="50" 
-                                        Height="26"
-                                        Margin="10,4,10,4">
-                                    </fa5:ImageAwesome>
-                                    <TextBlock Foreground="#FFFFFF" Text="."/>
-                                </StackPanel>
-                                </DataGridTextColumn.Header>
-                       
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Padding" Value="5" />
-                                    <Setter Property="Background" Value="#081A29" />
-                                    <Setter Property="Foreground" Value="#ffffff" />
-                                    <Setter Property="FontWeight" Value="Bold" />
-                                    <Setter Property="Padding" Value="10" />
-                                    <Setter Property="Margin" Value="10" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn  Binding="{Binding Naam}" IsReadOnly="True" Width="400" CanUserSort="False" >
-                  
-                            <DataGridTextColumn.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Foreground="#091F30" Background="#ffffff" Padding="5 8 5 8" Width="377" Text="User ID" FontWeight="Bold" Margin="20,10,10,10"/>
-                                </StackPanel>
-                            </DataGridTextColumn.Header>
-                            
-                                <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Padding" Value="5" />
-                                    <Setter Property="Background" Value="#081A29" />
-                                    <Setter Property="Foreground" Value="#ffffff" />
-                                    <Setter Property="FontWeight" Value="Bold" />
-                                    <Setter Property="Padding" Value="10" />
-                                    <Setter Property="Margin" Value="10" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn  Binding="{Binding Score}" IsReadOnly="True" Width="400" CanUserSort="False">
-                            <DataGridTextColumn.Header>
-
-                                <StackPanel Orientation="Horizontal">
-
-                                    <TextBlock Foreground="#091F30" Background="#ffffff" Padding="5 8 5 8" Width="377" Text="Score" FontWeight="Bold" Margin="20,10,10,10"  >
-                                        <TextBlock.Effect>
-                                            <DropShadowEffect/>
-                                        </TextBlock.Effect>
-                                    </TextBlock>
-                                </StackPanel>
-                            </DataGridTextColumn.Header>
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Padding" Value="5" />
-                                    <Setter Property="Background" Value="#081A29" />
-                                    <Setter Property="Foreground" Value="#ffffff" />
-                                    <Setter Property="FontWeight" Value="Bold" />
-                                    <Setter Property="Padding" Value="10" />
-                                    <Setter Property="Margin" Value="10" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-
-
-                    </DataGrid.Columns>
-
-                </DataGrid>
-
-
-            </Border>
-
-
-
-            <Grid Grid.Row="0" VerticalAlignment="Top" Margin="0,20,0,0" 
->
-                <Grid.ColumnDefinitions >
-
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="0.36*"/>
-                </Grid.ColumnDefinitions>
-
-                <ComboBox Grid.Column="1" Style="{StaticResource CustomComboBoxStyle}" 
-                HorizontalAlignment="Left"
-                          VerticalAlignment="Bottom"
-                Width="145"
-                Height="30"
-                FontFamily="Lucida Console"
-                Foreground="{StaticResource MainTextColor}"
-                FontSize="15"
-                ItemsSource="{Binding ChartFilters}"
-                Text="{Binding ChartFilter}"/>
-            </Grid>
-        </Grid>
-
-    </Border>
+             d:DesignHeight="300" d:DesignWidth="300">
+  <Border>
+    <Border.Background>
+      <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0" />
+        <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0" />
+      </LinearGradientBrush>
+    </Border.Background>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="3*" />
+      </Grid.ColumnDefinitions>
+      <Label Foreground="{StaticResource MainTextColor}" Grid.Column="0" Content="LeaderboardView"></Label>
+      <Button Grid.Column="1" Content="NewTest"
+              Height="25"
+              Command="{Binding NavigateToNewTestView}" />
+    </Grid>
+  </Border>
 </UserControl>

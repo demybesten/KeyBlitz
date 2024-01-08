@@ -37,11 +37,9 @@
 
   <ItemGroup>
     <None Remove="Resources\KeyBlitzLogo.png" />
-    <None Remove="Views\Component.png" />
     <Resource Include="Resources\KeyBlitzLogo.png" />
     <None Remove="Resources\KeyBlitzLogoBannerTransparent.png" />
     <Resource Include="Resources\KeyBlitzLogoBannerTransparent.png" />
-    <Resource Include="Views\Component.png" />
   </ItemGroup>
 
   <ItemGroup>

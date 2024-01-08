@@ -5,8 +5,6 @@
     <Color x:Key="PrimaryBackgroundColor">#0B2438</Color>
     <Color x:Key="SecondaryBackgroundColor">#071826</Color>
     <Color x:Key="BackgroundColor">#071826</Color>
-    <Color x:Key="LoginScreenColor1">#06131e</Color>
-    <Color x:Key="LoginScreenColor2">#030b11</Color>
     
     <!-- Font Colors -->
     <SolidColorBrush x:Key="MainTextColor" Color="White"/>
