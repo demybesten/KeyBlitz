@@ -384,28 +384,33 @@ public class ScoreViewModel : BaseViewModel
         var response = await apiClient.GetPlayerScores();
         ScoreList = response.ScoreList;
 
-
-
-        Application.Current.Dispatcher.Invoke(() => // updates ui values
+        if (ScoreList.Count > 0)
         {
+
+
+          Application.Current.Dispatcher.Invoke(() => // updates ui values
+          {
 
             foreach (var score in ScoreList) // calculate totals
             {
-                totalCpm += score.cpm;
-                totalWpm += score.wpm;
-                totalAccuracy += score.accuracy;
-                if (score.multiplayerId != 0)
-                {
-                    mpGamesPlayed++;
-                }
+              totalCpm += score.cpm;
+              totalWpm += score.wpm;
+              totalAccuracy += score.accuracy;
+              if (score.multiplayerId != 0)
+              {
+                mpGamesPlayed++;
+              }
             }
+
             //calculate averages
             AverageAccuracy = totalAccuracy / ScoreList.Count;
             AverageCPM = totalCpm / ScoreList.Count;
             AverageWPM = totalWpm / ScoreList.Count;
             MpGamesPlayed = mpGamesPlayed;
             TestsTaken = ScoreList.Count;
-        });
+          });
+        }
+
         //reset total values
         mpGamesPlayed = 0;
         mpGamesPlayed = 0;
