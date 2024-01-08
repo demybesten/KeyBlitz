@@ -16,4 +16,9 @@ public interface IDataService
 
   string ElapsedTime { get; set; }
   string Text {  get; set; }
+
+   bool Multiplayer {  get; set; }
+
+    string status { get; set; }
+
 }

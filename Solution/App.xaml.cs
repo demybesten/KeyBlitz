@@ -36,6 +36,8 @@ namespace Solution
             services.AddSingleton<TypeTextViewModel>();
             services.AddSingleton<LoginRegisterViewModel>();
             services.AddSingleton<TestResultsViewModel>();
+            services.AddSingleton<MultiplayerResultsViewModel>();
+            services.AddSingleton<WebserverService>();
             services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider =>
                 viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
 

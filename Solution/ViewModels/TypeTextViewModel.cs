@@ -4,7 +4,7 @@ using Solution.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -33,6 +33,7 @@ namespace Solution.ViewModels
 
     public void Execute(object parameter)
     {
+        private WebserverService _webserverService;
       _execute(parameter);
     }
   }
@@ -135,9 +136,11 @@ namespace Solution.ViewModels
     private readonly ITextUpdater? _textUpdater;
     //public ObservableCollection<FormattedTextLine> Lines { get; set; }
 
+        public ICommand PressChar { get; private set; }
+        public NavRelayCommand NavigateToMultiplayerResultsView { get; set; }
     public ICommand MyCommand { get; private set; }
 
-    public ICommand PressChar { get; private set; }
+
 
     public ICommand PressBackspace { get; private set; }
     private string _textCache;
@@ -148,7 +151,8 @@ namespace Solution.ViewModels
       apiClient = client;
       Navigation = navigation;
       NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
-
+      NavigateToMultiplayerResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerResultsViewModel>(); }, o => true);
+      
       this.passTestStats = passTestStats;
       _weight = 0.6;
       MyCommand = new RelayCommand(ExecuteMyCommand);
@@ -212,6 +216,7 @@ namespace Solution.ViewModels
     public List<int> intList = new List<int> { };
     public List<Word> myList = new List<Word> { };
     private readonly IDataService passTestStats;
+    private ScoreViewModel scoreViewModel;
 
 
     private void ProcessChar(object parameter)
@@ -254,31 +259,124 @@ namespace Solution.ViewModels
         string typedWord = "";
         if (w < UserInput.Count)
         {
-          typedWord = UserInput[w];
+            stopWatch.Start();
+            timer.Start();
+            /*var text = parameter as string;
+            if (text != null)
+            {
+                tempList.Add(0);
+                updateText(new List<Word>
+                {
+                    new Word("temp", tempList),
+                });
+            } else
+            {
+                updateText(new List<Word>
+                {
+                    new Word("no text", new List<int> {}),
+                });
+            }*/
+            var text = parameter as string;
+            if (text == " ")
+            {
+                UserInput.Add("");
+            }
+            else if (text?.Length == 1)
+            {
+                UserInput[UserInput.Count - 1] = UserInput[UserInput.Count - 1] + text;
+            }
+            updateInput();
         }
         intList = new List<int> { };
 
-        for (int i = 0; i < word.Length; i++)
+        private async void updateInput(bool resetWordWrap = false)
         {
-          //char character = word[i];
-          if (i < typedWord.Length)
-          {
-            if (typedWord[i].Equals(word[i]))
+            myList = new List<Word> { };
+            for (int w = 0; w < TheText.Count; w++)
             {
-              intList.Add(0);
-            } else
-            {
-              intList.Add(1);
+                string word = TheText[w];
+                string typedWord = "";
+                if (w < UserInput.Count)
+                {
+                    typedWord = UserInput[w];
+                }
+                intList = new List<int> { };
+
+                for (int i = 0; i < word.Length; i++)
+                {
+                    //char character = word[i];
+                    if (i < typedWord.Length)
+                    {
+                        if (typedWord[i].Equals(word[i]))
+                        {
+                            intList.Add(0);
+                        }
+                        else
+                        {
+                            intList.Add(1);
+                        }
+                    }
+                    else if (w < UserInput.Count - 1)
+                    {
+                        intList.Add(2);
+                    }
+                }
+
+                if (typedWord.Length > word.Length)
+                {
+                    for (int i = word.Length; i < typedWord.Length; i++)
+                    {
+                        intList.Add(3);
+                    }
+                    word = word + typedWord.Substring(word.Length, typedWord.Length - word.Length);
+                }
+
+                myList.Add(new Word(word, intList));
             }
-          }
-          else if (w < UserInput.Count - 1)
-          {
-            intList.Add(2);
-          }
+            updateText(myList, resetWordWrap);
+            string lastWord = TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' });
+            System.Diagnostics.Debug.WriteLine(lastWord);
+            if (UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
+                                                     UserInput[UserInput.Count - 1].Length == TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }).Length &&
+                                                     GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
+                                                     GetLastChar.GetLastCharacter(TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }))))
+            {
+                StopTimer();
+                CalculateScore();
+                ResetData();
+                if (passTestStats.Multiplayer == true)
+                {
+
+                    WebserverService.Instance.SendFinishMessage(50, 99);
+                    
+                    NavigateToMultiplayerResultsView.Execute(null);
+
+                }
+                else
+                {
+                    NavigateToTestResultsView.Execute(null);
+                }
+                // text finished
+            }
         }
 
         if (typedWord.Length > word.Length)
         {
+            if (UserInput[UserInput.Count - 1].Length > 0)
+            {
+                UserInput[UserInput.Count - 1] = UserInput[UserInput.Count - 1].Substring(0, UserInput[UserInput.Count - 1].Length - 1);
+                updateInput();
+            }
+            else if (UserInput.Count > 1)
+            {
+                UserInput.RemoveAt(UserInput.Count - 1);
+                updateInput();
+            }
+        }
+
+        public void StopTimer()
+        {
+            stopWatch.Stop();
           for (int i = word.Length; i < typedWord.Length; i++)
           {
             intList.Add(3);
@@ -356,7 +454,8 @@ namespace Solution.ViewModels
       Cpm = Convert.ToInt32((_amountOfTypedChars / totalSeconds) * 60);
       Accuracy = Convert.ToInt32(_amountOfCorrectChars / _amountOfTypedChars * 100); // via api score terugkrijgen en opsturen van data
       ApiResponse response = await apiClient.SaveScore(Accuracy, Cpm, Wpm);
-
+            Score = Convert.ToInt32(_wpm * (1 - _weight) + _accuracy * _weight);
+            passTestStats.Score = Score;
       //data passen
       passTestStats.Accuracy = Accuracy;
       passTestStats.Cpm = Cpm;

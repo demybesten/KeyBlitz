@@ -3,11 +3,11 @@ using System.Windows.Input;
 
 namespace Solution.Helpers;
 
-public class NavRelayCommand: ICommand
+public class NavRelayCommand : ICommand
 {
     private readonly Predicate<object> _canExecute;
     private readonly Action<object> _execute;
-//test
+    //test
     public NavRelayCommand(Action<object> execute, Predicate<object> canExecute)
     {
         _canExecute = canExecute;
@@ -16,8 +16,8 @@ public class NavRelayCommand: ICommand
 
     public event EventHandler CanExecuteChanged
     {
-        add => CommandManager. RequerySuggested += value;
-        remove => CommandManager. RequerySuggested -= value;
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
     }
     public bool CanExecute(object parameter)
     {

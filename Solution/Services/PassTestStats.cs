@@ -3,7 +3,7 @@ using System.ComponentModel;
 using Solution.Helpers;
 namespace Solution.Services;
 
-public class PassTestStats : IDataService,INotifyPropertyChanged
+public class PassTestStats : IDataService, INotifyPropertyChanged
 {
 private double _amountOfCorrectChars;
     public double AmountOfCorrectChars
@@ -102,7 +102,19 @@ private double _amountOfCorrectChars;
             }
         }
     }
-
+    private bool _multiplayer;
+    public bool Multiplayer
+    {
+        get { return _multiplayer; }
+        set
+        {
+            if (_multiplayer != value)
+            {
+                _multiplayer = value;
+                OnPropertyChanged(nameof(Multiplayer));
+            }
+        }
+    }
     private string _elapsedTime;
     public string ElapsedTime
     {
@@ -113,6 +125,19 @@ private double _amountOfCorrectChars;
             {
                 _elapsedTime = value;
                 OnPropertyChanged(nameof(ElapsedTime));
+            }
+        }
+    }
+    private string _status;
+    public string status
+    {
+        get { return _status; }
+        set
+        {
+            if (_status != value)
+            {
+                _status = value;
+                OnPropertyChanged(nameof(status));
             }
         }
     }

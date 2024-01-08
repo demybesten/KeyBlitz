@@ -281,6 +281,8 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(Languages));
         }
     }
+   
+    private ObservableCollection<string> _languages = new ObservableCollection<string>();
 
     private string _language = "english";
 
@@ -361,6 +363,13 @@ public class ScoreViewModel : BaseViewModel
         }
     }
 
+  public async Task SendPrompt()
+  {
+    ShowLoading = true;
+    Console.WriteLine("Generating....");
+    //ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
+        ResponseText = await _sendPrompt.GeneratePrompt("scheeps", "story", 20, "basic", "Dutch");
+        if (ResponseText != "" && ResponseText != null)
     private int _averageAccuracy;
     public int AverageAccuracy
     {
