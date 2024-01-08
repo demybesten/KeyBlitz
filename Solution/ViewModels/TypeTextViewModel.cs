@@ -192,6 +192,7 @@ namespace Solution.ViewModels
         }
 
         public NavRelayCommand NavigateToTestResultsView { get; set; }
+        public int Accuraatheid { get; private set; }
 
         private void updateText(List<Word> words, bool resetWordWrap = false)
         {
@@ -308,8 +309,14 @@ namespace Solution.ViewModels
                 ResetData();
                 if (passTestStats.Multiplayer == true)
                 {
+                    string[] timeParts = ElapsedTime.Split(':');
+                    int minutes = int.Parse(timeParts[0]);
+                    int seconds = int.Parse(timeParts[1]);
+                    int milliseconds = int.Parse(timeParts[2]);
+                    double totalSeconds = minutes * 60 + seconds + milliseconds / 1000D;
 
-                    WebserverService.Instance.SendFinishMessage();
+                    Accuraatheid = Convert.ToInt32(_amountOfCorrectChars / _amountOfTypedChars * 100);
+                    WebserverService.Instance.SendFinishMessage(totalSeconds, Accuraatheid);
                     
                     NavigateToMultiplayerResultsView.Execute(null);
 

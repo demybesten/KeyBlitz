@@ -217,7 +217,7 @@ namespace Solution.Services
         }
 
 
-        public async void SendFinishMessage()
+        public async void SendFinishMessage(double tijd, int accuraatheid)
         {
             try
             {
@@ -226,8 +226,8 @@ namespace Solution.Services
                     type = "finish",
                     data = new
                     {
-                        time = 50,      
-                        accuracy = 99 
+                        time = tijd,      
+                        accuracy = accuraatheid
                     }
                 };
 
