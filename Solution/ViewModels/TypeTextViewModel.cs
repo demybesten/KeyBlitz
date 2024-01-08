@@ -96,7 +96,7 @@ namespace Solution.ViewModels
       {
         _wpm = value;
         OnPropertyChanged(nameof(Wpm));
-        Console.WriteLine("WordsPerMinute changed in typing model: " + value);
+        // Console.WriteLine("WordsPerMinute changed in typing model: " + value);
       }
     }
     public int _cpm;

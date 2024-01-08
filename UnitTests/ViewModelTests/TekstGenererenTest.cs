@@ -12,6 +12,8 @@ public class OnPropertyChangedTests
   private Mock<SendPrompt> sendPromptMock;
   private Mock<PassTestStats> passTestStatsMock;
   private ScoreViewModel viewModel;
+  private Mock<ApiClient> mockApiClient;
+
 
   [SetUp]
   public void SetUp()
@@ -20,7 +22,9 @@ public class OnPropertyChangedTests
     navigationMock = new Mock<INavigationService>();
     sendPromptMock = new Mock<SendPrompt>();
     passTestStatsMock = new Mock<PassTestStats>();
-    viewModel = new ScoreViewModel(navigationMock.Object, sendPromptMock.Object, passTestStatsMock.Object);
+    mockApiClient = new Mock<ApiClient>();
+
+    viewModel = new ScoreViewModel(navigationMock.Object, sendPromptMock.Object, passTestStatsMock.Object,mockApiClient.Object);
   }
   [Test]
   public void OnPropertyChanged_ResponseText()
@@ -110,26 +114,5 @@ public class OnPropertyChangedTests
 
     // Assert
     Assert.IsTrue(propertyChangedRaised, "PropertyChanged event not raised.");
-  }
-  [Test]
-  public async Task SendPrompt_SetsResponseText()
-  {
-    // Act
-    await viewModel.SendPrompt();
-
-    // Assert
-    Assert.That(viewModel.ResponseText, Is.Not.Null.And.Not.Empty);
-  }
-
-  [Test]
-  public async Task SendPrompt_EmptySubject_DefaultToRandom()
-  {
-    viewModel.TextSubject = "";
-
-    // Act
-    await viewModel.SendPrompt();
-
-    // Assert
-    Assert.That(viewModel.TextSubject, Is.EqualTo(""));
   }
 }

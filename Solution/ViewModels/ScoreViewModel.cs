@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -11,8 +12,6 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Solution.Helpers;
 using Solution.Services;
-using Solution.Views;
-using Solution.ViewModels;
 
 namespace Solution.ViewModels;
 
@@ -96,295 +95,392 @@ public class ScoreViewModel : BaseViewModel
     return response.ScoreList;
   }
 
-  private SendPrompt _sendPrompt;
+  
 
-  public INavigationService _Navigation;
+//     private readonly IDataService passTestStats;
+//     private readonly ApiClient apiClient;
+//     private List<Score> ScoreList;
+//     private readonly Timer _updateTimer;
+//     public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
+//     {
+        
+//         _updateTimer = new Timer(UpdateData, null, TimeSpan.Zero, TimeSpan.FromSeconds(15)); // Update every 15 seconds VERANDEREN NAAR LANGERE TIJD?
+        
+//         apiClient = client;
+//         this.passTestStats = passTestStats;
+//         Navigation = navigation;
 
-  public INavigationService Navigation
-  {
-    get => _Navigation;
-    set
-    {
-      _Navigation = value;
-      OnPropertyChanged();
-    }
-  }
+//         ScoreList = new List<Score>();
+    
+//         NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
+//         NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
+//         NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
-  public NavRelayCommand NavigateToTypeTextView { get; set; }
+//         _sendPrompt = sendPrompt;
+//         ShowPopupCommand = new RelayCommand(ShowPopup);
+//         HidePopupCommand = new RelayCommand(HidePopup);
 
-  private string _apiKey;
+//         _textLength = 20;
+//         ComplexityLevels.Add("basic");
+//         ComplexityLevels.Add("average");
+//         ComplexityLevels.Add("advanced");
+//         TextTypes.Add("story");
+//         TextTypes.Add("sentences");
+//         TextTypes.Add("words");
+//         Languages.Add("english");
+//         Languages.Add("dutch");
+//         Languages.Add("german");
+//         Languages.Add("french");
+        
+//         InitializeAsync(); // runs calculatescores for ui binding
+//         SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+//     }
+
+    private SendPrompt _sendPrompt;
+
+    public INavigationService _Navigation;
 
   public RelayCommand SendPromptCommand { get; set; }
 
-  private bool ContainsNumber(string value)
-  {
-    return value.Any(char.IsDigit);
-  }
-
-  private string _errorMessage;
-
-  public string ErrorMessage
-  {
-    get { return _errorMessage; }
-    set
+    public INavigationService Navigation
     {
-      _errorMessage = value;
-      OnPropertyChanged(nameof(ErrorMessage));
+        get => _Navigation;
+        set
+        {
+            _Navigation = value;
+            OnPropertyChanged();
+        }
+    }
+    public NavRelayCommand NavigateToNewTestView { get; set; }
+    public NavRelayCommand NavigateToMultiplayerView { get; set; }
+    public NavRelayCommand NavigateToTypeTextView { get; set; }
+
+    private string _apiKey;
+
+    public RelayCommand SendPromptCommand { get; }
+
+    private bool ContainsNumber(string value)
+    {
+        return value.Any(char.IsDigit);
+    }
+
+    private string _errorMessage;
+
+    public string ErrorMessage
+    {
+        get { return _errorMessage; }
+        set
+        {
+            _errorMessage = value;
+            OnPropertyChanged(nameof(ErrorMessage));
+        }
     }
   }
   
   string closestString = null;
 
-  private string _responseText;
-  private string[] ResponseTextArray;
+    private string _responseText;
+    private string[] ResponseTextArray;
 
-  public string ResponseText
-  {
-    get { return _responseText; }
-    set
+    public string ResponseText
     {
-      if (_responseText != value)
-      {
-        _responseText = value;
-        OnPropertyChanged(nameof(ResponseText));
-      }
+        get { return _responseText; }
+        set
+        {
+            if (_responseText != value)
+            {
+                _responseText = value;
+                OnPropertyChanged(nameof(ResponseText));
+            }
+        }
     }
-  }
 
-  private int _textLength;
+    private int _textLength;
 
-  public int TextLength
-  {
-    get { return _textLength; }
-    set
+    public int TextLength
     {
-      _textLength = value;
-      OnPropertyChanged(nameof(TextLength));
+        get { return _textLength; }
+        set
+        {
+            _textLength = value;
+            OnPropertyChanged(nameof(TextLength));
+        }
     }
-  }
 
-  private bool _showLoading = false;
+    private bool _showLoading = false;
 
-  public bool ShowLoading
-  {
-    get { return _showLoading; }
-    set
+    public bool ShowLoading
     {
-      _showLoading = value;
-      OnPropertyChanged(nameof(ShowLoading));
+        get { return _showLoading; }
+        set
+        {
+            _showLoading = value;
+            OnPropertyChanged(nameof(ShowLoading));
+        }
     }
-  }
 
-  private ObservableCollection<string> _complexityLevels = new ObservableCollection<string>();
-
-  public ObservableCollection<string> ComplexityLevels
-  {
-    get { return _complexityLevels; }
-    set
+    private ObservableCollection<string> _complexityLevels = new ObservableCollection<string>();
+    public ObservableCollection<string> ComplexityLevels
     {
-      _complexityLevels = value;
-      OnPropertyChanged(nameof(ComplexityLevels));
+        get { return _complexityLevels; }
+        set
+        {
+            _complexityLevels = value;
+            OnPropertyChanged(nameof(ComplexityLevels));
+        }
     }
-  }
 
-  private ObservableCollection<string> _textTypes = new ObservableCollection<string>();
+    private ObservableCollection<string> _textTypes = new ObservableCollection<string>();
 
-  public ObservableCollection<string> TextTypes
-  {
-    get { return _textTypes; }
-    set
+    public ObservableCollection<string> TextTypes
     {
-      _textTypes = value;
-      OnPropertyChanged(nameof(TextTypes));
+        get { return _textTypes; }
+        set
+        {
+            _textTypes = value;
+            OnPropertyChanged(nameof(TextTypes));
+        }
     }
-  }
 
-  private string _textType = "story";
+    private string _textType = "story";
 
-  public string TextType
-  {
-    get { return _textType; }
-    set
+    public string TextType
     {
-      _textType = value;
-      OnPropertyChanged(nameof(TextType));
+        get { return _textType; }
+        set
+        {
+            _textType = value;
+            OnPropertyChanged(nameof(TextType));
+        }
     }
-  }
 
-  private string _complexityLevel = "basic";
+    private string _complexityLevel = "basic";
 
-  public string ComplexityLevel
-  {
-    get { return _complexityLevel; }
-    set
+    public string ComplexityLevel
     {
-      _complexityLevel = value;
-      OnPropertyChanged(nameof(ComplexityLevel));
+        get { return _complexityLevel; }
+        set
+        {
+            _complexityLevel = value;
+            OnPropertyChanged(nameof(ComplexityLevel));
+        }
     }
-  }
 
-  private ObservableCollection<string> _languages = new ObservableCollection<string>();
+    private ObservableCollection<string> _languages = new ObservableCollection<string>();
 
-  public ObservableCollection<string> Languages
-  {
-    get { return _languages; }
-    set
+    public ObservableCollection<string> Languages
     {
-      _languages = value;
-      OnPropertyChanged(nameof(Languages));
+        get { return _languages; }
+        set
+        {
+            _languages = value;
+            OnPropertyChanged(nameof(Languages));
+        }
     }
-  }
 
-  private string _language = "english";
+    private string _language = "english";
 
-  public string Language
-  {
-    get { return _language; }
-    set
+    public string Language
     {
-      if (/*!ContainsNumber(value)*/ true)
-      {
-        ErrorMessage = "";
-        _language = value;
-      }
-      else
-      {
-        ErrorMessage = "Language input can't contain numbers!";
-      }
+        get { return _language; }
+        set
+        {
+            if (/*!ContainsNumber(value)*/ true)
+            {
+                ErrorMessage = "";
+                _language = value;
+            }
+            else
+            {
+                ErrorMessage = "Language input can't contain numbers!";
+            }
 
-      OnPropertyChanged(nameof(Language));
+            OnPropertyChanged(nameof(Language));
+        }
     }
-  }
 
-  private string _textSubject = "random";
+    private string _textSubject = "random";
 
-  public string TextSubject
-  {
-    get { return _textSubject; }
-    set
+    public string TextSubject
     {
-      if (/*!ContainsNumber(value)*/ true)
-      {
-        ErrorMessage = "";
-        _textSubject = value;
-      }
-      else
-      {
-        ErrorMessage = "Subject input can't contain numbers!";
-      }
+        get { return _textSubject; }
+        set
+        {
+            if (/*!ContainsNumber(value)*/ true)
+            {
+                ErrorMessage = "";
+                _textSubject = value;
+            }
+            else
+            {
+                ErrorMessage = "Subject input can't contain numbers!";
+            }
 
-      OnPropertyChanged(nameof(TextSubject));
+            OnPropertyChanged(nameof(TextSubject));
+        }
     }
-  }
 
-  public async Task SendPrompt()
-  {
-    ShowLoading = true;
-    Console.WriteLine("Generating....");
-    ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
-    if (ResponseText != "" && ResponseText != null)
+    public async Task SendPrompt()
     {
-      ShowLoading = false;
-      HidePopup();
-      passTestStats.Text = ResponseText;
-      NavigateToTypeTextView.Execute(null);
+        ShowLoading = true;
+        ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
+        if (ResponseText != "" && ResponseText != null)
+        {
+            ShowLoading = false;
+            HidePopup();
+            passTestStats.Text = ResponseText;
+            NavigateToTypeTextView.Execute(null);
+        }
     }
-  }
 
-  public NavRelayCommand NavigateToNewTestView { get; set; }
-  public NavRelayCommand NavigateToMultiplayerView { get; set; }
-
-  private int _averageRPM = 126;
-  public int AverageRPM
-  {
-    get { return _averageRPM; }
-    set
+    private int _averageWPM;
+    public int AverageWPM
     {
-      _averageRPM = value;
-      OnPropertyChanged(nameof(AverageRPM));
-    }
-  }
+        get { return _averageWPM; }
+        set
+        {
+            _averageWPM = value;
+            OnPropertyChanged(nameof(AverageWPM));
 
-  private int _averageCPM = 618;
-  public int AverageCPM
-  {
-    get { return _averageCPM; }
-    set
+        }
+    }
+
+    private int _averageCPM;
+    public int AverageCPM
     {
-      _averageCPM = value;
-      OnPropertyChanged(nameof(AverageCPM));
-    }
-  }
+        get { return _averageCPM; }
+        set
+        {
+            _averageCPM = value;
+            OnPropertyChanged(nameof(AverageCPM));
 
-  private int _averageAccuracy = 95;
-  public int AverageAccuracy
-  {
-    get { return _averageAccuracy; }
-    set
+        }
+    }
+
+    private int _averageAccuracy;
+    public int AverageAccuracy
     {
-      _averageAccuracy = value;
-      OnPropertyChanged(nameof(AverageAccuracy));
+        get { return _averageAccuracy; }
+        set
+        {
+            _averageAccuracy = value;
+            OnPropertyChanged(nameof(AverageAccuracy));
+        }
     }
-  }
 
-  private int _wordsTyped = 54932;
-  public int WordsTyped
-  {
-    get { return _wordsTyped; }
-    set
+    private int _testsTaken;
+    public int TestsTaken
     {
-      _wordsTyped = value;
-      OnPropertyChanged(nameof(WordsTyped));
-    }
-  }
+        get { return _testsTaken; }
+        set
+        {
+            _testsTaken = value;
+            OnPropertyChanged(nameof(TestsTaken));
 
-  private int _testsTaken = 419;
-  public int TestsTaken
-  {
-    get { return _testsTaken; }
-    set
+        }
+    }
+
+    private int _mpGamesPlayed;
+    public int MpGamesPlayed
     {
-      _testsTaken = value;
-      OnPropertyChanged(nameof(TestsTaken));
+        get { return _mpGamesPlayed; }
+        set
+        {
+            _mpGamesPlayed = value;
+            OnPropertyChanged(nameof(MpGamesPlayed));
+        }
     }
-  }
 
-  private int _mpGamesPlayed = 53;
-  public int MpGamesPlayed
-  {
-    get { return _mpGamesPlayed; }
-    set
+    private int _mpGamesWon;
+    public int MpGamesWon
     {
-      _mpGamesPlayed = value;
-      OnPropertyChanged(nameof(MpGamesPlayed));
+        get { return _mpGamesWon; }
+        set
+        {
+            _mpGamesWon = value;
+            OnPropertyChanged(nameof(MpGamesWon));
+        }
     }
-  }
-
-  private int _mpGamesWon = 15;
-  public int MpGamesWon
-  {
-    get { return _mpGamesWon; }
-    set
+  
+  
+    private int mpGamesPlayed;
+    private int mpGamesWon;
+    private int totalCpm;
+    private int totalWpm;
+    private int totalAccuracy;
+    public async void  InitializeAsync() // runs calculate in constructor
     {
-      _mpGamesWon = value;
-      OnPropertyChanged(nameof(MpGamesWon));
+        await calculateScores();
     }
-  }
-
-  private bool _isPopupVisible;
-
-  public bool IsPopupVisible
-  {
-    get { return _isPopupVisible; }
-    set
+    public async Task calculateScores()
     {
-      if (_isPopupVisible != value)
-      {
-        _isPopupVisible = value;
-        OnPropertyChanged(nameof(IsPopupVisible));
-        OnPropertyChanged(nameof(BlurEffect));
-      }
+        var response = await apiClient.GetPlayerScores();
+        ScoreList = response.ScoreList;
+    
+
+
+        Application.Current.Dispatcher.Invoke(() => // updates ui values
+        {
+            
+            foreach (var score in ScoreList) // calculate totals
+            {
+                totalCpm += score.cpm;
+                totalWpm += score.wpm;
+                totalAccuracy += score.accuracy;
+                if (score.multiplayerId != 0)
+                {
+                    mpGamesPlayed++;
+                }
+            }
+            //calculate averages
+            AverageAccuracy = totalAccuracy / ScoreList.Count;
+            AverageCPM = totalCpm / ScoreList.Count;
+            AverageWPM = totalWpm / ScoreList.Count;
+            MpGamesPlayed = mpGamesPlayed;
+            TestsTaken = ScoreList.Count;
+        });
+        //reset total values
+        mpGamesPlayed = 0;
+        mpGamesPlayed = 0;
+        totalCpm = 0;
+        totalWpm = 0;
+        totalAccuracy = 0;
     }
+    
+    private async void UpdateData(object state) // timer update function
+    {
+        InitializeAsync();
+    }
+
+    private bool _isPopupVisible;
+
+    public bool IsPopupVisible
+    {
+        get { return _isPopupVisible; }
+        set
+        {
+            if (_isPopupVisible != value)
+            {
+                _isPopupVisible = value;
+                OnPropertyChanged(nameof(IsPopupVisible));
+                OnPropertyChanged(nameof(BlurEffect));
+            }
+        }
+    }
+
+    public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
+
+    public ICommand ShowPopupCommand { get; }
+    private void ShowPopup()
+    {
+        IsPopupVisible = true;
+    }
+    public ICommand HidePopupCommand { get; }
+    private void HidePopup()
+    {
+        IsPopupVisible = false;
+    }
+
   }
 
   public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
@@ -438,3 +534,6 @@ public class ScoreViewModel : BaseViewModel
     }
   }
 }
+
+}
+

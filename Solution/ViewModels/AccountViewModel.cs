@@ -32,17 +32,12 @@ public class AccountViewModel : BaseViewModel
     public async void MessageBoxTest()
     {
         ApiClient api = new ApiClient();
-
-
-        await api.Register("admin622", "password");
+        // ApiResponse response = await api.Register("admin622", "password");
         await api.Login("admin", "password");
         // ApiResponse response = await api.GetUserInfo();
         // ApiResponse response = await api.GetText("story", "pirate english", "69", "dancing cupcakes", "medium");
-        // ApiResponse response = await api.SaveScore(69, 42, 69);
-        ApiResponse response = await api.GetPlayerScores();
-        // ApiResponse response = await api.GetLeaderboard(LeaderboardTimeperiod.Week);
-
-        var user = response.ScoreList;
-        Console.WriteLine(user);
+        //await api.SaveScore(100, 42, 3000); //highscore test
+        // ApiResponse response = await api.GetPlayerScores();
+        ApiResponse response = await api.GetLeaderboard(LeaderboardTimeperiod.Year);
     }
 }

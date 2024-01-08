@@ -18,6 +18,7 @@ namespace UnitTests.ViewModelTests
     private Mock<INavigationService> mockNavigation;
     private Mock<SendPrompt> mockSendPrompt;
     private Mock<IDataService> mockDataService;
+    private Mock<ApiClient> mockApiClient;
 
     [SetUp]
     public void Setup()
@@ -25,8 +26,9 @@ namespace UnitTests.ViewModelTests
       mockNavigation = new Mock<INavigationService>();
       mockSendPrompt = new Mock<SendPrompt>();
       mockDataService = new Mock<IDataService>();
+      mockApiClient = new Mock<ApiClient>();
 
-      viewModel = new ScoreViewModel(mockNavigation.Object, mockSendPrompt.Object, mockDataService.Object);
+      viewModel = new ScoreViewModel(mockNavigation.Object, mockSendPrompt.Object, mockDataService.Object,mockApiClient.Object);
     }
 
     [Test]
