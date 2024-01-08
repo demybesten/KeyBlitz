@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 using Solution.Helpers;
 using Solution.Services;
 
@@ -14,49 +17,130 @@ namespace Solution.ViewModels;
 
 public class ScoreViewModel : BaseViewModel
 {
+  private readonly ApiClient apiClient;
+  private readonly IDataService passTestStats;
+  public SeriesCollection ChartSeries { get; set; }
+  private List<Score> ScoreList { get; set; }
+  private bool _isDataLoaded = false;
+  
+  public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
+  {
+    apiClient = client;
+    this.passTestStats = passTestStats;
+    Navigation = navigation;
+    NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
+    NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
+    NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
-    private readonly IDataService passTestStats;
-    private readonly ApiClient apiClient;
-    private List<Score> ScoreList;
-    private readonly Timer _updateTimer;
-    public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
-    {
-        
-        _updateTimer = new Timer(UpdateData, null, TimeSpan.Zero, TimeSpan.FromSeconds(15)); // Update every 15 seconds VERANDEREN NAAR LANGERE TIJD?
-        
-        apiClient = client;
-        this.passTestStats = passTestStats;
-        Navigation = navigation;
+    _sendPrompt = sendPrompt;
+    ShowPopupCommand = new RelayCommand(ShowPopup);
+    HidePopupCommand = new RelayCommand(HidePopup);
 
-        ScoreList = new List<Score>();
+    _textLength = 20;
+    ComplexityLevels.Add("basic");
+    ComplexityLevels.Add("average");
+    ComplexityLevels.Add("advanced");
+    TextTypes.Add("story");
+    TextTypes.Add("sentences");
+    TextTypes.Add("words");
+    Languages.Add("english");
+    Languages.Add("dutch");
+    Languages.Add("german");
+    Languages.Add("french");
+    ChartFilters.Add("last week");
+    ChartFilters.Add("last month");
+    ChartFilters.Add("last year");
+    ChartFilters.Add("all time");
     
-        NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
-        NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
-        NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
+    Task.Run(async () =>
+    {
+      ScoreList = await GetPlayerScores();
+      Console.WriteLine(ScoreList.Count);
 
-        _sendPrompt = sendPrompt;
-        ShowPopupCommand = new RelayCommand(ShowPopup);
-        HidePopupCommand = new RelayCommand(HidePopup);
-
-        _textLength = 20;
-        ComplexityLevels.Add("basic");
-        ComplexityLevels.Add("average");
-        ComplexityLevels.Add("advanced");
-        TextTypes.Add("story");
-        TextTypes.Add("sentences");
-        TextTypes.Add("words");
-        Languages.Add("english");
-        Languages.Add("dutch");
-        Languages.Add("german");
-        Languages.Add("french");
+      Application.Current.Dispatcher.Invoke(() =>
+      {
+        var dates = new List<DateTime> { };
         
-        InitializeAsync(); // runs calculatescores for ui binding
-        SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
-    }
+        ChartSeries = new SeriesCollection();
+
+        LineSeries lineSeries = new LineSeries
+        {
+          PointGeometrySize = 15,
+          Values = new ChartValues<ObservablePoint>()
+        };
+
+        for (int i = 0; i < ScoreList.Count; i++)
+        {
+          double yValue = Convert.ToDouble(ScoreList[i].score);
+          lineSeries.Values.Add(new ObservablePoint(i, yValue));
+          Console.WriteLine($"X: {i}, Y: {yValue}");
+          dates.Add(ScoreList[i].date);
+          Console.WriteLine(dates[i]);
+        }
+        
+        ChartSeries.Add(lineSeries); 
+        DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
+        
+        // Zorgt ervoor dat de UI van de applicatie wordt aangepast
+        OnPropertyChanged(nameof(ChartSeries));
+        OnPropertyChanged(nameof(DateLabels));
+      });
+    });
+    SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+  }
+  
+  private async Task<List<Score>> GetPlayerScores()
+  {
+    var response = await apiClient.GetPlayerScores();
+    return response.ScoreList;
+  }
+
+  
+
+//     private readonly IDataService passTestStats;
+//     private readonly ApiClient apiClient;
+//     private List<Score> ScoreList;
+//     private readonly Timer _updateTimer;
+//     public ScoreViewModel(INavigationService navigation, SendPrompt sendPrompt, IDataService passTestStats, ApiClient client)
+//     {
+        
+//         _updateTimer = new Timer(UpdateData, null, TimeSpan.Zero, TimeSpan.FromSeconds(15)); // Update every 15 seconds VERANDEREN NAAR LANGERE TIJD?
+        
+//         apiClient = client;
+//         this.passTestStats = passTestStats;
+//         Navigation = navigation;
+
+//         ScoreList = new List<Score>();
+    
+//         NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
+//         NavigateToMultiplayerView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerViewModel>(); }, o => true);
+//         NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
+
+//         _sendPrompt = sendPrompt;
+//         ShowPopupCommand = new RelayCommand(ShowPopup);
+//         HidePopupCommand = new RelayCommand(HidePopup);
+
+//         _textLength = 20;
+//         ComplexityLevels.Add("basic");
+//         ComplexityLevels.Add("average");
+//         ComplexityLevels.Add("advanced");
+//         TextTypes.Add("story");
+//         TextTypes.Add("sentences");
+//         TextTypes.Add("words");
+//         Languages.Add("english");
+//         Languages.Add("dutch");
+//         Languages.Add("german");
+//         Languages.Add("french");
+        
+//         InitializeAsync(); // runs calculatescores for ui binding
+//         SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
+//     }
 
     private SendPrompt _sendPrompt;
 
     public INavigationService _Navigation;
+
+  public RelayCommand SendPromptCommand { get; set; }
 
     public INavigationService Navigation
     {
@@ -91,9 +175,9 @@ public class ScoreViewModel : BaseViewModel
             OnPropertyChanged(nameof(ErrorMessage));
         }
     }
-
-
-    string closestString = null;
+  }
+  
+  string closestString = null;
 
     private string _responseText;
     private string[] ResponseTextArray;
@@ -396,4 +480,60 @@ public class ScoreViewModel : BaseViewModel
     {
         IsPopupVisible = false;
     }
+
+  }
+
+  public Effect BlurEffect => IsPopupVisible ? new BlurEffect { Radius = 5 } : null;
+
+
+  public ICommand HidePopupCommand { get; }
+  private void HidePopup()
+  {
+    IsPopupVisible = false;
+  }
+
+  public ICommand ShowPopupCommand { get; }
+  private void ShowPopup()
+  {
+    IsPopupVisible = true;
+  }
+  
+  public ICommand LoadDataCommand { get; }
+  
+
+  private List<string> _dateLabels;
+  public List<string> DateLabels
+  {
+    get => _dateLabels;
+    set
+    {
+      _dateLabels = value;
+      OnPropertyChanged(nameof(DateLabels));
+    }
+  }
+
+  private ObservableCollection<string> _chartFilters = new ObservableCollection<string>();
+  public ObservableCollection<string> ChartFilters
+  {
+    get { return _chartFilters; }
+    set
+    {
+      _chartFilters = value;
+      OnPropertyChanged(nameof(ChartFilters));
+    }
+  }
+
+  private string _chartFilter = "all time";
+  public string ChartFilter
+  {
+    get { return _chartFilter; }
+    set
+    {
+      _chartFilter = value;
+      OnPropertyChanged(nameof(ChartFilter));
+    }
+  }
 }
+
+}
+
