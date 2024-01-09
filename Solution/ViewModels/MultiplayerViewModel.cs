@@ -85,9 +85,12 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    private readonly ApiClient apiClient;
 
-    public MultiplayerViewModel(INavigationService navigation, WebserverService _webserverservice, IDataService passTestStats, SendPrompt sendPrompt)
+    public MultiplayerViewModel(INavigationService navigation, WebserverService _webserverservice, IDataService passTestStats, SendPrompt sendPrompt, ApiClient client)
     {
+        apiClient = client;
+
         this.passTestStats = passTestStats;
         NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
         _sendPrompt = sendPrompt;
@@ -103,7 +106,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
         Navigation = navigation;
         NavigateToTypeTextViewCommand = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
 
-        _scoreViewModel = new ScoreViewModel(navigation, new SendPrompt(), passTestStats);
+        _scoreViewModel = new ScoreViewModel(navigation, new SendPrompt(), passTestStats, client);
 
 
         stopWatch = new Stopwatch();
