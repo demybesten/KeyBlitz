@@ -4,9 +4,14 @@ using Solution.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
+using System.Windows;
+
 using System.Threading.Tasks;
+
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Net.NetworkInformation;
 
 namespace Solution.ViewModels
 {
@@ -30,12 +35,14 @@ namespace Solution.ViewModels
     {
       return _canExecute == null || _canExecute(parameter);
     }
-
+private WebserverService _webserverService;
     public void Execute(object parameter)
     {
+
       _execute(parameter);
     }
   }
+
 
   public class TypeTextViewModel : BaseViewModel
   {
@@ -54,6 +61,7 @@ namespace Solution.ViewModels
       }
     }
 
+
     public double _amountOfTypedChars;
     public double AmountOfTypedChars
     {
@@ -64,6 +72,7 @@ namespace Solution.ViewModels
         OnPropertyChanged(nameof(AmountOfTypedChars));
       }
     }
+
 
     public double _amountOfTypedWords;
     public double AmountOfTypedWords
@@ -87,6 +96,7 @@ namespace Solution.ViewModels
         OnPropertyChanged(nameof(Score));
       }
     }
+
 
     public int _wpm;
     public int Wpm
@@ -120,6 +130,7 @@ namespace Solution.ViewModels
       }
     }
 
+
     //Slaat stopwatch value op en wordt gebruikt om te binden aan een label
     private string _elapsedTime = String.Empty;
     public string ElapsedTime {
@@ -135,9 +146,14 @@ namespace Solution.ViewModels
     private readonly ITextUpdater? _textUpdater;
     //public ObservableCollection<FormattedTextLine> Lines { get; set; }
 
+
+        public NavRelayCommand NavigateToMultiplayerResultsView { get; set; }
+
     public ICommand MyCommand { get; private set; }
 
+
     public ICommand PressChar { get; private set; }
+
 
     public ICommand PressBackspace { get; private set; }
     private string _textCache;
@@ -148,6 +164,7 @@ namespace Solution.ViewModels
       apiClient = client;
       Navigation = navigation;
       NavigateToTestResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<TestResultsViewModel>(); }, o => true);
+            NavigateToMultiplayerResultsView = new NavRelayCommand(o => { Navigation.NavigateTo<MultiplayerResultsViewModel>(); }, o => true);
 
       this.passTestStats = passTestStats;
       _weight = 0.6;
@@ -176,6 +193,7 @@ namespace Solution.ViewModels
     }
 
     public INavigationService _Navigation;
+
 
     public INavigationService Navigation
     {
@@ -214,6 +232,7 @@ namespace Solution.ViewModels
     private readonly IDataService passTestStats;
 
 
+
     private void ProcessChar(object parameter)
     {
       stopWatch.Start();
@@ -245,64 +264,83 @@ namespace Solution.ViewModels
     }
 
 
-    private async void updateInput(bool resetWordWrap = false)
-    {
-      myList = new List<Word> { };
-      for (int w = 0; w < TheText.Count; w++)
-      {
-        string word = TheText[w];
-        string typedWord = "";
-        if (w < UserInput.Count)
-        {
-          typedWord = UserInput[w];
-        }
-        intList = new List<int> { };
 
-        for (int i = 0; i < word.Length; i++)
-        {
-          //char character = word[i];
-          if (i < typedWord.Length)
-          {
-            if (typedWord[i].Equals(word[i]))
-            {
-              intList.Add(0);
-            } else
-            {
-              intList.Add(1);
+ private async void updateInput(bool resetWordWrap = false)
+ {
+     myList = new List<Word> { };
+     for (int w = 0; w < TheText.Count; w++)
+     {
+         string word = TheText[w];
+         string typedWord = "";
+         if (w < UserInput.Count)
+         {
+             typedWord = UserInput[w];
+         }
+         intList = new List<int> { };
+
+         for (int i = 0; i < word.Length; i++)
+         {
+             //char character = word[i];
+             if (i < typedWord.Length)
+             {
+                 if (typedWord[i].Equals(word[i]))
+                 {
+                     intList.Add(0);
+                 }
+                 else
+                 {
+                     intList.Add(1);
+                 }
+             }
+             else if (w < UserInput.Count - 1)
+             {
+                 intList.Add(2);
+             }
+         }
+
+         if (typedWord.Length > word.Length)
+         {
+             for (int i = word.Length; i < typedWord.Length; i++)
+             {
+                 intList.Add(3);
+             }
+             word = word + typedWord.Substring(word.Length, typedWord.Length - word.Length);
+         }
+
+         myList.Add(new Word(word, intList));
+     }
+     updateText(myList, resetWordWrap);
+     string lastWord = TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' });
+     System.Diagnostics.Debug.WriteLine(lastWord);
+     if (UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
+                                              UserInput[UserInput.Count - 1].Length == TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }).Length &&
+                                              GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
+                                              GetLastChar.GetLastCharacter(TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }))))
+     {
+         StopTimer();
+         CalculateScore();
+         
+         if (passTestStats.Multiplayer == true)
+         {
+                    Accuracy = Convert.ToInt32((int)(_amountOfCorrectChars / _amountOfTypedChars * 100));
+                    System.Diagnostics.Debug.WriteLine($"Accuracy: {Accuracy}");
+                    System.Diagnostics.Debug.WriteLine($"_amountOfCorrectChars: {_amountOfCorrectChars}");
+                    System.Diagnostics.Debug.WriteLine($"_amountOfTypedChars: {_amountOfTypedChars}");
+
+
+                    WebserverService.Instance.SendFinishMessage((int)stopWatch.Elapsed.TotalMilliseconds, Accuracy);
+
+             NavigateToMultiplayerResultsView.Execute(null);
+
+         }  
+         else
+         {
+             NavigateToTestResultsView.Execute(null);
+         }
+                ResetData();
+                // text finished
             }
-          }
-          else if (w < UserInput.Count - 1)
-          {
-            intList.Add(2);
-          }
-        }
-
-        if (typedWord.Length > word.Length)
-        {
-          for (int i = word.Length; i < typedWord.Length; i++)
-          {
-            intList.Add(3);
-          }
-          word = word + typedWord.Substring(word.Length, typedWord.Length - word.Length);
-        }
-
-        myList.Add(new Word(word, intList));
-      }
-      updateText(myList, resetWordWrap);
-      string lastWord = TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' });
-      System.Diagnostics.Debug.WriteLine(lastWord);
-      if ( UserInput.Count > TheText.Count || (UserInput.Count == TheText.Count &&
-                                               UserInput[UserInput.Count-1].Length == TheText[TheText.Count-1].TrimEnd(new char[] { ' ', '\n', '\r' }).Length &&
-                                               GetLastChar.GetLastCharacter(UserInput[TheText.Count - 1]) ==
-                                               GetLastChar.GetLastCharacter(TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }))))
-      {
-        StopTimer();
-        await CalculateScore();
-        ResetData();
-        NavigateToTestResultsView.Execute(null);
-        // text finished
-      }
-    }
+ }
 
     private void ExecuteMyCommand()
     {
@@ -357,6 +395,7 @@ namespace Solution.ViewModels
       Accuracy = Convert.ToInt32(_amountOfCorrectChars / _amountOfTypedChars * 100); // via api score terugkrijgen en opsturen van data
       ApiResponse response = await apiClient.SaveScore(Accuracy, Cpm, Wpm);
 
+
       //data passen
       passTestStats.Accuracy = Accuracy;
       passTestStats.Cpm = Cpm;
@@ -365,6 +404,7 @@ namespace Solution.ViewModels
       passTestStats.AmountOfTypedChars = _amountOfTypedChars;
       passTestStats.AmountOfTypedWords = UserInput.Count;
       passTestStats.ElapsedTime = ElapsedTime;
+
 
       passTestStats.Score = response.Score.score;
 
@@ -387,7 +427,7 @@ namespace Solution.ViewModels
 
       TimeSpan ts = stopWatch.Elapsed;
     }
-
+        private int lastping = 0;
     private void timer_Tick(object sender, EventArgs e)
     {
       //Als stopwatch runt
@@ -395,9 +435,18 @@ namespace Solution.ViewModels
       {
         //Haalt time span op en format deze
         TimeSpan ts = stopWatch.Elapsed;
-        ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
+                if(ts.TotalMilliseconds > lastping + 5000)
+                {
+                      WebserverService.Instance.ping();
+                    lastping = (int)ts.TotalMilliseconds;
+                    System.Diagnostics.Debug.WriteLine($"lastping: {lastping}");
+
+                }
+                ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
           ts.Minutes, ts.Seconds, ts.Milliseconds / 1);
       }
     }
+
   }
 }
+

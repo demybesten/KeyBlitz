@@ -62,11 +62,13 @@ public class ScoreViewModel : BaseViewModel
     SendPromptCommand = new RelayCommand(async () => await SendPrompt(), () => true);
   }
 
+
   private async Task<List<Score>> GetPlayerScores()
   {
     var response = await apiClient.GetPlayerScores();
     return response.ScoreList;
   }
+
 
     private SendPrompt _sendPrompt;
 
@@ -210,7 +212,9 @@ public class ScoreViewModel : BaseViewModel
         }
     }
 
+
     private string _language = "english";
+
 
     public string Language
     {
@@ -277,8 +281,10 @@ public class ScoreViewModel : BaseViewModel
         }
     }
 
+
     private int _averageCPM;
     public int AverageCPM
+
     {
         get { return _averageCPM; }
         set
