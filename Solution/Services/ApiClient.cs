@@ -256,7 +256,7 @@ namespace Solution.Services
         public int wpm { get; set; }
         public int original_score { get; set; }
         public int score { get; set; }
-        public DateTime date { get; set; }
+        public string date { get; set; }
     }
 
     public class ApiResponse
