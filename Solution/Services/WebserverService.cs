@@ -33,6 +33,7 @@ namespace Solution.Services
         public WebserverService()
         {
             _webSocket = new ClientWebSocket();
+            _webSocket.Options.KeepAliveInterval = TimeSpan.Zero;
 
             // _ = Connect();
         }
@@ -95,8 +96,8 @@ namespace Solution.Services
             try
             {
                 Uri serverUri = new Uri("ws://161.97.129.111:6969");
-
                 await _webSocket.ConnectAsync(serverUri, CancellationToken.None);
+              
                 await SendAuthenticationRequest();
                 await LobbyUpdates();
                 //MessageBox.Show("connectie gemaakt");
