@@ -250,6 +250,7 @@ namespace Solution.Services
         public int id { get; set; }
         public int user_id { get; set; }
         public User? user { get; set; }
+        public string username { get; set; }
         public int multiplayerId { get; set; }
         public int accuracy { get; set; }
         public int cpm { get; set; }

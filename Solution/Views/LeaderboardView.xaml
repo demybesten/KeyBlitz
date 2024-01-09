@@ -92,7 +92,7 @@
                   
                             <DataGridTextColumn.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Foreground="#091F30" Background="#ffffff" Padding="5 8 5 8" Width="377" Text="User ID" FontWeight="Bold" Margin="20,10,10,10"/>
+                                    <TextBlock Foreground="#091F30" Background="#ffffff" Padding="5 8 5 8" Width="377" Text="User" FontWeight="Bold" Margin="20,10,10,10"/>
                                 </StackPanel>
                             </DataGridTextColumn.Header>
                             

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Solution.ViewModels;
 public class Persoon
 {
-    public int Naam { get; set; }
+    public string Naam { get; set; }
     public int Score { get; set; }
     public int Positie { get; set; }
 
@@ -53,7 +53,7 @@ public class LeaderboardViewModel : BaseViewModel
         for (int i = 0; i < 5; i++)
         {
             // Console.WriteLine(i);
-            Personen.Add(new Persoon { Naam = Leaderboard[i].user_id, Score = Leaderboard[i].score, Positie = i+1});
+            Personen.Add(new Persoon { Naam = Leaderboard[i].username, Score = Leaderboard[i].score, Positie = i+1});
         }
         
 
