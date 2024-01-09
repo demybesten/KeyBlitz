@@ -1,0 +1,75 @@
+<UserControl x:Class="Solution.Views.HeaderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Solution.Views"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:viewModels="clr-namespace:Solution.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
+             mc:Ignorable="d">
+
+    <Border Background="{StaticResource PanelBackgroundColor1}"
+            BorderBrush="{StaticResource PanelBackgroundColor1}"
+            VerticalAlignment="Top"
+            Height="100">
+        <Grid>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0"
+                           Source="/Solution;component/Resources/KeyBlitzLogoBannerTransparent.png"
+                           Height="65"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Margin="15,16,0,0"/>
+                    <Button Grid.Column="1"
+                            Style="{StaticResource GrayIsMouseOver}"
+                            Content="play"
+                            FontFamily="Lucida Console"
+                            FontSize="20"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Margin="0,15,0,0"
+                            Command="{Binding NavigateToScoreViewCommand}" />
+                    <Button Grid.Column="2"
+                            Style="{StaticResource GrayIsMouseOver}"
+                            Content="leaderboard"
+                            FontFamily="Lucida Console"
+                            FontSize="20"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="0,15,0,0"
+                            Command="{Binding NavigateToLeaderboardViewCommand}" />
+                    <Button Grid.Column="3"
+                            Style="{StaticResource GrayIsMouseOver}"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Margin="0,15,15,0"
+                            Command="{Binding LogOutCommand}"
+                            >
+                        <Button.Content>
+                            <fa:ImageAwesome
+                                Style="{StaticResource GrayIconOnHover}"
+                                Icon="SignOut"
+                                Height="50">
+                            </fa:ImageAwesome>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
+
+</UserControl>

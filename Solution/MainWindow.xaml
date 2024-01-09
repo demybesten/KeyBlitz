@@ -3,18 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solution"
-        xmlns:vm="clr-namespace:Solution.ViewModels"
-        xmlns:views="clr-namespace:Solution.Views" d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        xmlns:viewModels="clr-namespace:Solution.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
+
+        xmlns:views="clr-namespace:Solution.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" Background="Transparent " AllowsTransparency="True">
-    
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type vm:NewTestViewModel}">
-            <views:NewTestView/>
-        </DataTemplate>
-    </Window.Resources>
+        Title="MainWindow" WindowStyle="ThreeDBorderWindow" WindowState="Maximized">
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- For Header, takes space as needed -->
+            <RowDefinition Height="*"/>
+            <!-- For Content, takes remaining space -->
+        </Grid.RowDefinitions>
+
+        <views:HeaderView Grid.Row="0"/>
+        <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}"/>
     </Grid>
 </Window>
