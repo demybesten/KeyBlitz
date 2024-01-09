@@ -351,7 +351,7 @@ public class ScoreViewModel : BaseViewModel
 
           Application.Current.Dispatcher.Invoke(() =>
           {
-            var dates = new List<DateTime> { };
+            var dates = new List<string> { };
 
             ChartSeries = new SeriesCollection();
 
@@ -371,7 +371,7 @@ public class ScoreViewModel : BaseViewModel
             }
 
             ChartSeries.Add(lineSeries);
-            DateLabels = dates.Select(d => d.ToString("dd-MM-yyyy")).ToList();
+            DateLabels = dates.Select(d => d).ToList();
 
             // Zorgt ervoor dat de UI van de applicatie wordt aangepast
             OnPropertyChanged(nameof(ChartSeries));
