@@ -435,7 +435,7 @@ private WebserverService _webserverService;
       {
         //Haalt time span op en format deze
         TimeSpan ts = stopWatch.Elapsed;
-                if(ts.TotalMilliseconds > lastping + 5000)
+                if(ts.TotalMilliseconds > lastping + 5000 && passTestStats.Multiplayer)
                 {
                       WebserverService.Instance.ping();
                     lastping = (int)ts.TotalMilliseconds;
