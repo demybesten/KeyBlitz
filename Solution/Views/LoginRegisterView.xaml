@@ -46,7 +46,7 @@
                                 <ColumnDefinition Width="1.5*"/>
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" 
+                            <Button Grid.Column="0"
                                     Style="{StaticResource CustomButtonStyle}"
                                     x:Name="ToLogInScreen"
                                     Foreground="White"
@@ -137,10 +137,8 @@
                                                              Margin="10"
                                                              Height="25"
                                                              Width="25"/>
-                                            <TextBox Grid.Column="1"
+                                            <PasswordBox Grid.Column="1"
                                                      x:Name="LoginPassword"
-                                                     Text="{Binding SignUpConfirmPassword}"
-                                                     Height="30"
                                                      Background="Transparent"
                                                      BorderBrush="Transparent"
                                                      BorderThickness="0"
@@ -167,14 +165,14 @@
                                         <RowDefinition Height="0.5*"/>
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
-                                        <TextBlock 
-                                            Text="{Binding MessageBlockSignIn}" 
+                                        <TextBlock
+                                            Text="{Binding MessageBlockSignIn}"
                                             Background="Transparent"
                                             FontFamily="Lucida Console"
                                             FontSize="20"
-                                            Foreground="{StaticResource SecondaryTextColor}" 
+                                            Foreground="{StaticResource SecondaryTextColor}"
                                             TextWrapping="Wrap"
-                                            HorizontalAlignment="Center" 
+                                            HorizontalAlignment="Center"
                                             VerticalAlignment="Bottom"/>
                                     </Border>
                                 </Grid>
@@ -274,7 +272,7 @@
                                                              Margin="10"
                                                              Height="25"
                                                              Width="25"/>
-                                            <TextBox  
+                                            <TextBox
                                                      Grid.Column="1"
                                                      x:Name="SignUpPassword"
                                                      Height="30"
@@ -316,7 +314,7 @@
                                                              Margin="10"
                                                              Height="25"
                                                              Width="25"/>
-                                            <TextBox 
+                                            <TextBox
                                                      Grid.Column="1"
                                                      x:Name="SignUpConfirmPassword"
                                                      Height="30"
@@ -347,14 +345,14 @@
                                         <RowDefinition Height="0.5*"/>
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
-                                        <TextBlock 
-                                            Text="{Binding MessageBlockSignUp}" 
+                                        <TextBlock
+                                            Text="{Binding MessageBlockSignUp}"
                                             Background="Transparent"
                                             FontFamily="Lucida Console"
                                             FontSize="20"
-                                            Foreground="{StaticResource SecondaryTextColor}" 
+                                            Foreground="{StaticResource SecondaryTextColor}"
                                             TextWrapping="Wrap"
-                                            HorizontalAlignment="Center" 
+                                            HorizontalAlignment="Center"
                                             VerticalAlignment="Bottom"/>
                                     </Border>
                                 </Grid>

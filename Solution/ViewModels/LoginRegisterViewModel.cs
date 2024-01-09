@@ -46,7 +46,7 @@ namespace Solution.ViewModels
             set { SetProperty(ref _MessageBlockSignUp, value); }
         }
 
-        private string _loginUsername = "username";
+        private string _loginUsername = "";
         public string LoginUsername
         {
             get { return _loginUsername; }
