@@ -118,7 +118,7 @@ public class SendPrompt: ObservableObject
       foreach (string currentString in resultArray)
       {
         ResponseTextArray = currentString.Split(' ');
-        Console.WriteLine($"Length({_textLength}/{ResponseTextArray.Length}):  {currentString}|||\n");
+        // Console.WriteLine($"Length({_textLength}/{ResponseTextArray.Length}):  {currentString}|||\n");
         // Calculate the absolute difference between the target word count and the current string's word count
         int currentWordCount = CountWords(currentString);
         int difference = Math.Abs(_textLength - currentWordCount);

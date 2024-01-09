@@ -43,9 +43,17 @@
             <DataTemplate DataType="{x:Type viewModels:TestResultsViewModel}">
                 <views:TestResultsView/>
             </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModels:MultiplayerResultsViewModel}">
                 <views:MultiplayerResultsView/>
             </DataTemplate>
+
+            
+            <DataTemplate DataType="{x:Type viewModels:LoginRegisterViewModel}">
+                <views:LoginRegisterView/>
+            </DataTemplate>
+
+
         </ResourceDictionary>
 
     </Application.Resources>

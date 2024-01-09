@@ -21,7 +21,6 @@
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0"
                            Source="/Solution;component/Resources/KeyBlitzLogoBannerTransparent.png"
@@ -53,23 +52,12 @@
                             Command="{Binding NavigateToLeaderboardViewCommand}" />
                     <Button Grid.Column="3"
                             Style="{StaticResource GrayIsMouseOver}"
-                            Content="account"
-                            FontFamily="Lucida Console"
-                            FontSize="20"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Margin="0,15,0,0"
-                            Command="{Binding NavigateToMultiplayerResultsViewModelCommand}"/>
-                    <Button Grid.Column="4"
-                            Style="{StaticResource GrayIsMouseOver}"
                             Background="Transparent"
                             BorderBrush="Transparent"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Margin="0,15,15,0"
-                            Command="{Binding NavigateToTestResultsViewCommand}"
+                            Command="{Binding LogOutCommand}"
                             >
                         <Button.Content>
                             <fa:ImageAwesome
