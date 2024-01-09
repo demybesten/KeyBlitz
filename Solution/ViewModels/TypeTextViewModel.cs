@@ -318,21 +318,27 @@ private WebserverService _webserverService;
      {
          StopTimer();
          CalculateScore();
-         ResetData();
+         
          if (passTestStats.Multiplayer == true)
          {
+                    Accuracy = Convert.ToInt32((int)(_amountOfCorrectChars / _amountOfTypedChars * 100));
+                    System.Diagnostics.Debug.WriteLine($"Accuracy: {Accuracy}");
+                    System.Diagnostics.Debug.WriteLine($"_amountOfCorrectChars: {_amountOfCorrectChars}");
+                    System.Diagnostics.Debug.WriteLine($"_amountOfTypedChars: {_amountOfTypedChars}");
 
-             WebserverService.Instance.SendFinishMessage(50, 99);
+
+                    WebserverService.Instance.SendFinishMessage(50, Accuracy);
 
              NavigateToMultiplayerResultsView.Execute(null);
 
-         }
+         }  
          else
          {
              NavigateToTestResultsView.Execute(null);
          }
-         // text finished
-     }
+                ResetData();
+                // text finished
+            }
  }
 
     private void ExecuteMyCommand()

@@ -30,12 +30,12 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-        
 
 
-         
-      
-        
+
+
+
+
             <ItemsControl ItemsSource="{Binding Players}" HorizontalContentAlignment="Center">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
