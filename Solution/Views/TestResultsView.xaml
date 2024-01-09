@@ -6,9 +6,14 @@
              xmlns:viewModels="clr-namespace:Solution.ViewModels"
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:liveCharts="clr-namespace:LiveCharts;assembly=LiveCharts"
+             xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
+             xmlns:helpers="clr-namespace:Solution.Helpers"
              d:DataContext="{d:DesignInstance Type=viewModels:TestResultsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <helpers:PercentageConverter x:Key="PercentageConverter" />
+    </UserControl.Resources>
     <Border>
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -76,14 +81,10 @@
                                         </Grid.ColumnDefinitions>
                                         <Border Grid.Column="0">
                                             <Grid>
-                                                <!-- <wpf:PieChart InnerRadius="100">  -->
-                                                <!--     <wpf:PieChart.Series> -->
-                                                <!--         <wpf:PieSeries Values="{Binding Accuracy}" Fill="LimeGreen"/> -->
-                                                <!--         <wpf:PieSeries Values="{Binding RemainingAccuracy}" Fill="Red"/> -->
-                                                <!--     </wpf:PieChart.Series> -->
-                                                <!-- </wpf:PieChart> -->
+          
                                                 <Label
-                                                    Content="{Binding Accuracy}"
+                                                    Content="{Binding Accuracy, Converter={StaticResource PercentageConverter}}"
+
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontFamily="Lucida Console"
@@ -104,7 +105,6 @@
                                                        Foreground="{StaticResource SecondaryTextColor}"
                                                        FontSize="18"
                                                        HorizontalContentAlignment="Left"
-                                                       Margin="25,25,0,0"
                                                        FontWeight="Bold"/>
                                                 <Label Grid.Row="0"
                                                        Content="{Binding AmountOfTypedChars}"

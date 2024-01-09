@@ -318,7 +318,7 @@ private WebserverService _webserverService;
                                               GetLastChar.GetLastCharacter(TheText[TheText.Count - 1].TrimEnd(new char[] { ' ', '\n', '\r' }))))
      {
          StopTimer();
-         CalculateScore();
+         await CalculateScore();
          
          if (passTestStats.Multiplayer == true)
          {
