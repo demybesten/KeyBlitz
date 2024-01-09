@@ -36,7 +36,7 @@
                             Background="Transparent"
                             BorderBrush="Transparent"
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
+                            HorizontalAlignment="Right"
                             Margin="0,15,0,0"
                             Command="{Binding NavigateToScoreViewCommand}" />
                     <Button Grid.Column="2"
@@ -62,7 +62,7 @@
                         <Button.Content>
                             <fa:ImageAwesome
                                 Style="{StaticResource GrayIconOnHover}"
-                                Icon="Cog"
+                                Icon="SignOut"
                                 Height="50">
                             </fa:ImageAwesome>
                         </Button.Content>

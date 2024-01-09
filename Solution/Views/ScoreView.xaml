@@ -35,16 +35,6 @@
             <ColumnDefinition Width="0.82*" />
             <ColumnDefinition Width="0.25*" />
           </Grid.ColumnDefinitions>
-          <ComboBox Grid.Column="1" Style="{StaticResource CustomComboBoxStyle}"
-                    HorizontalAlignment="Left"
-                    Width="145"
-                    Height="30"
-                    FontFamily="Lucida Console"
-                    Foreground="{StaticResource MainTextColor}"
-                    FontSize="15"
-                    Margin="0,75,0,0"
-                    ItemsSource="{Binding ChartFilters}"
-                    Text="{Binding ChartFilter}" />
         </Grid>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
