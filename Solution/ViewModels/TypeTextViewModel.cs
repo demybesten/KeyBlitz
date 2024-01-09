@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Net.NetworkInformation;
 
 namespace Solution.ViewModels
 {
@@ -426,7 +427,7 @@ private WebserverService _webserverService;
 
       TimeSpan ts = stopWatch.Elapsed;
     }
-
+        private int lastping = 0;
     private void timer_Tick(object sender, EventArgs e)
     {
       //Als stopwatch runt
@@ -434,7 +435,14 @@ private WebserverService _webserverService;
       {
         //Haalt time span op en format deze
         TimeSpan ts = stopWatch.Elapsed;
-        ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
+                if(ts.TotalMilliseconds > lastping + 5000)
+                {
+                      WebserverService.Instance.ping();
+                    lastping = (int)ts.TotalMilliseconds;
+                    System.Diagnostics.Debug.WriteLine($"lastping: {lastping}");
+
+                }
+                ElapsedTime = String.Format("{0:00}:{1:00}:{2:00}",
           ts.Minutes, ts.Seconds, ts.Milliseconds / 1);
       }
     }

@@ -198,7 +198,15 @@ namespace Solution.Services
             }
         }
 
+        public async void ping()
+        {
+            string jsonFinishMessage = "ping";
 
+            // Convert the JSON string to bytes
+            byte[] finishMessageBytes = Encoding.UTF8.GetBytes(jsonFinishMessage);
+            await _webSocket.SendAsync(new ArraySegment<byte>(finishMessageBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+
+        }
 
 
 

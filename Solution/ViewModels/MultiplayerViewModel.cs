@@ -138,7 +138,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     public async Task SendPrompt()
     {
         //ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
-        ResponseText = await _sendPrompt.GeneratePrompt("Project groep 1 van OOSD Semester van Windesheim", "story", 20, "basic", "Dutch");
+        ResponseText = await _sendPrompt.GeneratePrompt("Een stoner genaamd Aad Glasbergen", "story", 20, "basic", "Dutch");
         if (ResponseText != "" && ResponseText != null)
         {
             passTestStats.Text = ResponseText;
@@ -148,12 +148,15 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     private void OnLobbyUpdateReceived(object sender, LobbyUpdateEventArgs e)
     {
         var lobbyData = e.LobbyUpdate;
-        foreach (var player in lobbyData.Players)
+        if (lobbyData.Type == "lobby")
         {
-            // Controleer of de speler al in de collectie aanwezig is
-            if (!UpdatedPlayers.Any(p => p.Name == player.Name))
+            foreach (var player in lobbyData.Players)
             {
-                UpdatedPlayers.Add(new Player { Name = player.Name });
+                // Controleer of de speler al in de collectie aanwezig is
+                if (!UpdatedPlayers.Any(p => p.Name == player.Name))
+                {
+                    UpdatedPlayers.Add(new Player { Name = player.Name });
+                }
             }
         }
 
