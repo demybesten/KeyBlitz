@@ -328,7 +328,7 @@ private WebserverService _webserverService;
                     System.Diagnostics.Debug.WriteLine($"_amountOfTypedChars: {_amountOfTypedChars}");
 
 
-                    WebserverService.Instance.SendFinishMessage(50, Accuracy);
+                    WebserverService.Instance.SendFinishMessage((int)stopWatch.Elapsed.TotalMilliseconds, Accuracy);
 
              NavigateToMultiplayerResultsView.Execute(null);
 

@@ -67,19 +67,19 @@ namespace Solution.ViewModels
 
                 if (existingPlayer != null)
                 {
-                    existingPlayer.Accuracy = player.Accuracy;
+                    existingPlayer.Score = player.Score;
 
                     ShowAccuracyMessageBox(existingPlayer);
                 }
                 else
                 {
-                    Players.Add(new Player { Name = player.Name, Accuracy = player.Accuracy });
+                    Players.Add(new Player { Name = player.Name, Score = player.Score });
 
                     ShowAccuracyMessageBox(Players.Last());
                 }
             }
 
-            Players = new ObservableCollection<Player>(Players.OrderByDescending(p => p.Accuracy));
+            Players = new ObservableCollection<Player>(Players.OrderByDescending(p => p.Score));
         }
         private RelayCommand _leaveLobbyCommand;
 

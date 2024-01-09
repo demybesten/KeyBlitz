@@ -41,7 +41,7 @@
                     <DataTemplate>
                         <Border BorderBrush="White" BorderThickness="1" CornerRadius="15" Background="#091F30" Padding="10" Margin="0 10 0 10">
                             <StackPanel>
-                                <TextBlock FontSize="18" Foreground="#ffffff" Text="{Binding Accuracy}" />
+                                <TextBlock FontSize="18" Foreground="#ffffff" Text="{Binding Score}" />
                                 <TextBlock FontSize="14" Foreground="#ffffff" Text="{Binding Name}" />
                             </StackPanel>
                         </Border>
