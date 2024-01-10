@@ -332,7 +332,8 @@ private WebserverService _webserverService;
 
              NavigateToMultiplayerResultsView.Execute(null);
 
-         }  
+                    passTestStats.Multiplayer = false;
+                }  
          else
          {
              NavigateToTestResultsView.Execute(null);

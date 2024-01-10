@@ -79,10 +79,7 @@ FontSize="26"
 Margin="0,70,0,0"
 />
 
-            <Border BorderBrush="White" BorderThickness="1" Margin="0 0 0 0" CornerRadius="5" Background="#091F30"  Grid.Column="0" Grid.Row="4">
-
-                <Button FontSize="15" Foreground="White" Background="Transparent"   BorderThickness="0" Content="Cancel"  VerticalAlignment="Top"    Command="{Binding NavigateToMultiplayerResultsView}"/>
-            </Border>
+       
         </Grid>
 
     </Border>

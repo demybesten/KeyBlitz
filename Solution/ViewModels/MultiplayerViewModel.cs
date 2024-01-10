@@ -138,7 +138,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     public async Task SendPrompt()
     {
         //ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
-        ResponseText = await _sendPrompt.GeneratePrompt("Een worstelaar genaamd Aad Glasbergen", "story", 20, "basic", "Dutch");
+        ResponseText = await _sendPrompt.GeneratePrompt("Windesheim HBO ICT Opleiding", "story", 20, "basic", "Dutch");
         if (ResponseText != "" && ResponseText != null)
         {
             passTestStats.Text = ResponseText;

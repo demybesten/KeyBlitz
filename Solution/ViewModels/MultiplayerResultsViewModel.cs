@@ -39,7 +39,7 @@ namespace Solution.ViewModels
 
                 WebserverService.Instance.LobbyUpdateReceived += OnLobbyUpdateReceived;
 
-         //   GenerateDummyData();
+            //   GenerateDummyData();
         }
 
         private void OnLobbyUpdateReceived(object sender, LobbyUpdateEventArgs e)
