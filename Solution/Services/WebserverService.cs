@@ -42,6 +42,7 @@ namespace Solution.Services
         public WebserverService(IDataService passTestStats, ScoreViewModel scoreViewModel)
         {
             passTestStats.Multiplayer = true;
+            WebserverService.passTestStats = passTestStats;
             _webSocket = new ClientWebSocket();
             _scoreViewModel = scoreViewModel;
             //_ = Connect();
@@ -75,7 +76,7 @@ namespace Solution.Services
             }
         }
         private ObservableCollection<Player> _players;
-        private IDataService passTestStats;
+        private static IDataService passTestStats;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -189,7 +190,7 @@ namespace Solution.Services
                 LobbyStatus = lobbyData.Status;
                 if (LobbyStatus == "playing")
                 {
-
+                    passTestStats.Text = lobbyData.Text;
                     //MessageBox.Show("test");
                 }
 

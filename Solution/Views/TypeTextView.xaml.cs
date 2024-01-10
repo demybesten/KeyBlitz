@@ -215,7 +215,7 @@ namespace Solution.Views
             {
                 wordsPerLine.Add(wordCount);
             }
-            System.Diagnostics.Debug.WriteLine("Line 2 " + wordsPerLine[1]);
+            //System.Diagnostics.Debug.WriteLine("Line 2 " + wordsPerLine[1]);
         }
 
 

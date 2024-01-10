@@ -91,6 +91,8 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     {
         apiClient = client;
 
+        lobbyState = "unknown";
+
         this.passTestStats = passTestStats;
         NavigateToTypeTextView = new NavRelayCommand(o => { Navigation.NavigateTo<TypeTextViewModel>(); }, o => true);
         _sendPrompt = sendPrompt;
@@ -121,6 +123,8 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     private SendPrompt _sendPrompt;
     private string _responseText;
     private string[] ResponseTextArray;
+
+    private string lobbyState;
     public NavRelayCommand NavigateToTypeTextView { get; set; }
 
     public string ResponseText
@@ -137,13 +141,7 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
     }
     public async Task SendPrompt()
     {
-        //ResponseText = await _sendPrompt.GeneratePrompt(TextSubject,TextType,TextLength,ComplexityLevel,Language);
-        ResponseText = await _sendPrompt.GeneratePrompt("Windesheim HBO ICT Opleiding", "story", 20, "basic", "Dutch");
-        if (ResponseText != "" && ResponseText != null)
-        {
-            passTestStats.Text = ResponseText;
-            NavigateToTypeTextView.Execute(null);
-        }
+        NavigateToTypeTextView.Execute(null);
     }
     private void OnLobbyUpdateReceived(object sender, LobbyUpdateEventArgs e)
     {
@@ -158,6 +156,8 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
                     UpdatedPlayers.Add(new Player { Name = player.Name });
                 }
             }
+            lobbyState = lobbyData.Status;
+            
         }
 
         Players = UpdatedPlayers;
@@ -194,17 +194,20 @@ public class MultiplayerViewModel : BaseViewModel, INotifyPropertyChanged
 
             if (remainingTime <= TimeSpan.Zero)
             {
-                stopWatch.Stop();
-                timer.Stop();
                 ElapsedTime = "00";
-                //MessageBox.Show("test");
-                _ = SendPrompt();
-
             }
             else
             {
                 ElapsedTime = String.Format("{0:00}", remainingTime.Seconds);
             }
+
+            if (lobbyState == "playing")
+            {
+                stopWatch.Stop();
+                timer.Stop();
+                _ = SendPrompt();
+            }
+            
         }
     }
 
