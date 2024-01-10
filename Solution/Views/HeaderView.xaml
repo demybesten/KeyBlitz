@@ -27,7 +27,7 @@
                            Height="65"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           Margin="15,16,0,0"/>
+                           Margin="15,16,0,0" />
                     <Button Grid.Column="1"
                             Style="{StaticResource GrayIsMouseOver}"
                             Content="play"
@@ -57,8 +57,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Margin="0,15,15,0"
-                            Command="{Binding LogOutCommand}"
-                            >
+                            Command="{Binding LogOutCommand}">
                         <Button.Content>
                             <fa:ImageAwesome
                                 Style="{StaticResource GrayIconOnHover}"

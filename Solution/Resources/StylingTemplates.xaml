@@ -22,8 +22,7 @@
                             Grid.Column="1"
                             Focusable="false"
                             IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                            ClickMode="Press"
-                        >
+                            ClickMode="Press">
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="ToggleButton">
                                     <Grid>
@@ -38,78 +37,75 @@
                                             Fill="Gray"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Data="M 0 0 L 4 4 L 8 0 Z"
-                                        />
+                                            Data="M 0 0 L 4 4 L 8 0 Z" />
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsChecked" Value="True">
-                                            <Setter TargetName="Arrow" Property="Data" Value="M 0 4 L 4 0 L 8 4 Z"/>
+                                            <Setter TargetName="Arrow" Property="Data" Value="M 0 4 L 4 0 L 8 4 Z" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </ToggleButton.Template>
                         </ToggleButton>
-                        <Popup 
+                        <Popup
                             Placement="Bottom"
                             IsOpen="{TemplateBinding IsDropDownOpen}"
                             AllowsTransparency="True"
                             PopupAnimation="Slide">
-                            <Grid 
+                            <Grid
                                 SnapsToDevicePixels="True"
                                 MinWidth="{TemplateBinding ActualWidth}"
                                 MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                <Border 
+                                <Border
                                     x:Name="DropDownBorder"
                                     Background="#040d16"
                                     BorderThickness="1"
-                                    BorderBrush="#040d16"/>
-                                <ScrollViewer 
-                                    Margin="4,6,4,6" 
+                                    BorderBrush="#040d16" />
+                                <ScrollViewer
+                                    Margin="4,6,4,6"
                                     SnapsToDevicePixels="True">
-                                    <ItemsPresenter 
+                                    <ItemsPresenter
                                         KeyboardNavigation.DirectionalNavigation="Contained"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </ScrollViewer>
                             </Grid>
-                            
+
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_EditableTextBox" Property="Background" Value="#0B2438"/>
-                            <Setter TargetName="PART_EditableTextBox" Property="BorderBrush" Value="#0B2438"/>
+                            <Setter TargetName="PART_EditableTextBox" Property="Background" Value="#0B2438" />
+                            <Setter TargetName="PART_EditableTextBox" Property="BorderBrush" Value="#0B2438" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="Button" x:Key="RoundedCornersButton">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Border 
+                        <Border
                             x:Name="border"
                             CornerRadius="10"
-                            Background="{TemplateBinding Background}"
-                            />
-                        <ContentPresenter 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center"
-                        />
+                            Background="{TemplateBinding Background}" />
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#0B2438"/>
+                            <Setter TargetName="border" Property="Background" Value="#0B2438" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="TextBox" x:Key="RoundedCornersTextBox">
         <Setter Property="Template">
             <Setter.Value>
@@ -126,45 +122,44 @@
                             FontSize="{TemplateBinding FontSize}"
                             Foreground="{TemplateBinding Foreground}"
                             Padding="{TemplateBinding Padding}"
-                            BorderThickness="0"
-                        />
+                            BorderThickness="0" />
                     </Border>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="Button" x:Key="GrayIsMouseOver">
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <ContentPresenter/>
+                    <ContentPresenter />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="Gray"/>
+                            <Setter Property="Foreground" Value="Gray" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="fa:ImageAwesome" x:Key="GrayIconOnHover">
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="White" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="Gray"/>
+                <Setter Property="Foreground" Value="Gray" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style x:Key="CustomButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontFamily" Value="Lucida Console"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontFamily" Value="Lucida Console" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -174,12 +169,12 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="5">
                         <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"/>
+                                          VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="Transparent"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="Transparent"/>
+                            <Setter TargetName="border" Property="Background" Value="Transparent" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

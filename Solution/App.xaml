@@ -37,20 +37,20 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:TypeTextViewModel}">
-                <views:TypeTextView/>
+                <views:TypeTextView />
             </DataTemplate>
-            
+
             <DataTemplate DataType="{x:Type viewModels:TestResultsViewModel}">
-                <views:TestResultsView/>
+                <views:TestResultsView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:MultiplayerResultsViewModel}">
-                <views:MultiplayerResultsView/>
+                <views:MultiplayerResultsView />
             </DataTemplate>
 
-            
+
             <DataTemplate DataType="{x:Type viewModels:LoginRegisterViewModel}">
-                <views:LoginRegisterView/>
+                <views:LoginRegisterView />
             </DataTemplate>
 
 
@@ -58,6 +58,3 @@
 
     </Application.Resources>
 </Application>
-
-
-

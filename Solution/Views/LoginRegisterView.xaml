@@ -12,39 +12,40 @@
     <Border>
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="{StaticResource LoginScreenColor1}" Offset="0.0"/>
-                <GradientStop Color="{StaticResource LoginScreenColor2}" Offset="1.0"/>
+                <GradientStop Color="{StaticResource LoginScreenColor1}" Offset="0.0" />
+                <GradientStop Color="{StaticResource LoginScreenColor2}" Offset="1.0" />
             </LinearGradientBrush>
         </Border.Background>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3.25*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3.25*"/>
+                    <ColumnDefinition Width="3.25*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3.25*" />
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="2" CornerRadius="10">
+                <Border Grid.Column="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="2"
+                        CornerRadius="10">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0"/>
-                            <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0"/>
+                            <GradientStop Color="{StaticResource PrimaryBackgroundColor}" Offset="0.0" />
+                            <GradientStop Color="{StaticResource SecondaryBackgroundColor}" Offset="1.0" />
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="0.5*" />
+                            <RowDefinition Height="2*" />
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0"
                                     Style="{StaticResource CustomButtonStyle}"
@@ -53,7 +54,7 @@
                                     Content="log in"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Click="LoginButtonClick"/>
+                                    Click="LoginButtonClick" />
                             <Button Grid.Column="1"
                                     Style="{StaticResource CustomButtonStyle}"
                                     x:Name="ToSignUpScreen"
@@ -61,40 +62,41 @@
                                     Content="sign up"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Click="SignUpButtonClick"/>
+                                    Click="SignUpButtonClick" />
                         </Grid>
                         <Grid Grid.Row="1" x:Name="LoginGrid">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1.5*"/>
-                                <RowDefinition Height="1.5*"/>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1.5*" />
+                                <RowDefinition Height="1.5*" />
+                                <RowDefinition Height="2*" />
+                                <RowDefinition Height="2*" />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.5*"/>
-                                        <RowDefinition Height="2*"/>
-                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="0.5*" />
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}"
+                                            BorderThickness="0 0 0 1">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1.2*"/>
-                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="1.2*" />
+                                                <ColumnDefinition Width="5*" />
                                             </Grid.ColumnDefinitions>
                                             <fa:ImageAwesome Grid.Column="0"
                                                              Icon="User"
                                                              Foreground="{StaticResource SecondaryTextColor}"
                                                              Margin="10"
                                                              Height="25"
-                                                             Width="25"/>
+                                                             Width="25" />
                                             <TextBox Grid.Column="1"
                                                      x:Name="LoginUsername"
                                                      Height="30"
@@ -108,63 +110,65 @@
                                                      VerticalContentAlignment="Center"
                                                      MaxLength="16"
                                                      Text="{Binding LoginUsername}"
-                                                     CaretBrush="{StaticResource MainTextColor}"/>
+                                                     CaretBrush="{StaticResource MainTextColor}" />
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.5*"/>
-                                        <RowDefinition Height="2*"/>
-                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="0.5*" />
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}"
+                                            BorderThickness="0 0 0 1">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1.2*"/>
-                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="1.2*" />
+                                                <ColumnDefinition Width="5*" />
                                             </Grid.ColumnDefinitions>
                                             <fa:ImageAwesome Grid.Column="0"
                                                              Icon="Lock"
                                                              Foreground="{StaticResource SecondaryTextColor}"
                                                              Margin="10"
                                                              Height="25"
-                                                             Width="25"/>
+                                                             Width="25" />
                                             <PasswordBox Grid.Column="1"
-                                                     x:Name="LoginPassword"
-                                                     Background="Transparent"
-                                                     BorderBrush="Transparent"
-                                                     BorderThickness="0"
-                                                     FontFamily="Lucida Console"
-                                                     FontSize="20"
-                                                     Foreground="{StaticResource SecondaryTextColor}"
-                                                     VerticalContentAlignment="Center"
-                                                     MaxLength="16"
-                                                     CaretBrush="{StaticResource MainTextColor}"/>
+                                                         x:Name="LoginPassword"
+                                                         Background="Transparent"
+                                                         BorderBrush="Transparent"
+                                                         BorderThickness="0"
+                                                         FontFamily="Lucida Console"
+                                                         FontSize="20"
+                                                         Foreground="{StaticResource SecondaryTextColor}"
+                                                         VerticalContentAlignment="Center"
+                                                         MaxLength="16"
+                                                         CaretBrush="{StaticResource MainTextColor}" />
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="3">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.5*"/>
-                                        <RowDefinition Height="2*"/>
-                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="0.5*" />
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}"
+                                            BorderThickness="0 0 0 1">
                                         <TextBlock
                                             Text="{Binding MessageBlockSignIn}"
                                             Background="Transparent"
@@ -173,15 +177,15 @@
                                             Foreground="{StaticResource SecondaryTextColor}"
                                             TextWrapping="Wrap"
                                             HorizontalAlignment="Center"
-                                            VerticalAlignment="Bottom"/>
+                                            VerticalAlignment="Bottom" />
                                     </Border>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="4">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.25*"/>
+                                    <ColumnDefinition Width="0.25*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.25*" />
                                 </Grid.ColumnDefinitions>
                                 <Button Grid.Column="1" Style="{StaticResource RoundedCornersButton}"
                                         Content="log in"
@@ -199,37 +203,38 @@
                         </Grid>
                         <Grid Grid.Row="1" x:Name="SignUpGrid">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1.5*"/>
-                                <RowDefinition Height="1.5*"/>
-                                <RowDefinition Height="1.5*"/>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1.5*" />
+                                <RowDefinition Height="1.5*" />
+                                <RowDefinition Height="1.5*" />
+                                <RowDefinition Height="2*" />
+                                <RowDefinition Height="2*" />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.5*"/>
-                                        <RowDefinition Height="3.5*"/>
-                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="3.5*" />
+                                        <RowDefinition Height="0.5*" />
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}"
+                                            BorderThickness="0 0 0 1">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1.2*"/>
-                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="1.2*" />
+                                                <ColumnDefinition Width="5*" />
                                             </Grid.ColumnDefinitions>
                                             <fa:ImageAwesome Grid.Column="0"
                                                              Icon="User"
                                                              Foreground="{StaticResource SecondaryTextColor}"
                                                              Margin="10"
                                                              Height="25"
-                                                             Width="25"/>
+                                                             Width="25" />
                                             <TextBox Grid.Column="1"
                                                      x:Name="SignUpUsername"
                                                      Height="30"
@@ -243,108 +248,111 @@
                                                      Text="{Binding SignUpUsername}"
                                                      VerticalContentAlignment="Center"
                                                      MaxLength="16"
-                                                     CaretBrush="{StaticResource MainTextColor}"/>
+                                                     CaretBrush="{StaticResource MainTextColor}" />
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.5*"/>
-                                        <RowDefinition Height="3.5*"/>
-                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="3.5*" />
+                                        <RowDefinition Height="0.5*" />
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}"
+                                            BorderThickness="0 0 0 1">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1.2*"/>
-                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="1.2*" />
+                                                <ColumnDefinition Width="5*" />
                                             </Grid.ColumnDefinitions>
                                             <fa:ImageAwesome Grid.Column="0"
                                                              Icon="Lock"
                                                              Foreground="{StaticResource SecondaryTextColor}"
                                                              Margin="10"
                                                              Height="25"
-                                                             Width="25"/>
+                                                             Width="25" />
                                             <TextBox
-                                                     Grid.Column="1"
-                                                     x:Name="SignUpPassword"
-                                                     Height="30"
-                                                     Background="Transparent"
-                                                     BorderBrush="Transparent"
-                                                     BorderThickness="0"
-                                                     FontFamily="Lucida Console"
-                                                     FontSize="20"
-                                                     Text="{Binding SignUpPassword}"
-                                                     Foreground="{StaticResource SecondaryTextColor}"
-                                                     VerticalContentAlignment="Center"
-                                                     MaxLength="16"
-                                                     CaretBrush="{StaticResource MainTextColor}"/>
+                                                Grid.Column="1"
+                                                x:Name="SignUpPassword"
+                                                Height="30"
+                                                Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                BorderThickness="0"
+                                                FontFamily="Lucida Console"
+                                                FontSize="20"
+                                                Text="{Binding SignUpPassword}"
+                                                Foreground="{StaticResource SecondaryTextColor}"
+                                                VerticalContentAlignment="Center"
+                                                MaxLength="16"
+                                                CaretBrush="{StaticResource MainTextColor}" />
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="3">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.5*"/>
-                                        <RowDefinition Height="3.5*"/>
-                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="3.5*" />
+                                        <RowDefinition Height="0.5*" />
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}"
+                                            BorderThickness="0 0 0 1">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1.2*"/>
-                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="1.2*" />
+                                                <ColumnDefinition Width="5*" />
                                             </Grid.ColumnDefinitions>
                                             <fa:ImageAwesome Grid.Column="0"
                                                              Icon="Lock"
                                                              Foreground="{StaticResource SecondaryTextColor}"
                                                              Margin="10"
                                                              Height="25"
-                                                             Width="25"/>
+                                                             Width="25" />
                                             <TextBox
-                                                     Grid.Column="1"
-                                                     x:Name="SignUpConfirmPassword"
-                                                     Height="30"
-                                                     Background="Transparent"
-                                                     BorderBrush="Transparent"
-                                                     BorderThickness="0"
-                                                     FontFamily="Lucida Console"
-                                                     Text="{Binding SignUpConfirmPassword}"
-                                                     FontSize="20"
-                                                     Foreground="{StaticResource SecondaryTextColor}"
-                                                     VerticalContentAlignment="Center"
-                                                     MaxLength="16"
-                                                     CaretBrush="{StaticResource MainTextColor}"/>
+                                                Grid.Column="1"
+                                                x:Name="SignUpConfirmPassword"
+                                                Height="30"
+                                                Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                BorderThickness="0"
+                                                FontFamily="Lucida Console"
+                                                Text="{Binding SignUpConfirmPassword}"
+                                                FontSize="20"
+                                                Foreground="{StaticResource SecondaryTextColor}"
+                                                VerticalContentAlignment="Center"
+                                                MaxLength="16"
+                                                CaretBrush="{StaticResource MainTextColor}" />
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="4">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.5*"/>
-                                        <RowDefinition Height="2*"/>
-                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="0.5*" />
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}" BorderThickness="0 0 0 1">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource PanelBackgroundColor2}"
+                                            BorderThickness="0 0 0 1">
                                         <TextBlock
                                             Text="{Binding MessageBlockSignUp}"
                                             Background="Transparent"
@@ -353,15 +361,15 @@
                                             Foreground="{StaticResource SecondaryTextColor}"
                                             TextWrapping="Wrap"
                                             HorizontalAlignment="Center"
-                                            VerticalAlignment="Bottom"/>
+                                            VerticalAlignment="Bottom" />
                                     </Border>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="5">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.25*"/>
+                                    <ColumnDefinition Width="0.25*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.25*" />
                                 </Grid.ColumnDefinitions>
                                 <Button Grid.Column="1" Style="{StaticResource RoundedCornersButton}"
                                         Content="register"

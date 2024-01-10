@@ -24,10 +24,10 @@ namespace Solution.ViewModels
 
         public void LogOut()
         {
-          var path = Environment.CurrentDirectory + "\\auth.token";
-          Process.Start("cmd.exe", string.Format("/c del \"{0}", path));
-          Console.WriteLine($"deleted :{path}");
-          NavigateToLoginViewCommand.Execute(null);
+            var path = Environment.CurrentDirectory + "\\auth.token";
+            Process.Start("cmd.exe", string.Format("/c del \"{0}", path));
+            Console.WriteLine($"deleted :{path}");
+            NavigateToLoginViewCommand.Execute(null);
         }
         public NavRelayCommand NavigateToLeaderboardViewCommand { get; set; }
         public NavRelayCommand NavigateToTypeTextViewCommand { get; set; }
@@ -44,7 +44,7 @@ namespace Solution.ViewModels
         public MainViewModel(INavigationService navService)
         {
 
-          LogOutCommand = new RelayCommand(LogOut);
+            LogOutCommand = new RelayCommand(LogOut);
 
 
             Navigation = navService;

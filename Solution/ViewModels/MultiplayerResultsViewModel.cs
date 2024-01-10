@@ -31,13 +31,13 @@ namespace Solution.ViewModels
 
         public MultiplayerResultsViewModel()
         {
-                StartLobbyUpdatesCommand = new RelayCommand(StartLobbyUpdates);
-                _ = WebserverService.Instance.LobbyUpdates();
+            StartLobbyUpdatesCommand = new RelayCommand(StartLobbyUpdates);
+            _ = WebserverService.Instance.LobbyUpdates();
 
-                _players = new ObservableCollection<Player>();
-                _ = WebserverService.Instance.LobbyUpdates();
+            _players = new ObservableCollection<Player>();
+            _ = WebserverService.Instance.LobbyUpdates();
 
-                WebserverService.Instance.LobbyUpdateReceived += OnLobbyUpdateReceived;
+            WebserverService.Instance.LobbyUpdateReceived += OnLobbyUpdateReceived;
 
             //   GenerateDummyData();
         }
@@ -96,13 +96,13 @@ namespace Solution.ViewModels
         {
             // Generate dummy data for testing
             var dummyPlayers = new List<Player>
-    {
-        new Player { Name = "DummyPlayer1", Accuracy = 80 },
-        new Player { Name = "DummyPlayer2", Accuracy = 70 },
-        new Player { Name = "DummyPlayer3", Accuracy = 90 },
-        new Player { Name = "DummyPlayer4", Accuracy = 99 },
-        // Add more dummy players as needed
-    };
+            {
+                new Player { Name = "DummyPlayer1", Accuracy = 80 },
+                new Player { Name = "DummyPlayer2", Accuracy = 70 },
+                new Player { Name = "DummyPlayer3", Accuracy = 90 },
+                new Player { Name = "DummyPlayer4", Accuracy = 99 },
+                // Add more dummy players as needed
+            };
 
             // Sorteer de dummygegevens op nauwkeurigheid (hoogste eerst)
             dummyPlayers = dummyPlayers.OrderByDescending(p => p.Accuracy).ToList();

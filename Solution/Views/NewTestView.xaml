@@ -28,7 +28,7 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Center"
                 Visibility="{Binding ShowLoading,
-                Converter={StaticResource BoolToVisibilityConverter}}"/>
+                Converter={StaticResource BoolToVisibilityConverter}}" />
             <Label
                 Content="new test"
                 HorizontalAlignment="Left"
@@ -164,7 +164,7 @@
                     FontSize="15" Height="30"
                     Width="155"
                     BorderBrush="Transparent"
-                    Command="{Binding HidePopupCommand}"/>
+                    Command="{Binding HidePopupCommand}" />
             <Button Style="{StaticResource RoundedCornersButton}"
                     Content="start"
                     HorizontalAlignment="Left"
@@ -177,12 +177,12 @@
                     Height="30"
                     Width="155"
                     BorderBrush="Transparent">
-              <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                  <i:InvokeCommandAction Command="{Binding SendPromptCommand}" />
-                  <!-- <i:InvokeCommandAction Command="{Binding HidePopupCommand}" /> -->
-                </i:EventTrigger>
-              </i:Interaction.Triggers>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SendPromptCommand}" />
+                        <!-- <i:InvokeCommandAction Command="{Binding HidePopupCommand}" /> -->
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
             <Label
                 Content="{Binding ErrorMessage}"

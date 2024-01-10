@@ -11,6 +11,4 @@ namespace Solution.ViewModels;
 
 public class NewTestViewModel : BaseViewModel
 {
-
-
 }

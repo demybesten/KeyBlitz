@@ -9,4 +9,3 @@ namespace Solution.ViewModels
 
     }
 }
-

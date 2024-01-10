@@ -5,7 +5,7 @@ namespace Solution.Services;
 
 public class PassTestStats : IDataService, INotifyPropertyChanged
 {
-private double _amountOfCorrectChars;
+    private double _amountOfCorrectChars;
     public double AmountOfCorrectChars
     {
         get { return _amountOfCorrectChars; }
@@ -41,7 +41,7 @@ private double _amountOfCorrectChars;
         {
             if (_amountOfTypedWords != value)
             {
-              _amountOfTypedWords = value;
+                _amountOfTypedWords = value;
                 OnPropertyChanged(nameof(AmountOfTypedWords));
             }
         }

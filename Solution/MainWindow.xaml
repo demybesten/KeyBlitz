@@ -12,13 +12,13 @@
         Title="KeyBlitz" WindowStyle="ThreeDBorderWindow" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <!-- For Header, takes space as needed -->
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
             <!-- For Content, takes remaining space -->
         </Grid.RowDefinitions>
 
-        <views:HeaderView Grid.Row="0"/>
-        <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}"/>
+        <views:HeaderView Grid.Row="0" />
+        <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}" />
     </Grid>
 </Window>
