@@ -26,8 +26,8 @@ public class LeaderboardViewModel : BaseViewModel
 
         Personen = new ObservableCollection<Persoon>();
         Leaderboard = new List<Score>();
-        
-        
+
+
         apiClient = client;
         Navigation = navigation;
         NavigateToNewTestView = new NavRelayCommand(o => { Navigation.NavigateTo<NewTestViewModel>(); }, o => true);
@@ -35,7 +35,7 @@ public class LeaderboardViewModel : BaseViewModel
     }
 
     public List<Score> Leaderboard;
-    
+
     public async void InitializeAsync()
     {
         await SetLeaderboard();
@@ -44,6 +44,7 @@ public class LeaderboardViewModel : BaseViewModel
     public async Task SetLeaderboard()
     {
         var response = await apiClient.GetLeaderboard(FilterToTimePeriod());
+        Console.WriteLine(FilterToTimePeriod());
         Leaderboard = response.ScoreList;
 
         if (Personen.Count != 0)
@@ -55,10 +56,10 @@ public class LeaderboardViewModel : BaseViewModel
             // Console.WriteLine(i);
             Personen.Add(new Persoon { Naam = Leaderboard[i].username, Score = Leaderboard[i].score, Positie = i+1});
         }
-        
+
 
     }
-    
+
     public INavigationService _Navigation;
 
     public INavigationService Navigation
@@ -72,7 +73,7 @@ public class LeaderboardViewModel : BaseViewModel
     }
 
     private ObservableCollection<Persoon> _personen;
-    
+
 
     public ObservableCollection<Persoon> Personen
     {

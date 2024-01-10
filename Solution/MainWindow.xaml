@@ -8,7 +8,8 @@
 
         xmlns:views="clr-namespace:Solution.Views"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStyle="ThreeDBorderWindow" WindowState="Maximized">
+        Icon="Resources/KeyBlitzLogo.png"
+        Title="KeyBlitz" WindowStyle="ThreeDBorderWindow" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
