@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Numerics;
@@ -19,6 +20,7 @@ namespace Solution.Services
 {
     public class WebserverService
     {
+        private static readonly string TokenFile = "auth.token";
         private ClientWebSocket _webSocket;
         private ScoreViewModel _scoreViewModel;
 
@@ -113,9 +115,9 @@ namespace Solution.Services
         {
             try
             {
+                ApiClient client = new ApiClient();
                 var buffer = new byte[1024];
                 var result = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
                     string authRequest = Encoding.UTF8.GetString(buffer, 0, result.Count);
@@ -136,12 +138,14 @@ namespace Solution.Services
         {
             try
             {
-                string authTokenResponse = @"{
-                    ""type"": ""auth"",
-                    ""data"": {
-                        ""token"": ""ditiseentoken""
-                    }
-                }";
+                string token = File.ReadAllText(TokenFile);
+
+                string authTokenResponse = $@"{{
+                 ""type"": ""auth"",
+                 ""data"": {{
+                     ""token"": ""{token}""
+                      }}
+                    }}";
 
                 byte[] authTokenResponseBytes = Encoding.UTF8.GetBytes(authTokenResponse);
                 await _webSocket.SendAsync(new ArraySegment<byte>(authTokenResponseBytes), WebSocketMessageType.Text, true, CancellationToken.None);
