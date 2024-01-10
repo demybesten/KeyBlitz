@@ -235,7 +235,7 @@ namespace Solution.Services
         }
 
 
-        public async void SendFinishMessage(int tijd, int accrucy)
+        public async void SendFinishMessage(int tijd, int accrucy, int score)
         {
             try
             {
@@ -245,7 +245,8 @@ namespace Solution.Services
                     data = new
                     {
                         time = tijd,
-                        accuracy = accrucy
+                        accuracy = accrucy,
+                        score = score
                     }
                 };
 
