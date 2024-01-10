@@ -332,7 +332,6 @@ private WebserverService _webserverService;
 
              NavigateToMultiplayerResultsView.Execute(null);
 
-                    passTestStats.Multiplayer = false;
                 }  
          else
          {
@@ -425,8 +424,10 @@ private WebserverService _webserverService;
       Cpm = default;
       Accuracy = default;
       stopWatch.Reset();
+            passTestStats.Multiplayer = false;
 
-      TimeSpan ts = stopWatch.Elapsed;
+
+            TimeSpan ts = stopWatch.Elapsed;
     }
         private int lastping = 0;
     private void timer_Tick(object sender, EventArgs e)
